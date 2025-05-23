@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\DashboardAdminController;
+use App\Http\Controllers\DashboardMahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,6 @@ use App\Http\Controllers\WelcomeController;
 //     return view('welcome');
 // });
 
-Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+
+Route::get('/mahasiswa/dashboard', [DashboardMahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
