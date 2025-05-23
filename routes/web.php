@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardMahasiswaController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +19,7 @@ use App\Http\Controllers\DashboardMahasiswaController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 
 Route::prefix('admin')->name('admin.')->group(function() {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
