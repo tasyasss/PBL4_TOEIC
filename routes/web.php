@@ -1,12 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\RolesController;
-use App\Http\Controllers\MahasiswaController;
-use App\Http\Controllers\ProdiController;
-use App\Http\Controllers\AdminController;    
+use App\Http\Controllers\DashboardAdminController;
+use App\Http\Controllers\DashboardMahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +15,9 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/', [WelcomeController::class, 'index']);
 
