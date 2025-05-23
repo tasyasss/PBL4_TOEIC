@@ -43,7 +43,7 @@
 
     <!-- Nav Item - Bantuan -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="{{ route('mahasiswa.help') }}">
             <i class="fas fa-fw fa-question-circle"></i>
             <span>Bantuan</span></a>
     </li>
