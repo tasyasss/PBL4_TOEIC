@@ -1,7 +1,6 @@
 @extends('layouts_mahasiswa.template')
 
 @section('content')
-<<<<<<< HEAD
 <!-- Main Content -->
 <div class="container-fluid">
     <!-- Kartu Statistik -->
@@ -150,7 +149,3 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{ asset('js/scripts.js') }}"></script>
 @endsection
-=======
-    <h1 class="text-center">Selamat Datang MAHASISWA</h1>
-@endsection
->>>>>>> 3de8596b3ed8a46ecfa9c0ef2fb169944c6f7610
