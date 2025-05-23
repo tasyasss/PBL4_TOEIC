@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>TOEIC - MHS</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('sbadmin/vendor/fontawesome-free/css/all.min.css')}} " rel="stylesheet" type="text/css">
@@ -28,7 +28,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('layouts.sidebar')
+        @include('layouts_mahasiswa.sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -38,11 +38,11 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('layouts.header')
+                @include('layouts_mahasiswa.header')
                 <!-- End of Topbar -->
 
                 <!-- Breadcrumb -->
-                @include('layouts.breadcrumb')
+                @include('layouts_mahasiswa.breadcrumb')
                 <!-- End of Breadcrumb -->
 
                 <!-- Begin Page Content -->
@@ -60,7 +60,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('layouts.footer')
+            @include('layouts_mahasiswa.footer')
             <!-- End of Footer -->
 
         </div>
