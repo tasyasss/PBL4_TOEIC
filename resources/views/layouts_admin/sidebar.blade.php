@@ -60,7 +60,7 @@
 
     <!-- Nav Item - Bantuan -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="{{ route('admin.help') }}"> <!-- { route('admin.bantuan') }} -->
             <i class="fas fa-fw fa-question-circle"></i>
             <span>Bantuan</span></a>
     </li>

@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardMahasiswaController;
-
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +19,14 @@ use App\Http\Controllers\DashboardMahasiswaController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 
-Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+Route::prefix('admin')->name('admin.')->group(function() {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/help', [AdminController::class, 'help'])->name('help');
+});
 
-Route::get('/mahasiswa/dashboard', [DashboardMahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+Route::prefix('mahasiswa')->name('mahasiswa.')->group(function() {
+    Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
+    Route::get('/help', [MahasiswaController::class, 'help'])->name('help');
+});
