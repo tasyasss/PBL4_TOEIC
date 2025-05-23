@@ -13,7 +13,7 @@ class MahasiswaController extends Controller
     //
     public function dashboard()
     {
-        return view('mahasiswa.dashboard');
+        return view('mahasiswa.dashboard_mahasiswa');
     }
 
     public function help()
