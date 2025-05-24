@@ -7,6 +7,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JadwalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::prefix('admin')->name('admin.')->group(function() {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/help', [AdminController::class, 'help'])->name('help');
+    Route::get('/jadwal-kuota', [JadwalController::class, 'jadwalKuota'])->name('admin.jadwal-kuota');
 });
 
 Route::prefix('mahasiswa')->name('mahasiswa.')->group(function() {
