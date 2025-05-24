@@ -6,9 +6,19 @@ use Illuminate\Http\Request;
 
 class JadwalController extends Controller
 {
-    public function jadwalKuota()
+    public function jadwal()
     {
-        // Ganti 'admin.jadwal-kuota' dengan nama view yang sesuai
-        return view('admin.jadwal-kuota');
+        $breadcrumb = (object) [
+            'title' => 'Jadwal & Kuota',
+            'list' => ['Home', 'Jadwal & Kuota'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Jadwal & Kuota',
+        ];
+
+        $activeMenu = 'jadwal'; // Should match your sidebar menu item
+
+        return view('admin.jadwal', compact('breadcrumb', 'activeMenu', 'page'));
     }
 }

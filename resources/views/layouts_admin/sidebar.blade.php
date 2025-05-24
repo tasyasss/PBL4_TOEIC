@@ -50,7 +50,7 @@
 
     <!-- Nav Item - Jadwal & Kuota -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('admin.jadwal') }} -->
+        <a class="nav-link" href="{{ route('admin.jadwal') }}"> 
             <i class="fas fa-fw fa-calendar-check"></i>
             <span>Jadwal & Kuota</span></a>
     </li>

@@ -13,7 +13,18 @@ class MahasiswaController extends Controller
     //
     public function dashboard()
     {
-        return view('mahasiswa.dashboard_mahasiswa');
+        $breadcrumb = (object) [
+            'title' => 'Dashboard',
+            'list' => ['Home', 'Dashboard'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Dashboard',
+        ];
+
+        $activeMenu = 'dashboard'; // Should match your sidebar menu item
+
+        return view('mahasiswa.dashboard_mahasiswa', compact('breadcrumb', 'activeMenu', 'page'));
     }
 
     public function help()
