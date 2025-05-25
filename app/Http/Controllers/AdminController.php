@@ -12,7 +12,18 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $breadcrumb = (object) [
+            'title' => 'Dashboard',
+            'list' => ['Home', 'Dashboard'],
+        ];
+
+        $page = (object) [
+            'title' => 'Dashboard',
+        ];
+
+        $activeMenu = 'dashboard'; // Should match your sidebar menu item
+
+        return view('admin.dashboard_admin', compact('breadcrumb', 'activeMenu', 'page'));
     }
 
     public function mahasiswa()
