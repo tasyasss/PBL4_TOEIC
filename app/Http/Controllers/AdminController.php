@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard_admin');
+        return view('admin.dashboard');
     }
 
     public function help()
