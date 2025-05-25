@@ -7,7 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\JadwalController;
-
+use App\Http\Controllers\PendaftaranController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('landingpage');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -28,5 +28,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
         Route::get('/help', [MahasiswaController::class, 'help'])->name('help');
+        Route::get('/pendaftaran', [PendaftaranController::class, 'Pendaftaran'])->name('mahasiswa.pendaftaran');
     });
 // });
