@@ -33,7 +33,7 @@
 
     <!-- Nav Item - Data Mahasiswa -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('admin.mahasiswa') }} -->
+        <a class="nav-link" href="{{ route('admin.mahasiswa') }}"> <!-- { route('admin.mahasiswa') }} -->
             <i class="fas fa-fw fa-table"></i>
             <span>Data Mahasiswa</span></a>
     </li>
@@ -43,14 +43,14 @@
 
     <!-- Nav Item - Data Pendaftaran -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('admin.pendaftaran') }} -->
+        <a class="nav-link" href="{{ route('admin.pendaftaran') }}"> <!-- { route('admin.pendaftaran') }} -->
             <i class="fas fa-fw fa-folder-plus"></i>
             <span>Data Pendaftaran</span></a>
     </li>
 
     <!-- Nav Item - Jadwal & Kuota -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('admin.jadwal') }} -->
+        <a class="nav-link" href="{{ route('admin.jadwal') }}"> 
             <i class="fas fa-fw fa-calendar-check"></i>
             <span>Jadwal & Kuota</span></a>
     </li>

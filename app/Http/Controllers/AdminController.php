@@ -12,7 +12,38 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard_admin');
+        return view('admin.dashboard');
+    }
+
+    public function mahasiswa()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Data Mahasiswa',
+            'list' => ['Home', 'Data Mahasiswa'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Data Mahasiswa',
+        ];
+
+        $activeMenu = 'mahasiswa'; // Should match your sidebar menu item
+
+        return view('admin.mahasiswa', compact('breadcrumb', 'activeMenu', 'page'));
+    }
+
+    public function pendaftaran()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Pendaftaran',
+            'list' => ['Home', 'Pendaftaran'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Pendaftaran',
+        ];
+        $activeMenu = 'pendaftaran';
+
+        return view('admin.pendaftaran', compact('breadcrumb', 'activeMenu', 'page'));
     }
 
     public function help()
