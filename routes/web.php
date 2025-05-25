@@ -18,8 +18,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //     Route::middleware('authorize:ADM')->prefix('admin')->name('admin.')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-        Route::get('/help', [AdminController::class, 'help'])->name('help');
-        Route::get('/jadwal', [JadwalController::class, 'jadwal'])->name('jadwal');    
+        Route::get('/mahasiswa', [AdminController::class, 'mahasiswa'])->name('mahasiswa');
+        Route::get('/jadwal', [JadwalController::class, 'jadwal'])->name('jadwal');
+        Route::get('/help', [AdminController::class, 'help'])->name('help');    
     });
 
     // Route::middleware('authorize:MHS')->prefix('mahasiswa')->name('mahasiswa.')->group(function () {

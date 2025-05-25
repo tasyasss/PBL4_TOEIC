@@ -15,6 +15,22 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
+    public function mahasiswa()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Data Mahasiswa',
+            'list' => ['Home', 'Data Mahasiswa'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Data Mahasiswa',
+        ];
+
+        $activeMenu = 'mahasiswa'; // Should match your sidebar menu item
+
+        return view('admin.mahasiswa', compact('breadcrumb', 'activeMenu', 'page'));
+    }
+
     public function help()
     {
         $breadcrumb = (object) [

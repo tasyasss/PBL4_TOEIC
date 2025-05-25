@@ -33,7 +33,7 @@
 
     <!-- Nav Item - Data Mahasiswa -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('admin.mahasiswa') }} -->
+        <a class="nav-link" href="{{ route('admin.mahasiswa') }}"> <!-- { route('admin.mahasiswa') }} -->
             <i class="fas fa-fw fa-table"></i>
             <span>Data Mahasiswa</span></a>
     </li>
