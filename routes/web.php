@@ -8,6 +8,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\PendaftaranController;
+use App\Models\PendaftaranModel;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/help', [AdminController::class, 'help'])->name('help');
     Route::get('/jadwal-kuota', [JadwalController::class, 'jadwalKuota'])->name('admin.jadwal-kuota');
+    Route::get('/data-pendaftaran', [PendaftaranController::class, 'dataPendaftaran'])->name('admin.data-pendaftaran');
 });
 
 Route::prefix('mahasiswa')->name('mahasiswa.')->group(function() {
