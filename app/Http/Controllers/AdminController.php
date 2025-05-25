@@ -31,6 +31,21 @@ class AdminController extends Controller
         return view('admin.mahasiswa', compact('breadcrumb', 'activeMenu', 'page'));
     }
 
+    public function pendaftaran()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Pendaftaran',
+            'list' => ['Home', 'Pendaftaran'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Pendaftaran',
+        ];
+        $activeMenu = 'pendaftaran';
+
+        return view('admin.pendaftaran', compact('breadcrumb', 'activeMenu', 'page'));
+    }
+
     public function help()
     {
         $breadcrumb = (object) [

@@ -43,7 +43,7 @@
 
     <!-- Nav Item - Data Pendaftaran -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('admin.pendaftaran') }} -->
+        <a class="nav-link" href="{{ route('admin.pendaftaran') }}"> <!-- { route('admin.pendaftaran') }} -->
             <i class="fas fa-fw fa-folder-plus"></i>
             <span>Data Pendaftaran</span></a>
     </li>

@@ -19,6 +19,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/mahasiswa', [AdminController::class, 'mahasiswa'])->name('mahasiswa');
+        Route::get('/pendaftaran', [AdminController::class, 'pendaftaran'])->name('pendaftaran');
         Route::get('/jadwal', [JadwalController::class, 'jadwal'])->name('jadwal');
         Route::get('/help', [AdminController::class, 'help'])->name('help');    
     });
