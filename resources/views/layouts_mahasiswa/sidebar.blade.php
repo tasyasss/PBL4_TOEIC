@@ -33,7 +33,7 @@
 
     <!-- Nav Item - Pendaftaran -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('mahasiswa.pendaftaran') }} -->
+        <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.index') }}">
             <i class="fas fa-fw fa-folder-plus"></i>
             <span>Pendaftaran</span></a>
     </li>

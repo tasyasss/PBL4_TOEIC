@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PendaftaranController extends Controller
+class Pendaftaran_MHSController extends Controller
 {
     
-    public function Pendaftaran()
+    public function index()
     {      
         $breadcrumb = (object) [
             'title' => ' Pendaftaran',
@@ -20,6 +20,6 @@ class PendaftaranController extends Controller
 
         $activeMenu = 'pendaftaran'; // Should match your sidebar menu item
 
-        return view('mahasiswa.pendaftaran', compact('breadcrumb', 'page', 'activeMenu'));
+        return view('mahasiswa.datapendaftaran.index', compact('breadcrumb', 'page', 'activeMenu'));
     }
 }

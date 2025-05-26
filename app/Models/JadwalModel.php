@@ -17,4 +17,9 @@ class JadwalModel extends Model
         'tanggal',
         'kuota'
     ];
+
+    public function pendaftaran()
+    {
+        return $this->hasMany(PendaftaranModel::class, 'jadwal_id');
+    }
 }
