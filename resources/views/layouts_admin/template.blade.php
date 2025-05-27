@@ -110,6 +110,11 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('sbadmin/js/sb-admin-2.min.js') }} "></script>
 
+    <!-- Bootstrap Tab JavaScript (Ensure tabs work) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Memastikan Bootstrap Tab JS berfungsi -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

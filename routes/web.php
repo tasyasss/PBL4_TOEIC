@@ -26,8 +26,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/help', [AdminController::class, 'help'])->name('help');    
 
-        Route::prefix('profile')->name('profile.')->group(function () {
-            // Route::get('/', [Profile_ADMController::class, 'index'])->name('index');
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::get('profil', [Profile_ADMController::class, 'profil'])->name('profil');
         });
 
         Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
@@ -53,9 +53,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('dashboard');
         Route::get('/help', [MahasiswaController::class, 'help'])->name('help');
 
-        Route::prefix('profile')->name('profile.')->group(function () {
-            // Route::get('/', [Profile_ADMController::class, 'index'])->name('index');
+        Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+            Route::get('profil', [Profile_MHSController::class, 'index'])->name('profil');
         });
+
+      
 
         Route::prefix('pendaftaran')->name('pendaftaran.')->group(function () {
         Route::get('/', [Pendaftaran_MHSController::class, 'index'])->name('index');

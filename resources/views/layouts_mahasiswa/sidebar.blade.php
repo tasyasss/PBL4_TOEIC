@@ -23,7 +23,7 @@
 
     <!-- Nav Item - Profil -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('mahasiswa.profil') }} -->
+        <a class="nav-link" href="{{ route('mahasiswa.mahasiswa.profil') }}"> 
             <i class="fas fa-fw fa-user"></i>
             <span>Profil</span></a>
     </li>
