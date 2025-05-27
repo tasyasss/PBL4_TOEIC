@@ -49,6 +49,20 @@
     </li>
 
     <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    
+    <li class="nav-item">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+            <a class="nav-link" href="#"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fas fa-fw fa-question-circle"></i>
+                <span>LogOut</span>
+            </a>
+        </form>
+    </li>
+
+    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->

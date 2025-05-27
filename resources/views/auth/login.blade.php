@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <title>TOEIC Log In</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -19,13 +20,24 @@
         <div class="form-container page2">
             <form id="loginForm" method="POST" action="{{ route('postlogin') }}">
                 @csrf
+                <meta name="csrf-token" content="{{ csrf_token() }}">
                 <h1>Login</h1>
                 <span>untuk masuk kedalam sistem</span><br>
+
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Login</button>
-                <br><a style="background-color: transparent; border-color: #2449AD; color:#2449AD"
-                    href="{{ route('landingpage') }}"><b><u>Kembali Ke Halaman Utama</b></u></a>
+                <br>
+                <a style="background-color: transparent; border-color: #2449AD; color:#2449AD"
+                    href="{{ route('landingpage') }}">
+                    <b><u>Kembali Ke Halaman Utama</u></b>
+                </a>
             </form>
         </div>
         <div class="form-container page1">
@@ -54,61 +66,25 @@
     </div>
 
     <script src="{{ asset('loginpage/script.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $(document).ready(function() {
-            $("#form-login").validate({
-                rules: {
-                    username: {
-                        required: true,
-                    },
-                    password: {
-                        required: true,
+        $('#loginForm').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.status) {
+                        // Tambahkan ini untuk memastikan session
+                        window.location.href = response.redirect + '?' + new Date().getTime();
                     }
                 },
-                submitHandler: function(form) { // ketika valid, maka bagian yg akan dijalankan
-                    $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $(form).serialize(),
-                        success: function(response) {
-                            if (response.status) { // jika sukses
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message,
-                                }).then(function() {
-                                    window.location = response.redirect;
-                                });
-                            } else { // jika error
-                                $('.error-text').text('');
-                                $.each(response.msgField, function(prefix, val) {
-                                    $('#error-' + prefix).text(val[0]);
-                                });
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Terjadi Kesalahan',
-                                    text: response.message
-                                });
-                            }
-                        }
-                    });
-                    return false;
-                },
-                errorElement: 'span',
-                errorPlacement: function(error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.input-group').append(error);
-                },
-                highlight: function(element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
+                error: function(xhr) {
+                    if (xhr.status === 403) {
+                        alert('Anda tidak memiliki akses');
+                    }
                 }
             });
         });

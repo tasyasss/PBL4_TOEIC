@@ -50,7 +50,7 @@
 
     <!-- Nav Item - Jadwal & Kuota -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.jadwal.index') }}"> 
+        <a class="nav-link" href="{{ route('admin.jadwal.index') }}">
             <i class="fas fa-fw fa-calendar-check"></i>
             <span>Jadwal & Kuota</span></a>
     </li>
@@ -63,6 +63,26 @@
         <a class="nav-link" href="{{ route('admin.help') }}"> <!-- { route('admin.bantuan') }} -->
             <i class="fas fa-fw fa-question-circle"></i>
             <span>Bantuan</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    {{-- <li class="nav-item">
+        <a class="nav-link" href="{{ route('logout') }}"> 
+            <i class="fas fa-fw fa-question-circle"></i>
+            <span>LogOut</span></a>
+    </li> --}}
+
+    <li class="nav-item">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+            @csrf
+            <a class="nav-link" href="#"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fas fa-fw fa-question-circle"></i>
+                <span>LogOut</span>
+            </a>
+        </form>
     </li>
 
     <!-- Divider -->

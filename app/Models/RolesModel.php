@@ -14,7 +14,7 @@ class RolesModel extends Model
     protected $primaryKey = 'id';
     
     protected $fillable = [
-        'roles_kode',
-        'roles_nama',
+        'role_kode',
+        'role_nama',
     ];
 }

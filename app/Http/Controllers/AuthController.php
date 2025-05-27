@@ -4,83 +4,80 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-
-use App\Models\UserModel;
-use App\Models\LevelModel;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function login()
     {
-        if (Auth::check()) { // jika sudah login, maka redirect ke halaman home
-            return redirect('/');
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if ($user->roles === null) {
+                    Auth::logout();
+                    return redirect()->route('login')->with('error', 'Role tidak ditemukan!');
+                }
+
+                if ($user->roles->role_kode === 'ADM') {
+                    return redirect()->route('admin.dashboard');
+                } elseif ($user->roles->role_kode === 'MHS') {
+                    return redirect()->route('mahasiswa.dashboard');
+                } else {
+                    Auth::logout();
+                    return redirect()->route('login')->with('error', 'Role tidak valid!');
+                }
+            }
+
+            return view('auth.login');
+        } catch (\Exception $e) {
+            Log::error('Login page error: ' . $e->getMessage());
+            return redirect()->route('landingpage')->with('error', 'Terjadi kesalahan sistem!');
         }
-        return view('auth.login');
     }
-    // public function postlogin(Request $request)
-    // {
-    //     if ($request->ajax() || $request->wantsJson()) {
-    //         $credentials = $request->only('username', 'password');
-    //         if (Auth::attempt($credentials)) {
-    //             return response()->json([
-    //                 'status' => true,
-    //                 'message' => 'Login Berhasil',
-    //                 'redirect' => url('/')
 
-    //             ]);
-    //         }
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Login Gagal'
-    //         ]);
-    //     }
-    //     return redirect('login');
-    // }
-    
-    // public function logout(Request $request)
-    // {
-    //     Auth::logout();
-    //     $request->session()->invalidate();
-    //     $request->session()->regenerateToken();
-    //     return redirect('login');
-    // }
+    public function postlogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
 
-    // public function register() // tambah akun baru
-    // {
-    //     $levels = LevelModel::select('level_id', 'level_nama')->get();
+        // if (Auth::attempt($credentials)) {
+        //     $request->session()->regenerate();
+        //     $user = Auth::user()->load('roles');
 
-    //     return view('auth.register')->with('levels', $levels);
-    // }
+        //     if (!$user->roles) {
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            $user = \App\Models\UsersModel::with('roles')->find(Auth::id());
 
-    // public function postRegister(Request $request) // proses tambah akun
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'username' => 'required|string|unique:m_user,username',
-    //         'nama'     => 'required|string|max:50',
-    //         'password' => 'required|string|min:5|confirmed',
-    //         'level_id' => 'required|exists:m_level,level_id',
-    //     ]);
+            if (!$user || !$user->roles) {
+                Auth::logout();
+                return back()->with('error', 'User tidak memiliki role');
+            }
 
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => false,
-    //             'message' => 'Validation Failed.',
-    //             'errors' => $validator->errors(),
-    //         ]);
-    //     }
+            return response()->json([
+                'status' => true,
+                'redirect' => ($user->roles->role_kode === 'ADM')
+                    ? route('admin.dashboard')
+                    : route('mahasiswa.dashboard')
+            ]);
+        }
 
-    //     UserModel::create([
-    //         'username' => $request->username,
-    //         'nama'     => $request->nama,
-    //         'password' => bcrypt($request->password),
-    //         'level_id' => $request->level_id
-    //     ]);
+        return back()->with('error', 'Login gagal');
+    }
 
-    //     return response()->json([
-    //         'status'   => true,
-    //         'message'  => 'Berhasil membuat akun.',
-    //         'redirect' => url('login')
-    //     ]);
-    // }
+    public function logout(Request $request)
+    {
+        try {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('login');
+        } catch (\Exception $e) {
+            Log::error('Logout error: ' . $e->getMessage());
+            return redirect()->route('landingpage')->with('error', 'Gagal logout!');
+        }
+    }
 }
