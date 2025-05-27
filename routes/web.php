@@ -32,7 +32,18 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
         Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
             Route::get('/', [DataMahasiswaController::class, 'index'])->name('index');
-            Route::post('/list', [DataMahasiswaController::class, 'list']);      // menampilkan data user dlm json utk datatables
+            Route::post('/list', [DataMahasiswaController::class, 'list']);      // menampilkan data  dlm json utk datatables
+            Route::get('/create_ajax', [DataMahasiswaController::class, 'create_ajax']);   // menampilkan halaman form tambah  AJAX
+            Route::post('/store_ajax', [DataMahasiswaController::class, 'store_ajax']);         // menampilkan data  baru AJAX
+            // Route::get('/{id}', [DataMahasiswaController::class, 'show']);       // menampilkan detail user
+            // Route::get('/{id}/edit_ajax', [DataMahasiswaController::class, 'edit_ajax']);     // menampilkan form perubahan data user AJAX
+            // Route::put('/{id}/update_ajax', [DataMahasiswaController::class, 'update_ajax']);     // menyimpan perubahan data user AJAX
+            // Route::get('/{id}/delete_ajax', [DataMahasiswaController::class, 'confirm_ajax']); // menampilkan form confirm delete AJAX
+            // Route::delete('/{id}/delete_ajax', [DataMahasiswaController::class, 'delete_ajax']); // menghapus data user AJAX
+            // Route::get('/import',[DataMahasiswaController::class, 'import']); // ajax form upload excel
+            // Route::post('/import_ajax', [DataMahasiswaController::class, 'import_ajax']); //ajax import excel
+            // Route::get('/export_excel',[DataMahasiswaController::class, 'export_excel']); // export excel
+            // Route::get('/export_pdf',[DataMahasiswaController::class, 'export_pdf']); // export pdf
         });
 
         Route::prefix('pendaftaran')->name('pendaftaran.')->group(function () {
