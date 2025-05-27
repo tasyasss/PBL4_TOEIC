@@ -1,13 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Profile_ADMController;
 use App\Http\Controllers\DataMahasiswaController;
 use App\Http\Controllers\Pendaftaran_ADMController;
 use App\Http\Controllers\JadwalController;
+
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\Profile_MHSController;
 use App\Http\Controllers\Pendaftaran_MHSController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('landingpage');
@@ -18,6 +23,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/help', [AdminController::class, 'help'])->name('admin.help');
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [Profile_ADMController::class, 'index'])->name('admin.profile.index');
+        Route::post('/update', [Profile_ADMController::class, 'update'])->name('admin.profile.update');
+        Route::get('/change_password', [Profile_ADMController::class, 'change_password'])->name('admin.profile.change_password');
+    });
 
     Route::prefix('mahasiswa')->group(function () {
         Route::get('/', [DataMahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
@@ -43,5 +54,11 @@ Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(functio
 
     Route::prefix('pendaftaran')->group(function () {
         Route::get('/', [Pendaftaran_MHSController::class, 'index'])->name('mahasiswa.pendaftaran.index');
+    });
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [Profile_MHSController::class, 'index'])->name('admin.profile.index');
+        Route::post('/update', [Profile_MHSController::class, 'update'])->name('admin.profile.update');
+        Route::get('/change_password', [Profile_MHSController::class, 'change_password'])->name('admin.profile.change_password');
     });
 });

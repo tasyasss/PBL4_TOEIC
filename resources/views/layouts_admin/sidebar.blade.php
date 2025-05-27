@@ -23,7 +23,7 @@
 
     <!-- Nav Item - Profil -->
     <li class="nav-item">
-        <a class="nav-link" href=""> <!-- { route('admin.profil') }} -->
+        <a class="nav-link" href="{{ route('admin.admin.profil') }}"> <!-- { route('admin.profil') }} -->
             <i class="fas fa-fw fa-user"></i>
             <span>Profil</span></a>
     </li>
