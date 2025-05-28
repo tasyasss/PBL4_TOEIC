@@ -38,6 +38,8 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::get('/edit_ajax/{id}', [DataMahasiswaController::class, 'edit_ajax'])->name('admin.mahasiswa.edit_ajax');
         Route::post('/update_ajax/{id}', [DataMahasiswaController::class, 'update_ajax'])->name('admin.mahasiswa.update_ajax');
         Route::get('/delete_ajax/{id}', [DataMahasiswaController::class, 'delete_ajax'])->name('admin.mahasiswa.delete_ajax');
+        Route::get('/{id}/show_ajax', [DataMahasiswaController::class, 'show_ajax'])->name('admin.mahasiswa.show_ajax');
+        Route::post('/{id}/reset_password', [DataMahasiswaController::class, 'resetPassword'])->name('admin.mahasiswa.resetPassword');
     });
 
     Route::prefix('pendaftaran')->group(function () {

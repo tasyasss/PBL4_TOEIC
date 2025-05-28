@@ -36,6 +36,14 @@
             </div>
         </div>
     </div>
+<!-- Modal Detail -->
+<div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modalDetailContent">
+            <!-- Konten detail dimuat di sini -->
+        </div>
+    </div>
+</div>
 
     <!-- Include CSS dan JS eksternal -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -43,6 +51,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
 
 
@@ -51,7 +60,54 @@
 @endsection
 
 @push('js')
+    
     <script>
+          // Tampilkan modal detail
+    function showDetail(id) {
+        $.get('/admin/mahasiswa/' + id + '/show_ajax', function(response) {
+            $('#modalDetailContent').html(response);
+            $('#modalDetail').modal('show');
+        });
+    }
+
+    // Reset password mahasiswa
+    function resetPassword(id) {
+    // SweetAlert konfirmasi
+    Swal.fire({
+        title: 'Yakin ingin reset password?',
+        text: "Password akan direset ke 12345!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, reset!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        // Jika user menekan tombol 'Ya, reset!'
+        if (result.isConfirmed) {
+            // Melakukan AJAX POST ke server untuk reset password
+            $.post('/admin/mahasiswa/' + id + '/reset_password', {
+                _token: $('meta[name="csrf-token"]').attr('content')  // CSRF token untuk keamanan
+  }, function(response) {
+                // Menampilkan pesan sukses setelah reset password
+                Swal.fire({
+                    title: 'Password berhasil direset!',
+                    text: response.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            }).fail(function(xhr) {
+                // Menangani jika terjadi kesalahan
+                Swal.fire({
+                    title: 'Terjadi kesalahan!',
+                    text: xhr.responseText,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        }
+    });
+}
+
+
         // ------ UNTUK DATATABLES ------
         function modalAction(url = '') {
             $('#myModal').load(url, function() {
