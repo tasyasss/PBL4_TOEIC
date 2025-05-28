@@ -109,5 +109,71 @@
                 }]
             });
         });
+
+        function deleteConfirm(url) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(res) {
+                    if (res.status) {
+                        $('#table_mahasiswa').DataTable().ajax.reload(null, false);
+                        Swal.fire('Berhasil!', res.message, 'success');
+                    } else {
+                        Swal.fire('Gagal!', res.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Error!', 'Terjadi kesalahan saat menghapus data', 'error');
+                }
+            });
+        }
+    });
+}
+
     </script>
+
+<script>
+    $('#form-edit').submit(function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        let id = $('#mahasiswa_id').val(); // pastikan ada input hidden dengan ID ini
+
+        $.ajax({
+            url: '/admin/mahasiswa/update_ajax/' + id,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.status) {
+                    $('#myModal').modal('hide');
+                    $('#table_mahasiswa').DataTable().ajax.reload();
+                    alert(res.message);
+                } else {
+                    if (res.msgField) {
+                        let err = Object.values(res.msgField).map(item => item.join(', ')).join('\n');
+                        alert('Validasi gagal:\n' + err);
+                    } else {
+                        alert('Gagal menyimpan data');
+                    }
+                }
+            },
+            error: function(xhr) {
+                alert('Terjadi kesalahan saat menyimpan');
+            }
+        });
+    });
+</script>
+
 @endpush
