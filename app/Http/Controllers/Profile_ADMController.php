@@ -6,16 +6,29 @@ use Illuminate\Http\Request;
 
 class Profile_ADMController extends Controller
 {
-     // Menampilkan halaman profile
-     public function index()
-     {
-         return view('admin.profil');  
-     }
- 
-     public function profil()
-     {
-         $breadcrumb = 'Profil Admin';
-     
-         return view('admin.profil', compact('breadcrumb'));
-     }
+    public function index()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Profile Admin',
+            'list' => ['Home', 'Profile Admin'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Profile Admin',
+        ];
+        $activeMenu = 'profile';
+
+        return view('admin.profile.index', compact('breadcrumb', 'activeMenu', 'page'));
+    }
+
+    public function showProfile()
+    {
+        $user = auth()->user();
+
+        $admin = $user->admin;
+
+        return view('admin.profile', [
+            'admin' => $admin
+        ]);
+    }
 }

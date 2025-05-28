@@ -18,4 +18,14 @@ class UsersModel extends Authenticatable
     {
         return $this->belongsTo(RolesModel::class, 'roles_id');
     }
+
+    public function admin()
+    {
+        return $this->hasOne(AdminModel::class, 'users_id');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasOne(MahasiswaModel::class, 'users_id');
+    }
 }

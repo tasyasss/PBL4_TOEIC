@@ -6,19 +6,29 @@ use Illuminate\Http\Request;
 
 class Profile_MHSController extends Controller
 {
-    // Menampilkan halaman profile
     public function index()
     {
-        return view('mahasiswa.profil');  
+        $breadcrumb = (object) [
+            'title' => 'Profile Mahasiswa',
+            'list' => ['Home', 'Profile Mahasiswa'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Profile Mahasiswa',
+        ];
+        $activeMenu = 'profile';
+
+        return view('Mahasiswa.profile.index', compact('breadcrumb', 'activeMenu', 'page'));
     }
 
-    public function profil()
+    public function showProfile()
     {
-        $breadcrumb = 'Profil Mahasiswa';
-    
-        return view('mahasiswa.profil', compact('breadcrumb'));
+        $user = auth()->user();
+
+        $mahasiswa = $user->mahasiswa;
+
+        return view('mahasiswa.profile', [
+            'mahasiswa' => $mahasiswa
+        ]);
     }
-
-   
-
 }
