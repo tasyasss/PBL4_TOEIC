@@ -41,6 +41,18 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
+    <!-- Nav Item - Data Kampus -->
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('kampus*') ? 'active' : '' }}" href="{{ route('admin.kampus.index') }}">
+        <i class="fas fa-fw fa-university"></i>
+        <span>Data Kampus</span>
+    </a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+
     <!-- Nav Item - Data Pendaftaran -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.pendaftaran.index') }}">
