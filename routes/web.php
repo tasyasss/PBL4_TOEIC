@@ -14,6 +14,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Profile_MHSController;
 use App\Http\Controllers\Pendaftaran_MHSController;
+use App\Http\Controllers\KampusController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('landingpage');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -35,6 +36,11 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::post('/list', [DataMahasiswaController::class, 'list'])->name('admin.mahasiswa.list');
         Route::get('/create_ajax', [DataMahasiswaController::class, 'create_ajax'])->name('admin.mahasiswa.create_ajax');
         Route::post('/store_ajax', [DataMahasiswaController::class, 'store_ajax'])->name('admin.mahasiswa.store_ajax');
+        Route::get('/edit_ajax/{id}', [DataMahasiswaController::class, 'edit_ajax'])->name('admin.mahasiswa.edit_ajax');
+        Route::post('/update_ajax/{id}', [DataMahasiswaController::class, 'update_ajax'])->name('admin.mahasiswa.update_ajax');
+        Route::get('/delete_ajax/{id}', [DataMahasiswaController::class, 'delete_ajax'])->name('admin.mahasiswa.delete_ajax');
+        Route::get('/{id}/show_ajax', [DataMahasiswaController::class, 'show_ajax'])->name('admin.mahasiswa.show_ajax');
+        Route::post('/{id}/reset_password', [DataMahasiswaController::class, 'resetPassword'])->name('admin.mahasiswa.resetPassword');
     });
 
     Route::prefix('pendaftaran')->group(function () {
@@ -58,7 +64,21 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::get('/{id}/delete_ajax', [JadwalController::class, 'confirm_ajax'])->name('admin.jadwal.confirm_ajax');
         Route::delete('/{id}/delete_ajax', [JadwalController::class, 'delete_ajax'])->name('admin.jadwal.delete_ajax');
     });
+  
+    
+
 });
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('kampus', [KampusController::class, 'index'])->name('kampus.index');
+    Route::post('kampus/list', [KampusController::class, 'list'])->name('kampus.list');
+    Route::get('kampus/create_ajax', [KampusController::class, 'create_ajax'])->name('kampus.create_ajax');
+    Route::post('kampus/store_ajax', [KampusController::class, 'store_ajax'])->name('kampus.store_ajax');
+    Route::get('kampus/edit_ajax/{id}', [KampusController::class, 'edit_ajax'])->name('kampus.edit_ajax');
+    Route::post('kampus/update_ajax/{id}', [KampusController::class, 'update_ajax'])->name('kampus.update_ajax');
+    Route::get('kampus/delete_ajax/{id}', [KampusController::class, 'delete_ajax'])->name('kampus.delete_ajax');
+});
+
 
 Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
@@ -69,8 +89,8 @@ Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(functio
     });
 
     Route::prefix('profile')->group(function () {
-        Route::get('/', [Profile_MHSController::class, 'index'])->name('admin.profile.index');
-        Route::post('/update', [Profile_MHSController::class, 'update'])->name('admin.profile.update');
-        Route::get('/change_password', [Profile_MHSController::class, 'change_password'])->name('admin.profile.change_password');
+        Route::get('/', [Profile_MHSController::class, 'index'])->name('mahasiswa.profile.index');
+        Route::post('/update', [Profile_MHSController::class, 'update'])->name('mahasiswa.profile.update');
+        Route::get('/change_password', [Profile_MHSController::class, 'change_password'])->name('mahasiswa.profile.change_password');
     });
 });

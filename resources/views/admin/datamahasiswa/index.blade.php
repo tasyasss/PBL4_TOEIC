@@ -36,6 +36,14 @@
             </div>
         </div>
     </div>
+<!-- Modal Detail -->
+<div class="modal fade" id="modalDetail" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modalDetailContent">
+            <!-- Konten detail dimuat di sini -->
+        </div>
+    </div>
+</div>
 
     <!-- Include CSS dan JS eksternal -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -43,6 +51,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
 
 
@@ -51,7 +60,54 @@
 @endsection
 
 @push('js')
+    
     <script>
+          // Tampilkan modal detail
+    function showDetail(id) {
+        $.get('/admin/mahasiswa/' + id + '/show_ajax', function(response) {
+            $('#modalDetailContent').html(response);
+            $('#modalDetail').modal('show');
+        });
+    }
+
+    // Reset password mahasiswa
+    function resetPassword(id) {
+    // SweetAlert konfirmasi
+    Swal.fire({
+        title: 'Yakin ingin reset password?',
+        text: "Password akan direset ke 12345!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, reset!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        // Jika user menekan tombol 'Ya, reset!'
+        if (result.isConfirmed) {
+            // Melakukan AJAX POST ke server untuk reset password
+            $.post('/admin/mahasiswa/' + id + '/reset_password', {
+                _token: $('meta[name="csrf-token"]').attr('content')  // CSRF token untuk keamanan
+  }, function(response) {
+                // Menampilkan pesan sukses setelah reset password
+                Swal.fire({
+                    title: 'Password berhasil direset!',
+                    text: response.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            }).fail(function(xhr) {
+                // Menangani jika terjadi kesalahan
+                Swal.fire({
+                    title: 'Terjadi kesalahan!',
+                    text: xhr.responseText,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        }
+    });
+}
+
+
         // ------ UNTUK DATATABLES ------
         function modalAction(url = '') {
             $('#myModal').load(url, function() {
@@ -109,5 +165,71 @@
                 }]
             });
         });
+
+        function deleteConfirm(url) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(res) {
+                    if (res.status) {
+                        $('#table_mahasiswa').DataTable().ajax.reload(null, false);
+                        Swal.fire('Berhasil!', res.message, 'success');
+                    } else {
+                        Swal.fire('Gagal!', res.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Error!', 'Terjadi kesalahan saat menghapus data', 'error');
+                }
+            });
+        }
+    });
+}
+
     </script>
+
+<script>
+    $('#form-edit').submit(function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
+        let id = $('#mahasiswa_id').val(); // pastikan ada input hidden dengan ID ini
+
+        $.ajax({
+            url: '/admin/mahasiswa/update_ajax/' + id,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.status) {
+                    $('#myModal').modal('hide');
+                    $('#table_mahasiswa').DataTable().ajax.reload();
+                    alert(res.message);
+                } else {
+                    if (res.msgField) {
+                        let err = Object.values(res.msgField).map(item => item.join(', ')).join('\n');
+                        alert('Validasi gagal:\n' + err);
+                    } else {
+                        alert('Gagal menyimpan data');
+                    }
+                }
+            },
+            error: function(xhr) {
+                alert('Terjadi kesalahan saat menyimpan');
+            }
+        });
+    });
+</script>
+
 @endpush
