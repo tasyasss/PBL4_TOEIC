@@ -45,6 +45,18 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
     Route::prefix('jadwal')->group(function () {
         Route::get('/', [JadwalController::class, 'index'])->name('admin.jadwal.index');
         Route::post('/list', [JadwalController::class, 'list'])->name('admin.jadwal.list');
+
+        // Create 
+        Route::get('/create_ajax', [JadwalController::class, 'create_ajax'])->name('admin.jadwal.create_ajax');
+        Route::post('/store_ajax', [JadwalController::class, 'store_ajax'])->name('admin.jadwal.store_ajax');
+
+        // Edit
+        Route::get('/{id}/edit_ajax', [JadwalController::class, 'edit_ajax'])->name('admin.jadwal.edit_ajax');
+        Route::put('/{id}/update_ajax', [JadwalController::class, 'update_ajax'])->name('admin.jadwal.update_ajax');
+
+        // Delete
+        Route::get('/{id}/delete_ajax', [JadwalController::class, 'confirm_ajax'])->name('admin.jadwal.confirm_ajax');
+        Route::delete('/{id}/delete_ajax', [JadwalController::class, 'delete_ajax'])->name('admin.jadwal.delete_ajax');
     });
 });
 
