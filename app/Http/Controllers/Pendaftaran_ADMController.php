@@ -100,4 +100,37 @@ class Pendaftaran_ADMController extends Controller
             ], 404);
         }
     }
+
+    public function delete_ajax($id)
+    {
+        try {
+            $pendaftaran = PendaftaranModel::with(['mahasiswa', 'mahasiswa.prodi', 'jadwal', 'status'])
+                              ->findOrFail($id);
+            
+            return view('admin.datapendaftaran.delete_ajax', compact('pendaftaran'));
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data tidak ditemukan: ' . $e->getMessage()
+            ], 404);
+        }
+    }
+
+    public function destroy_ajax($id)
+    {
+        try {
+            $pendaftaran = PendaftaranModel::findOrFail($id);
+            $pendaftaran->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data pendaftaran berhasil dihapus!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false, 
+                'message' => 'Gagal menghapus data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

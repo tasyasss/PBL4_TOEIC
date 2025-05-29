@@ -48,6 +48,8 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::post('/list', [Pendaftaran_ADMController::class, 'list'])->name('admin.pendaftaran.list');
         Route::post('store_ajax', [Pendaftaran_ADMController::class, 'store_ajax'])->name('admin.pendaftaran.store_ajax');
         Route::get('{id}/show_ajax', [Pendaftaran_ADMController::class, 'show_ajax'])->name('admin.pendaftaran.show_ajax');
+        Route::get('{id}/delete_ajax', [Pendaftaran_ADMController::class, 'delete_ajax'])->name('admin.pendaftaran.delete_ajax');
+        Route::delete('{id}/destroy', [Pendaftaran_ADMController::class, 'destroy_ajax'])->name('admin.pendaftaran.destroy'); 
 
     });
 
