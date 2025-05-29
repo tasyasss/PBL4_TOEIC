@@ -51,7 +51,7 @@ class DataMahasiswaController extends Controller
             // menambahkan kolom index
             ->addIndexColumn()
             ->addColumn('aksi', function ($mhs) {
-                $btn = '<button onclick="modalAction(\'' . url('admin/mahasiswa/' . $mhs->id . '/show_ajax') . '\')" class="btn btn-outline-info btn-sm"><i class="fas fa-info"></i> Detail</button> ';
+                $btn = '<button onclick="showDetail(' . $mhs->id . ')" class="btn btn-outline-info btn-sm"><i class="fas fa-info"></i> Detail</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('admin/mahasiswa/edit_ajax/' . $mhs->id) . '\')" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Edit</button> ';
                 $btn .= '<button onclick="deleteConfirm(\'' . url('admin/mahasiswa/delete_ajax/' . $mhs->id) . '\')" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button> ';
                 return $btn;
@@ -244,4 +244,41 @@ class DataMahasiswaController extends Controller
             'message' => 'Data mahasiswa berhasil disimpan'
         ]);
     }
+    public function show_ajax($id)
+{
+    $mahasiswa = MahasiswaModel::with(['user', 'prodi'])->find($id);
+
+    if (!$mahasiswa) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data mahasiswa tidak ditemukan'
+        ]);
+    }
+
+    return view('admin.datamahasiswa.detail', compact('mahasiswa'));
+}
+
+// Reset Password AJAX
+public function resetPassword($id)
+{
+    try {
+        $mahasiswa = MahasiswaModel::findOrFail($id);
+        
+        // Update password user terkait
+        $mahasiswa->user()->update([
+            'password' => bcrypt('12345')
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password berhasil direset ke 12345'
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+        ],500);
+}
+}
 }
