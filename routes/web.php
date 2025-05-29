@@ -14,6 +14,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Profile_MHSController;
 use App\Http\Controllers\Pendaftaran_MHSController;
+use App\Http\Controllers\KampusController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('landingpage');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -51,7 +52,21 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::get('/', [JadwalController::class, 'index'])->name('admin.jadwal.index');
         Route::post('/list', [JadwalController::class, 'list'])->name('admin.jadwal.list');
     });
+  
+    
+
 });
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('kampus', [KampusController::class, 'index'])->name('kampus.index');
+    Route::post('kampus/list', [KampusController::class, 'list'])->name('kampus.list');
+    Route::get('kampus/create_ajax', [KampusController::class, 'create_ajax'])->name('kampus.create_ajax');
+    Route::post('kampus/store_ajax', [KampusController::class, 'store_ajax'])->name('kampus.store_ajax');
+    Route::get('kampus/edit_ajax/{id}', [KampusController::class, 'edit_ajax'])->name('kampus.edit_ajax');
+    Route::post('kampus/update_ajax/{id}', [KampusController::class, 'update_ajax'])->name('kampus.update_ajax');
+    Route::get('kampus/delete_ajax/{id}', [KampusController::class, 'delete_ajax'])->name('kampus.delete_ajax');
+});
+
 
 Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
