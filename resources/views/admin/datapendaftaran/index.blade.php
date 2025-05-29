@@ -4,14 +4,13 @@
     <!-- Main Content -->
     <div class="container-fluid">
         <!-- Tabel Pendaftaran Mahasiswa -->
+        
         <div class="row">
             <div class="col-xl-12 col-lg-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 font-weight-bold text-primary">Data Pendaftaran Mahasiswa</h6>
-                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPendaftaranModal">
-                            <i class="fas fa-plus mr-1"></i> Tambah Data
-                        </button>
+                        <h6 class="m-0 font-weight-bold text-primary">Data Pendaftaran Mahasiswa</h6>      
+
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -71,58 +70,6 @@
         </div>
     </div>
 
-    <!-- Modal Tambah -->
-    <div class="modal fade" id="tambahPendaftaranModal" tabindex="-1" role="dialog"
-        aria-labelledby="tambahPendaftaranLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <form id="formTambahPendaftaran">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tambah Pendaftaran</h5>
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="mahasiswa_id">Mahasiswa</label>
-                            <select class="form-control" id="mahasiswa_id" name="mahasiswa_id" required>
-                                <option value="">Pilih Mahasiswa</option>
-                                <option value="1">John Doe</option>
-                                <option value="2">Jane Smith</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tanggal_pendaftaran">Tanggal Pendaftaran</label>
-                            <input type="date" class="form-control" id="tanggal_pendaftaran" name="tanggal_pendaftaran"
-                                required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jadwal_id">Jadwal</label>
-                            <select class="form-control" id="jadwal_id" name="jadwal_id" required>
-                                <option value="">Pilih Jadwal</option>
-                                <option value="1">Jadwal 1</option>
-                                <option value="2">Jadwal 2</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="status_id">Status</label>
-                            <select class="form-control" id="status_id" name="status_id" required>
-                                <option value="">Pilih Status</option>
-                                <option value="1">Diterima</option>
-                                <option value="2">Proses</option>
-                                <option value="3">Ditolak</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Modal Edit -->
     <div class="modal fade" id="editPendaftaranModal" tabindex="-1" role="dialog" aria-labelledby="editPendaftaranLabel"
@@ -176,6 +123,14 @@
             </form>
         </div>
     </div>
+    <!-- Modal Container -->
+<div class="modal fade" id="modalContainer" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" id="modalContent">
+            <!-- Konten modal akan dimuat di sini -->
+        </div>
+    </div>
+</div>
 
     <!-- Include CSS dan JS eksternal -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -186,6 +141,35 @@
     <script src="{{ asset('js/scripts.js') }}"></script>
 
     <script>
+      function modalAction(url) {
+    $.get(url)
+        .done(function(data) {
+            // Pastikan modal sebelumnya dihapus
+            $('body').find('#detailModal').remove();
+            
+            // Tambahkan modal baru ke body
+            $('body').append(data);
+            
+            // Tampilkan modal
+            $('#detailModal').modal('show');
+            
+            // Handle close button
+            $('#detailModal').on('click', '[data-dismiss="modal"]', function() {
+                $('#detailModal').modal('hide');
+            });
+            
+            // Auto close ketika klik di luar modal
+            $('#detailModal').on('hidden.bs.modal', function () {
+                $(this).remove();
+            });
+        })
+        .fail(function(xhr) {
+            console.error(xhr);
+            Swal.fire('Error!', 'Gagal memuat data detail', 'error');
+        });
+}
+
+
         $(document).ready(function() {
             $('#editPendaftaranModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
