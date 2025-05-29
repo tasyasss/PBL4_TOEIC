@@ -17,6 +17,8 @@
     <link rel="stylesheet"
         href="{{ asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    {{-- SweetAlert2 --}}
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('sbadmin/vendor/fontawesome-free/css/all.min.css') }} " rel="stylesheet" type="text/css">
@@ -102,7 +104,8 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('sbadmin/vendor/jquery/jquery.min.js') }} "></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="{{ asset('sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js') }} "></script>
 
     <!-- Core plugin JavaScript-->
@@ -112,6 +115,8 @@
     <script src="{{ asset('sbadmin/js/sb-admin-2.min.js') }} "></script>
 
     <!-- Bootstrap Tab JavaScript (Ensure tabs work) -->
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Memastikan Bootstrap Tab JS berfungsi -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -130,6 +135,14 @@
     <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+
+    <!-- Jquery Validation -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+
+
+    {{-- SweetAlert2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         // Untuk mengirimkan token Laravel CSRF pada setiap request ajax
         $.ajaxSetup({
@@ -140,7 +153,6 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 
     @stack('js') <!-- Digunakan untuk memanggil custom js dari perintah push('js') pada masing-masing view -->
 
