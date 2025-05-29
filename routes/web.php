@@ -43,9 +43,12 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::post('/{id}/reset_password', [DataMahasiswaController::class, 'resetPassword'])->name('admin.mahasiswa.resetPassword');
     });
 
-    Route::prefix('pendaftaran')->group(function () {
+        Route::prefix('pendaftaran')->group(function () {
         Route::get('/', [Pendaftaran_ADMController::class, 'index'])->name('admin.pendaftaran.index');
         Route::post('/list', [Pendaftaran_ADMController::class, 'list'])->name('admin.pendaftaran.list');
+        Route::post('store_ajax', [Pendaftaran_ADMController::class, 'store_ajax'])->name('admin.pendaftaran.store_ajax');
+        Route::get('{id}/show_ajax', [Pendaftaran_ADMController::class, 'show_ajax'])->name('admin.pendaftaran.show_ajax');
+
     });
 
     Route::prefix('jadwal')->group(function () {
