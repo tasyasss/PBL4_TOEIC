@@ -28,7 +28,8 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
     Route::prefix('profile')->group(function () {
         Route::get('/', [Profile_ADMController::class, 'index'])->name('admin.profile.index');
         Route::post('/update', [Profile_ADMController::class, 'update'])->name('admin.profile.update');
-        Route::get('/change_password', [Profile_ADMController::class, 'change_password'])->name('admin.profile.change_password');
+        Route::post('/change_password', [Profile_ADMController::class, 'change_password'])->name('admin.profile.change_password');
+        Route::post('/update_picture', [Profile_ADMController::class, 'updateProfilePicture'])->name('admin.profile.update_picture');
     });
 
     Route::prefix('mahasiswa')->group(function () {
