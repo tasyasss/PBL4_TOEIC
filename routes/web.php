@@ -87,5 +87,8 @@ Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(functio
         Route::get('/', [Profile_MHSController::class, 'index'])->name('mahasiswa.profile.index');
         Route::post('/update', [Profile_MHSController::class, 'update'])->name('mahasiswa.profile.update');
         Route::get('/change_password', [Profile_MHSController::class, 'change_password'])->name('mahasiswa.profile.change_password');
+        Route::post('/change_password', [Profile_MHSController::class, 'change_password'])->name('mahasiswa.profile.change_password');
+        Route::post('/update_picture', [Profile_MHSController::class, 'updateProfilePicture'])->name('mahasiswa.profile.update_picture');
+        Route::post('/update_dokumen', [Profile_MHSController::class, 'updateDokumen'])->name('mahasiswa.profile.update_dokumen');
     });
 });

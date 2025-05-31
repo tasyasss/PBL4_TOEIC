@@ -23,7 +23,8 @@ class MahasiswaModel extends Model
         'file_ktm',
         'file_ktp',
         'file_pas_foto',
-        'prodi_id'
+        'prodi_id',
+        'foto_profil',
     ];
 
     public function user()
