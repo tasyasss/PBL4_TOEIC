@@ -9,17 +9,30 @@ class StatusTableSeeder extends Seeder
 {
     public function run()
     {
-        StatusModel::create([
-            'status_kode' => 'ST001',
-            'status_nama' => 'Diproses'
-        ]);
-        StatusModel::create([
-            'status_kode' => 'ST002',
-            'status_nama' => 'Diterima'
-        ]);
-        StatusModel::create([
-            'status_kode' => 'ST003',
-            'status_nama' => 'Ditolak'
-        ]);
+        $statuses = [
+            [
+                'status_kode' => 'ST001',
+                'status_nama' => 'Diproses'
+            ],
+            [
+                'status_kode' => 'ST002',
+                'status_nama' => 'Diterima'
+            ],
+            [
+                'status_kode' => 'ST003',
+                'status_nama' => 'Ditolak'
+            ],
+            [
+                'status_kode' => 'ST004',
+                'status_nama' => 'Menunggu pembayaran'
+            ]
+        ];
+
+        foreach ($statuses as $status) {
+            StatusModel::firstOrCreate(
+                ['status_kode' => $status['status_kode']],
+                $status
+            );
+        }
     }
 }
