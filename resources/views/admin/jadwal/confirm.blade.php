@@ -1,4 +1,4 @@
-<form action="{{ route('admin.jadwal.delete_ajax', $jadwal->id) }}" method="POST" id="form-delete">
+{{-- <form action="{{ route('admin.jadwal.delete_ajax', $jadwal->id) }}" method="POST" id="form-delete">
     @csrf
     @method('DELETE')
 
@@ -88,4 +88,4 @@
             });
         });
     </script>
-@endpush
+@endpush --}}
