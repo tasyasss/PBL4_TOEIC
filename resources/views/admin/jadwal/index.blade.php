@@ -57,6 +57,11 @@
             });
     }
 
+    // untuk modal close
+    function closeModal() {
+        $('#myModal').modal('hide');
+    }
+
     var dataJadwal;
     $(document).ready(function() {
         dataJadwal = $('#table_jadwal').DataTable({
@@ -93,38 +98,38 @@
     });
 
     function deleteConfirm(url) {
-    Swal.fire({
-        title: 'Apakah Anda yakin?',
-        text: "Data yang dihapus tidak dapat dikembalikan!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, hapus!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(res) {
-                    if(res.status) {
-                        dataJadwal.ajax.reload();
-                        Swal.fire('Berhasil!', res.message, 'success');
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(res) {
+                        if(res.status) {
+                            dataJadwal.ajax.reload();
+                            Swal.fire('Berhasil!', res.message, 'success');
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire(
+                            'Error!',
+                            xhr.responseJSON?.message || 'Terjadi kesalahan',
+                            'error'
+                        );
                     }
-                },
-                error: function(xhr) {
-                    Swal.fire(
-                        'Error!',
-                        xhr.responseJSON?.message || 'Terjadi kesalahan',
-                        'error'
-                    );
-                }
-            });
-        }
-    });
-}
+                });
+            }
+        });
+    }
 </script>
 @endpush

@@ -4,7 +4,7 @@
             @csrf
             <div class="modal-header">
                 <h5 class="modal-title">Edit Data Mahasiswa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" onclick="closeModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -45,7 +45,7 @@
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
             </div>
         </form>
 
@@ -56,6 +56,8 @@
                     let form = $(this);
                     let url = form.attr('action');
                     let data = form.serialize();
+
+                    $('.text-danger').text('');
             
                     $.post(url, data, function(res) {
                         if (res.status) {

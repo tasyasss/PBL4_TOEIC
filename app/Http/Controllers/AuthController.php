@@ -65,7 +65,10 @@ class AuthController extends Controller
             ]);
         }
 
-        return back()->with('error', 'Login gagal');
+        return response()->json([
+            'status' => false,
+            'message' => 'Username atau password salah'
+        ], 401);
     }
 
     public function logout(Request $request)
@@ -74,7 +77,7 @@ class AuthController extends Controller
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            return redirect()->route('login');
+            return redirect()->route('landingpage');
         } catch (\Exception $e) {
             Log::error('Logout error: ' . $e->getMessage());
             return redirect()->route('landingpage')->with('error', 'Gagal logout!');
