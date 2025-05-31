@@ -49,8 +49,11 @@
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
-});
+    });
 
+    function closeModal() {
+        $('#myModal').modal('hide');
+    }
 
     var dataKampus;
     $(document).ready(function() {
@@ -83,35 +86,35 @@
     });
 
     function deleteConfirm(url) {
-    Swal.fire({
-        title: 'Apakah Anda yakin?',
-        text: "Data yang dihapus tidak dapat dikembalikan!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, hapus!',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(res) {
-                    if (res.status) {
-                        dataKampus.ajax.reload(null, false);
-                        Swal.fire('Berhasil!', res.message, 'success');
-                    } else {
-                        Swal.fire('Gagal!', res.message, 'error');
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(res) {
+                        if (res.status) {
+                            dataKampus.ajax.reload(null, false);
+                            Swal.fire('Berhasil!', res.message, 'success');
+                        } else {
+                            Swal.fire('Gagal!', res.message, 'error');
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire('Error!', 'Terjadi kesalahan saat menghapus data.', 'error');
                     }
-                },
-                error: function(xhr) {
-                    Swal.fire('Error!', 'Terjadi kesalahan saat menghapus data.', 'error');
-                }
-            });
-        }
-    });
-}
+                });
+            }
+        });
+    }
 
 </script>
 @endpush
