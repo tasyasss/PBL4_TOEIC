@@ -52,6 +52,19 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/jurusan*') ? 'active' : '' }}" href="{{ route('jurusan.index') }}">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Data Jurusan</span>
+        </a>
+    </li>
+    
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    
+    
+    
+
     <!-- Nav Item - Data Pendaftaran -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.pendaftaran.index') }}">
