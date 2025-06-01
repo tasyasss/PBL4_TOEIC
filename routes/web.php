@@ -10,7 +10,7 @@ use App\Http\Controllers\Profile_ADMController;
 use App\Http\Controllers\DataMahasiswaController;
 use App\Http\Controllers\Pendaftaran_ADMController;
 use App\Http\Controllers\JadwalController;
-
+use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Profile_MHSController;
 use App\Http\Controllers\Pendaftaran_MHSController;
@@ -73,6 +73,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('kampus/update_ajax/{id}', [KampusController::class, 'update_ajax'])->name('kampus.update_ajax');
     Route::get('kampus/delete_ajax/{id}', [KampusController::class, 'delete_ajax'])->name('kampus.delete_ajax');
 });
+
+
+Route::prefix('admin/jurusan')->group(function () {
+    Route::get('/', [JurusanController::class, 'index'])->name('jurusan.index');
+    Route::post('/list', [JurusanController::class, 'list'])->name('jurusan.list');  
+    Route::get('/create_ajax', [JurusanController::class, 'create_ajax']);
+    Route::post('/store_ajax', [JurusanController::class, 'store_ajax']);
+    Route::get('/edit_ajax/{id}', [JurusanController::class, 'edit_ajax']);
+    Route::post('/update_ajax/{id}', [JurusanController::class, 'update_ajax']);
+    Route::get('/delete_ajax/{id}', [JurusanController::class, 'delete_ajax']);
+});
+
 
 
 Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(function () {

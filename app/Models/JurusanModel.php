@@ -16,11 +16,8 @@ class JurusanModel extends Model
     protected $fillable = [
         'jurusan_kode',
         'jurusan_nama',
-        'kampus_id'
+        
     ];
 
-    public function kampus()
-    {
-        return $this->belongsTo(KampusModel::class, 'kampus_id');
-    }
+  
 }
