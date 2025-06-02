@@ -15,6 +15,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Profile_MHSController;
 use App\Http\Controllers\Pendaftaran_MHSController;
 use App\Http\Controllers\KampusController;
+use App\Http\Controllers\ProdiController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('landingpage');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -83,6 +84,16 @@ Route::prefix('admin/jurusan')->group(function () {
     Route::get('/edit_ajax/{id}', [JurusanController::class, 'edit_ajax']);
     Route::post('/update_ajax/{id}', [JurusanController::class, 'update_ajax']);
     Route::get('/delete_ajax/{id}', [JurusanController::class, 'delete_ajax']);
+});
+
+Route::prefix('admin/prodi')->group(function () {
+    Route::get('/', [ProdiController::class, 'index'])->name('prodi.index');
+    Route::post('/list', [ProdiController::class, 'list'])->name('prodi.list');
+    Route::get('/create_ajax', [ProdiController::class, 'create_ajax']);
+    Route::post('/store_ajax', [ProdiController::class, 'store_ajax']);
+    Route::get('/edit_ajax/{id}', [ProdiController::class, 'edit_ajax']);
+    Route::post('/update_ajax/{id}', [ProdiController::class, 'update_ajax']);
+    Route::get('/delete_ajax/{id}', [ProdiController::class, 'delete_ajax']);
 });
 
 
