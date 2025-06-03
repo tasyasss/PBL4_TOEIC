@@ -2,9 +2,9 @@
     @csrf
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background-color: #224abe; color: white;">
                 <h5 class="modal-title">Tambah Data Jurusan</h5>
-                <button type="button" class="close" onclick="closeModal()">&times;</button>
+                <button type="button" class="close" onclick="closeModal()" style="color: white;">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -17,8 +17,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" class="btn btn-danger" onclick="closeModal()">Batal</button>
+                <button type="submit" class="btn btn-success">Simpan</button>
             </div>
         </div>
     </div>

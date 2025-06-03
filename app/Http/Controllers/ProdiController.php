@@ -10,7 +10,17 @@ class ProdiController extends Controller
 {
     public function index()
     {
-        return view('admin.prodi.index');
+        $breadcrumb = (object) [
+            'title' => 'Program Studi',
+            'list' => ['Home', 'Program Studi'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Program Studi',
+        ];
+        $activeMenu = 'prodi';
+
+        return view('admin.prodi.index', compact('breadcrumb', 'activeMenu', 'page'));
     }
 
     public function list(Request $request)
@@ -23,8 +33,8 @@ class ProdiController extends Controller
                     $editUrl = url('admin/prodi/edit_ajax/' . $row->id);
                     $deleteUrl = url('admin/prodi/delete_ajax/' . $row->id);
                     return '
-                        <button onclick="modalAction(`' . $editUrl . '`)" class="btn btn-sm btn-warning">Edit</button>
-                        <button onclick="deleteConfirm(`' . $deleteUrl . '`)" class="btn btn-sm btn-danger">Hapus</button>
+                        <button onclick="modalAction(`' . $editUrl . '`)" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Edit</button>
+                        <button onclick="deleteConfirm(`' . $deleteUrl . '`)" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button>
                     ';
                 })
                 ->rawColumns(['aksi'])

@@ -1,5 +1,4 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -31,7 +30,23 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Data Mahasiswa -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+            aria-controls="collapseOne">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Data Utama</span>
+        </a>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('admin.prodi.index') }}">Program Studi</a>
+                <a class="collapse-item" href="{{ route('admin.jurusan.index') }}">Jurusan</a>
+                <a class="collapse-item" href="{{ route('admin.kampus.index') }}">Kampus</a>
+                <a class="collapse-item" href="{{ route('admin.mahasiswa.index') }}">Mahasiswa</a>
+            </div>
+        </div>
+    </li>
+
+    {{-- <!-- Nav Item - Data Mahasiswa -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.mahasiswa.index') }}">
             <i class="fas fa-fw fa-table"></i>
@@ -58,7 +73,7 @@
             <span>Data Jurusan</span>
         </a>
     </li>
-    
+
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
@@ -67,15 +82,26 @@
             <i class="fas fa-fw fa-book"></i>
             <span>Data Prodi</span>
         </a>
-    </li>
-    
+    </li> --}}
+
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-    
-    
-    
 
-    <!-- Nav Item - Data Pendaftaran -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-folder-plus"></i>
+            <span>Data Pendaftaran</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('admin.pendaftaran.index') }}">Validasi Pendaftaran</a>
+                <a class="collapse-item" href="{{ route('admin.jadwal.index') }}">Jadwal & Kuota</a>
+            </div>
+        </div>
+    </li>
+
+    {{-- <!-- Nav Item - Data Pendaftaran -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.pendaftaran.index') }}">
             <i class="fas fa-fw fa-folder-plus"></i>
@@ -87,7 +113,7 @@
         <a class="nav-link" href="{{ route('admin.jadwal.index') }}">
             <i class="fas fa-fw fa-calendar-check"></i>
             <span>Jadwal & Kuota</span></a>
-    </li>
+    </li> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -127,7 +153,7 @@
 <script>
     function showLogoutConfirmation(event) {
         event.preventDefault();
-        
+
         Swal.fire({
             title: 'Apakah Anda yakin?',
             text: "Anda akan keluar dari sistem!",
@@ -160,7 +186,7 @@
         border: none;
         margin-right: 10px;
     }
-    
+
     .btn-cancel {
         background-color: #d33;
         color: white;

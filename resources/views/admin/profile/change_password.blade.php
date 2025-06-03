@@ -22,7 +22,7 @@
                     <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                     <div class="invalid-feedback" id="confirm_password_error"></div>
                 </div>
-                <button type="submit" class="btn btn-primary" id="submitBtn">Ubah Password</button>
+                <button type="submit" class="btn btn-SUCCESS" id="submitBtn">Ubah Password</button>
                 <div id="passwordMessage" class="mt-3"></div>
             </form>
         </div>
