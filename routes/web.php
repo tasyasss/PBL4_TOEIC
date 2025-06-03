@@ -63,38 +63,67 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
     Route::delete('/delete_ajax/{id}', [JadwalController::class, 'delete_ajax'])->name('admin.jadwal.delete_ajax');
     });
 
+    Route::prefix('kampus')->group(function () {
+        Route::get('/', [KampusController::class, 'index'])->name('admin.kampus.index');
+        Route::post('/list', [KampusController::class, 'list'])->name('admin.kampus.list');
+        Route::get('/create_ajax', [KampusController::class, 'create_ajax'])->name('admin.kampus.create_ajax');
+        Route::post('/store_ajax', [KampusController::class, 'store_ajax'])->name('admin.kampus.store_ajax');
+        Route::get('/edit_ajax/{id}', [KampusController::class, 'edit_ajax'])->name('admin.kampus.edit_ajax');
+        Route::post('/update_ajax/{id}', [KampusController::class, 'update_ajax'])->name('admin.kampus.update_ajax');
+        Route::get('/delete_ajax/{id}', [KampusController::class, 'delete_ajax'])->name('admin.kampus.delete_ajax');
+    });
+
+    Route::prefix('jurusan')->group(function () {
+        Route::get('/', [JurusanController::class, 'index'])->name('admin.jurusan.index');
+        Route::post('/list', [JurusanController::class, 'list'])->name('admin.jurusan.list');
+        Route::get('/create_ajax', [JurusanController::class, 'create_ajax'])->name('admin.jurusan.create_ajax');
+        Route::post('/store_ajax', [JurusanController::class, 'store_ajax'])->name('admin.jurusan.store_ajax');
+        Route::get('/edit_ajax/{id}', [JurusanController::class, 'edit_ajax'])->name('admin.jurusan.edit_ajax');
+        Route::post('/update_ajax/{id}', [JurusanController::class, 'update_ajax'])->name('admin.jurusan.update_ajax');
+        Route::get('/delete_ajax/{id}', [JurusanController::class, 'delete_ajax'])->name('admin.jurusan.delete_ajax');
+    });
+
+    Route::prefix('prodi')->group(function () {
+        Route::get('/', [ProdiController::class, 'index'])->name('admin.prodi.index');
+        Route::post('/list', [ProdiController::class, 'list'])->name('admin.prodi.list');
+        Route::get('/create_ajax', [ProdiController::class, 'create_ajax'])->name('admin.prodi.create_ajax');
+        Route::post('/store_ajax', [ProdiController::class, 'store_ajax'])->name('admin.prodi.store_ajax');
+        Route::get('/edit_ajax/{id}', [ProdiController::class, 'edit_ajax'])->name('admin.prodi.edit_ajax');
+        Route::post('/update_ajax/{id}', [ProdiController::class, 'update_ajax'])->name('admin.prodi.update_ajax');
+        Route::get('/delete_ajax/{id}', [ProdiController::class, 'delete_ajax'])->name('admin.prodi.delete_ajax');
+    });
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('kampus', [KampusController::class, 'index'])->name('kampus.index');
-    Route::post('kampus/list', [KampusController::class, 'list'])->name('kampus.list');
-    Route::get('kampus/create_ajax', [KampusController::class, 'create_ajax'])->name('kampus.create_ajax');
-    Route::post('kampus/store_ajax', [KampusController::class, 'store_ajax'])->name('kampus.store_ajax');
-    Route::get('kampus/edit_ajax/{id}', [KampusController::class, 'edit_ajax'])->name('kampus.edit_ajax');
-    Route::post('kampus/update_ajax/{id}', [KampusController::class, 'update_ajax'])->name('kampus.update_ajax');
-    Route::get('kampus/delete_ajax/{id}', [KampusController::class, 'delete_ajax'])->name('kampus.delete_ajax');
-});
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::get('kampus', [KampusController::class, 'index'])->name('kampus.index');
+//     Route::post('kampus/list', [KampusController::class, 'list'])->name('kampus.list');
+//     Route::get('kampus/create_ajax', [KampusController::class, 'create_ajax'])->name('kampus.create_ajax');
+//     Route::post('kampus/store_ajax', [KampusController::class, 'store_ajax'])->name('kampus.store_ajax');
+//     Route::get('kampus/edit_ajax/{id}', [KampusController::class, 'edit_ajax'])->name('kampus.edit_ajax');
+//     Route::post('kampus/update_ajax/{id}', [KampusController::class, 'update_ajax'])->name('kampus.update_ajax');
+//     Route::get('kampus/delete_ajax/{id}', [KampusController::class, 'delete_ajax'])->name('kampus.delete_ajax');
+// });
 
 
-Route::prefix('admin/jurusan')->group(function () {
-    Route::get('/', [JurusanController::class, 'index'])->name('jurusan.index');
-    Route::post('/list', [JurusanController::class, 'list'])->name('jurusan.list');  
-    Route::get('/create_ajax', [JurusanController::class, 'create_ajax']);
-    Route::post('/store_ajax', [JurusanController::class, 'store_ajax']);
-    Route::get('/edit_ajax/{id}', [JurusanController::class, 'edit_ajax']);
-    Route::post('/update_ajax/{id}', [JurusanController::class, 'update_ajax']);
-    Route::get('/delete_ajax/{id}', [JurusanController::class, 'delete_ajax']);
-});
+// Route::prefix('admin/jurusan')->group(function () {
+//     Route::get('/', [JurusanController::class, 'index'])->name('jurusan.index');
+//     Route::post('/list', [JurusanController::class, 'list'])->name('jurusan.list');  
+//     Route::get('/create_ajax', [JurusanController::class, 'create_ajax']);
+//     Route::post('/store_ajax', [JurusanController::class, 'store_ajax']);
+//     Route::get('/edit_ajax/{id}', [JurusanController::class, 'edit_ajax']);
+//     Route::post('/update_ajax/{id}', [JurusanController::class, 'update_ajax']);
+//     Route::get('/delete_ajax/{id}', [JurusanController::class, 'delete_ajax']);
+// });
 
-Route::prefix('admin/prodi')->group(function () {
-    Route::get('/', [ProdiController::class, 'index'])->name('prodi.index');
-    Route::post('/list', [ProdiController::class, 'list'])->name('prodi.list');
-    Route::get('/create_ajax', [ProdiController::class, 'create_ajax']);
-    Route::post('/store_ajax', [ProdiController::class, 'store_ajax']);
-    Route::get('/edit_ajax/{id}', [ProdiController::class, 'edit_ajax']);
-    Route::post('/update_ajax/{id}', [ProdiController::class, 'update_ajax']);
-    Route::get('/delete_ajax/{id}', [ProdiController::class, 'delete_ajax']);
-});
+// Route::prefix('admin/prodi')->group(function () {
+//     Route::get('/', [ProdiController::class, 'index'])->name('prodi.index');
+//     Route::post('/list', [ProdiController::class, 'list'])->name('prodi.list');
+//     Route::get('/create_ajax', [ProdiController::class, 'create_ajax']);
+//     Route::post('/store_ajax', [ProdiController::class, 'store_ajax']);
+//     Route::get('/edit_ajax/{id}', [ProdiController::class, 'edit_ajax']);
+//     Route::post('/update_ajax/{id}', [ProdiController::class, 'update_ajax']);
+//     Route::get('/delete_ajax/{id}', [ProdiController::class, 'delete_ajax']);
+// });
 
 
 

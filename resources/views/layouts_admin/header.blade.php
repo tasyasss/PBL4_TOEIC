@@ -171,7 +171,7 @@
                         @endif
                     @endauth
                 </span>
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                <img class="img-profile rounded-circle" src="{{ asset('storage/profile_pictures/foto_user_' . auth()->id() . '.' . pathinfo(auth()->user()->admin->foto_profil, PATHINFO_EXTENSION)) }}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

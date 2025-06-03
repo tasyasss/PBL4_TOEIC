@@ -10,8 +10,17 @@ class JurusanController extends Controller
 {
     public function index()
     {
-        $jurusan = JurusanModel::all();
-        return view('admin.jurusan.index', compact('jurusan'));
+        $breadcrumb = (object) [
+            'title' => 'Jurusan',
+            'list' => ['Home', 'Jurusan'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Jurusan',
+        ];
+        $activeMenu = 'jurusan';
+
+        return view('admin.jurusan.index', compact('breadcrumb', 'activeMenu', 'page'));
     }
 
     public function list(Request $request)
@@ -24,8 +33,8 @@ class JurusanController extends Controller
                     $editUrl = url('admin/jurusan/edit_ajax/' . $row->id);
                     $deleteUrl = url('admin/jurusan/delete_ajax/' . $row->id);
                     return '
-                        <button class="btn btn-sm btn-warning" onclick="modalAction(\'' . $editUrl . '\')">Edit</button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteConfirm(\'' . $deleteUrl . '\')">Hapus</button>
+                        <button onclick="modalAction(`' . $editUrl . '`)" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Edit</button>
+                        <button onclick="deleteConfirm(`' . $deleteUrl . '`)" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button>
                     ';
                 })
                 ->rawColumns(['aksi'])

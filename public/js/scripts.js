@@ -51,7 +51,7 @@ new Chart(document.getElementById('lineChart'), {
         datasets: [{
             label: 'Verifikasi',
             data: [10, 15, 20, 12, 18, 25, 22, 30, 28, 35, 40, 38],
-            borderColor: '#4e73df',
+            borderColor: '#224abe',
             fill: true,
             backgroundColor: 'rgba(78, 115, 223, 0.1)',
             tension: 0.4
