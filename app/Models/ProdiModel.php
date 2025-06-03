@@ -16,11 +16,8 @@ class ProdiModel extends Model
     protected $fillable = [
         'prodi_kode',
         'prodi_nama',
-        'jurusan_id'
+        
     ];
 
-    public function jurusan()
-    {
-        return $this->belongsTo(JurusanModel::class, 'jurusan_id');
-    }
+  
 }

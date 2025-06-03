@@ -61,6 +61,16 @@
     
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/prodi*') ? 'active' : '' }}" href="{{ route('prodi.index') }}">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Data Prodi</span>
+        </a>
+    </li>
+    
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
     
     
     
