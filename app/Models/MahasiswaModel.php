@@ -20,10 +20,13 @@ class MahasiswaModel extends Model
         'alamat',
         'no_telp',
         'email',
+        'nik',
         'file_ktm',
         'file_ktp',
         'file_pas_foto',
         'prodi_id',
+        'jurusan_id',
+        'kampus_id',
         'foto_profil',
     ];
 
@@ -35,5 +38,15 @@ class MahasiswaModel extends Model
     public function prodi()
     {
         return $this->belongsTo(ProdiModel::class, 'prodi_id');
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(JurusanModel::class, 'jurusan_id');
+    }
+
+    public function kampus()
+    {
+        return $this->belongsTo(KampusModel::class, 'kampus_id');
     }
 }
