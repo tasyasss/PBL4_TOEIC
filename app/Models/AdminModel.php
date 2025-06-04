@@ -20,7 +20,8 @@ class AdminModel extends Model
         'email',
         'no_telp',
         'alamat',
-        'username'
+        'username',
+        'foto_profil',
     ];
 
     public function user()

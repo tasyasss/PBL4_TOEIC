@@ -1,240 +1,152 @@
 @extends('layouts_mahasiswa.template')
 
-@section('title', 'Profile Mahasiswa')
+@section('title', 'Profil Mahasiswa')
 
 @section('content')
-    <!-- Memasukkan Breadcrumb -->
-    @include('layouts_mahasiswa.breadcrumb', ['breadcrumb' => 'Profil Mahasiswa'])
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <div class="container-fluid mt-4">
-        <!-- Profile Header Section -->
+        <!-- Header Profile -->
         <div class="row">
-            <div class="col-lg-12">
-                <div class="profile-header">
-                
-                    <!-- Banner Image -->
-                    <img src="{{ asset('landingpage/img/bg.png') }}" class="img-fluid" alt="Banner Image">
+            <div class="col-lg-12 position-relative">
+                <!-- Banner -->
+                <img src="{{ asset('landingpage/img/bg.png') }}" class="img-fluid w-100" alt="Banner Image"
+                    style="opacity: 0.8; height: 200px; object-fit: cover;">
 
-                    <!-- Profile Picture (Tengah Banner) -->
-                    <div class="profile-picture">
-                        <img src="{{ asset('landingpage/img/team-1.jpg') }}" alt="Profile Picture" class="img-fluid rounded-circle shadow">
-                    </div>
+                <!-- Foto Profil -->
+                <div class="profile-picture">
+                    @if (auth()->user()->mahasiswa->foto_profil)
+                        <img src="{{ asset('storage/profile_pictures/foto_user_' . auth()->id() . '.' . pathinfo(auth()->user()->mahasiswa->foto_profil, PATHINFO_EXTENSION)) }}"
+                            alt="Profile Picture" class="img-fluid rounded-circle shadow">
+                    @else
+                        <img src="{{ asset('landingpage/img/team-1.jpg') }}" alt="Profile Picture"
+                            class="img-fluid rounded-circle shadow">
+                    @endif
                 </div>
-
-                <!-- Nama dan Role -->
-                
             </div>
         </div>
 
-        <!-- Profile Tabs -->
-        <ul class="nav nav-tabs mt-3" id="profileTabs" role="tablist">
+        <!-- Tab Menu -->
+        <ul class="nav nav-tabs mt-4" id="profileTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="overview-tab" data-bs-toggle="tab" href="#overview" role="tab">Detail Profil</a>
+                <a class="nav-link active" id="overview-tab" data-bs-toggle="tab" href="#overview" role="tab">Detail
+                    Profil</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="editProfile-tab" data-bs-toggle="tab" href="#editProfile" role="tab">Edit Profil</a>
+                <a class="nav-link" id="editProfile-tab" data-bs-toggle="tab" href="#editProfile" role="tab">Edit
+                    Profil</a>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="editDokumen-tab" data-bs-toggle="tab" href="#editDokumen" role="tab">Edit
+                    Dokumen</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="editDocument-tab" data-bs-toggle="tab" href="#editDocument" role="tab">Edit Dokumen</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="changePassword-tab" data-bs-toggle="tab" href="#changePassword" role="tab">Ubah Password</a>
+                <a class="nav-link" id="changePassword-tab" data-bs-toggle="tab" href="#changePassword" role="tab">Ubah
+                    Password</a>
             </li>
         </ul>
 
-        <!-- Tab Content -->
+        <!-- Isi Tab -->
         <div class="tab-content mt-3" id="profileTabsContent">
-            <!-- Overview Tab -->
+            <!-- Overview -->
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <h5>Detail profil</h5>
+                        <h5>Detail Profil</h5>
                     </div>
                     <div class="card-body">
-                        <p><strong>NIM:</strong> 4638327827</p>
-                        <p><strong>Nama:</strong> Zacky Yudha</p>
-                        <p><strong>Email:</strong> jak231@example.com</p>
-                        <p><strong>Nomor Telepon:</strong> 87987897892</p>
-                        <p><strong>Alamat:</strong> Jalan Raya No. 123</p>
-                        <p><strong>Username:</strong> jak123</p>
+                        @auth
+                            @if (auth()->user()->mahasiswa)
+                                <div class="mb-3">
+                                    <label for="nim" class="form-label">NIM</label>
+                                    <input type="text" class="form-control" id="nim" name="nim"
+                                        value="{{ auth()->user()->mahasiswa->mahasiswa_nim }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ auth()->user()->mahasiswa->mahasiswa_nama }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="{{ auth()->user()->mahasiswa->email }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Nomor Telepon</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                        value="{{ auth()->user()->mahasiswa->no_telp }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="alamat" class="form-label">Alamat</label>
+                                    <input type="text" class="form-control" id="alamat" name="alamat"
+                                        value="{{ auth()->user()->mahasiswa->alamat }}" readonly>
+                                </div>
+                                {{-- <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        value="{{ auth()->user()->mahasiswa->username }}" readonly>
+                                </div> --}}
+                            @endif
+                        @endauth
                     </div>
                 </div>
             </div>
 
-           <!-- Edit Document Tab -->
-<div class="tab-pane fade" id="editDocument" role="tabpanel" aria-labelledby="editDocument-tab">
-    <div class="container mt-3">
-        <div class="row">
-            <!-- Document Box 1 -->
-            <div class="col-md-4 mb-3">
-                <div class="document-box">
-                    <img src="{{ asset('landingpage/img/logofile2.jpg') }}" class="img-fluid" alt="Document Image">
-                    <div class="actions">
-                        <button class="btn btn-primary">Lihat</button>
-                        <button class="btn btn-warning">Edit</button>
-                        <button class="btn btn-danger">Hapus</button>
-                    </div>
-                </div>
-            </div>
+            @include('mahasiswa.profile.edit')
 
-            <!-- Document Box 2 -->
-            <div class="col-md-4 mb-3">
-                <div class="document-box">
-                    <img src="{{ asset('landingpage/img/logofile2.jpg') }}" class="img-fluid" alt="Document Image">
-                    <div class="actions">
-                        <button class="btn btn-primary">Lihat</button>
-                        <button class="btn btn-warning">Edit</button>
-                        <button class="btn btn-danger">Hapus</button>
-                    </div>
-                </div>
-            </div>
+            @include('mahasiswa.profile.edit_dokumen')
 
-            <!-- Document Box 3 -->
-            <div class="col-md-4 mb-3">
-                <div class="document-box">
-                    <img src="{{ asset('landingpage/img/logofile2.jpg') }}" class="img-fluid" alt="Document Image">
-                    <div class="actions">
-                        <button class="btn btn-primary">Lihat</button>
-                        <button class="btn btn-warning">Edit</button>
-                        <button class="btn btn-danger">Hapus</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-            <!-- Edit Profile Tab -->
-            <div class="tab-pane fade" id="editProfile" role="tabpanel" aria-labelledby="editProfile-tab">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h5>Edit Profil</h5>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="name" value="Zacky Yudha">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" value="jak231@example.com">
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Nomor Telefon</label>
-                                <input type="text" class="form-control" id="phone" value="87987897892">
-                            </div>
-                             <div class="mb-3">
-                                <label for="alamat" class="form-label">Alamat </label>
-                                <input type="alamat" class="form-control" id="alamat" value="Jalan Raya No. 123">
-                            </div>
-                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="username" class="form-control" id="username" value="jak123">
-                            </div>
-
-                            <button type="submit" class="btn btn-success">Simpan perubahan</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Change Password Tab -->
-            <div class="tab-pane fade" id="changePassword" role="tabpanel" aria-labelledby="changePassword-tab">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h5>ubah password</h5>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="currentPassword" class="form-label">password sekarang</label>
-                                <input type="password" class="form-control" id="currentPassword">
-                            </div>
-                            <div class="mb-3">
-                                <label for="newPassword" class="form-label">password baru</label>
-                                <input type="password" class="form-control" id="newPassword">
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirmPassword" class="form-label">konfirmasi password baru</label>
-                                <input type="password" class="form-control" id="confirmPassword">
-                            </div>
-                            <button type="submit" class="btn btn-success">ubah password</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            @include('mahasiswa.profile.change_password')
         </div>
     </div>
 @endsection
 
 <style>
-.profile-picture {
-    position: absolute;
-    top: 50%; /* posisikan di tengah vertikal banner */
-    left: 50%; /* posisikan di tengah horizontal */
-    transform: translate(-50%, -50%); /* tepat di tengah */
-    width: 140px;
-    height: 140px;
-    border: 5px solid white;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-    background: url{{asset('landingpage/img/bg.png')}};
-    z-index: 10;
+    .profile-picture {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 140px;
+        height: 140px;
+        border: 5px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        z-index: 10;
+    }
 
-}
+    .profile-picture img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
+    .img-thumbnail {
+        max-width: 150px;
+        max-height: 150px;
+        border-radius: 50%;
+    }
 </style>
 @section('styles')
-<style>
-   
-   
-    .document-box {
-        position: relative;
-        width: 259px;
-        height: 304px;
-        background: white;
-        border: 1px solid #AEB1B6;
-        padding: 10px;
-    }
+    <style>
+        .document-box {
+            position: relative;
+            width: 259px;
+            height: 304px;
+            background: white;
+            border: 1px solid #AEB1B6;
+            padding: 10px;
+        }
 
-    .document-box img {
-    width: 100%; /* Adjust to 100% to take full width of the container */
-    height: auto; /* Maintain aspect ratio */
-    margin: 0 auto;
-    display: block;
-}
-
-
-    .actions {
-        display: flex;
-        justify-content: space-around;
-        position: absolute;
-        bottom: 10px;
-        left: 0;
-        right: 0;
-    }
-
-    .actions button {
-        width: 63px;
-        height: 32px;
-        border-radius: 5px;
-    }
-
-    .actions .btn-primary {
-        background-color: #4E73DF;
-        color: white;
-    }
-
-    .actions .btn-warning {
-        background-color: #FFC107;
-        color: white;
-    }
-
-    .actions .btn-danger {
-        background-color: #E74A3B;
-        color: white;
-    }
-</style>
+        .document-box img {
+            width: 100%;
+            /* Adjust to 100% to take full width of the container */
+            height: auto;
+            /* Maintain aspect ratio */
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
 @endsection

@@ -115,6 +115,10 @@
             });
         }
 
+        function closeModal() {
+            $('#myModal').modal('hide');
+        }
+
         var dataMahasiswa;
         $(document).ready(function() {
             dataMahasiswa = $('#table_mahasiswa').DataTable({

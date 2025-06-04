@@ -12,10 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('prodi_kode')->unique();
             $table->string('prodi_nama');
-            $table->unsignedBigInteger('jurusan_id')->index();
             $table->timestamps();
-
-            $table->foreign('jurusan_id')->references('id')->on('jurusan')->onDelete('cascade');
         });
     }
 

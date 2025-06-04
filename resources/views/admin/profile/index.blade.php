@@ -3,6 +3,7 @@
 @section('title', 'Profil Admin')
 
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <div class="container-fluid mt-4">
         <!-- Header Profile -->
         <div class="row">
@@ -13,8 +14,13 @@
 
                 <!-- Foto Profil -->
                 <div class="profile-picture">
-                    <img src="{{ asset('landingpage/img/team-1.jpg') }}" alt="Profile Picture"
-                        class="img-fluid rounded-circle shadow">
+                    @if (auth()->user()->admin->foto_profil)
+                        <img src="{{ asset('storage/profile_pictures/foto_user_' . auth()->id() . '.' . pathinfo(auth()->user()->admin->foto_profil, PATHINFO_EXTENSION)) }}"
+                            alt="Profile Picture" class="img-fluid rounded-circle shadow">
+                    @else
+                        <img src="{{ asset('landingpage/img/team-1.jpg') }}" alt="Profile Picture"
+                            class="img-fluid rounded-circle shadow">
+                    @endif
                 </div>
             </div>
         </div>
@@ -46,12 +52,31 @@
                     <div class="card-body">
                         @auth
                             @if (auth()->user()->admin)
-                                <p><strong>NIP:</strong> {{ auth()->user()->admin->admin_nip }}</p>
-                                <p><strong>Nama:</strong> {{ auth()->user()->admin->admin_nama }}</p>
-                                <p><strong>Email:</strong> {{ auth()->user()->admin->email }}</p>
-                                <p><strong>Nomor Telepon:</strong> {{ auth()->user()->admin->no_telp }}</p>
-                                <p><strong>Alamat:</strong> {{ auth()->user()->admin->alamat }}</p>
-                                <p><strong>Username:</strong> {{ auth()->user()->admin->username }}</p>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Nama</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ auth()->user()->admin->admin_nama }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="{{ auth()->user()->admin->email }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Nomor Telepon</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                        value="{{ auth()->user()->admin->no_telp }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="alamat" class="form-label">Alamat</label>
+                                    <input type="text" class="form-control" id="alamat" name="alamat"
+                                        value="{{ auth()->user()->admin->alamat }}" readonly>
+                                </div>
+                                {{-- <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        value="{{ auth()->user()->admin->username }}" readonly>
+                                </div> --}}
                             @endif
                         @endauth
                     </div>
@@ -59,6 +84,8 @@
             </div>
 
             @include('admin.profile.edit')
+
+            @include('admin.profile.change_password')
         </div>
     </div>
 @endsection
@@ -67,19 +94,27 @@
     .profile-picture {
         position: absolute;
         top: 50%;
-        /* posisikan di tengah vertikal banner */
         left: 50%;
-        /* posisikan di tengah horizontal */
         transform: translate(-50%, -50%);
-        /* tepat di tengah */
         width: 140px;
         height: 140px;
         border: 5px solid white;
         border-radius: 50%;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-        background: url{{ asset('landingpage/img/bg.png') }};
+        overflow: hidden;
         z-index: 10;
+    }
 
+    .profile-picture img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .img-thumbnail {
+        max-width: 150px;
+        max-height: 150px;
+        border-radius: 50%;
     }
 </style>
 @section('styles')
