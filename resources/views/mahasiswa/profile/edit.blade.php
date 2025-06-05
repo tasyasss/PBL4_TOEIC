@@ -14,6 +14,11 @@
                                 value="{{ auth()->user()->mahasiswa->mahasiswa_nim }}" readonly>
                         </div>
                         <div class="mb-3">
+                            <label for="nik" class="form-label">NIK</label>
+                            <input type="text" class="form-control" id="nik" name="nik"
+                                value="{{ auth()->user()->mahasiswa->nik }}">
+                        </div>
+                        <div class="mb-3">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"
                                 value="{{ auth()->user()->mahasiswa->mahasiswa_nama }}">

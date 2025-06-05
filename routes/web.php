@@ -45,11 +45,14 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::post('/{id}/reset_password', [DataMahasiswaController::class, 'resetPassword'])->name('admin.mahasiswa.resetPassword');
     });
 
-        Route::prefix('pendaftaran')->group(function () {
+    Route::prefix('pendaftaran')->group(function () {
         Route::get('/', [Pendaftaran_ADMController::class, 'index'])->name('admin.pendaftaran.index');
         Route::post('/list', [Pendaftaran_ADMController::class, 'list'])->name('admin.pendaftaran.list');
-        Route::post('store_ajax', [Pendaftaran_ADMController::class, 'store_ajax'])->name('admin.pendaftaran.store_ajax');
-        Route::get('{id}/show_ajax', [Pendaftaran_ADMController::class, 'show_ajax'])->name('admin.pendaftaran.show_ajax');
+        Route::get('/show_ajax/{id}', [Pendaftaran_ADMController::class, 'show_ajax'])->name('admin.pendaftaran.show_ajax');
+        Route::get('/edit_ajax/{id}', [Pendaftaran_ADMController::class, 'edit_ajax'])->name('admin.pendaftaran.edit_ajax');
+        Route::put('/update_ajax/{id}', [Pendaftaran_ADMController::class, 'update'])->name('admin.pendaftaran.update_ajax');
+        Route::get('/delete_ajax/{id}', [Pendaftaran_ADMController::class, 'delete_ajax'])->name('admin.pendaftaran.delete_ajax');
+        Route::delete('/destroy_ajax/{id}', [Pendaftaran_ADMController::class, 'destroy'])->name('admin.pendaftaran.destroy_ajax');
 
     });
 
@@ -93,39 +96,6 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::get('/delete_ajax/{id}', [ProdiController::class, 'delete_ajax'])->name('admin.prodi.delete_ajax');
     });
 });
-
-// Route::prefix('admin')->name('admin.')->group(function () {
-//     Route::get('kampus', [KampusController::class, 'index'])->name('kampus.index');
-//     Route::post('kampus/list', [KampusController::class, 'list'])->name('kampus.list');
-//     Route::get('kampus/create_ajax', [KampusController::class, 'create_ajax'])->name('kampus.create_ajax');
-//     Route::post('kampus/store_ajax', [KampusController::class, 'store_ajax'])->name('kampus.store_ajax');
-//     Route::get('kampus/edit_ajax/{id}', [KampusController::class, 'edit_ajax'])->name('kampus.edit_ajax');
-//     Route::post('kampus/update_ajax/{id}', [KampusController::class, 'update_ajax'])->name('kampus.update_ajax');
-//     Route::get('kampus/delete_ajax/{id}', [KampusController::class, 'delete_ajax'])->name('kampus.delete_ajax');
-// });
-
-
-// Route::prefix('admin/jurusan')->group(function () {
-//     Route::get('/', [JurusanController::class, 'index'])->name('jurusan.index');
-//     Route::post('/list', [JurusanController::class, 'list'])->name('jurusan.list');  
-//     Route::get('/create_ajax', [JurusanController::class, 'create_ajax']);
-//     Route::post('/store_ajax', [JurusanController::class, 'store_ajax']);
-//     Route::get('/edit_ajax/{id}', [JurusanController::class, 'edit_ajax']);
-//     Route::post('/update_ajax/{id}', [JurusanController::class, 'update_ajax']);
-//     Route::get('/delete_ajax/{id}', [JurusanController::class, 'delete_ajax']);
-// });
-
-// Route::prefix('admin/prodi')->group(function () {
-//     Route::get('/', [ProdiController::class, 'index'])->name('prodi.index');
-//     Route::post('/list', [ProdiController::class, 'list'])->name('prodi.list');
-//     Route::get('/create_ajax', [ProdiController::class, 'create_ajax']);
-//     Route::post('/store_ajax', [ProdiController::class, 'store_ajax']);
-//     Route::get('/edit_ajax/{id}', [ProdiController::class, 'edit_ajax']);
-//     Route::post('/update_ajax/{id}', [ProdiController::class, 'update_ajax']);
-//     Route::get('/delete_ajax/{id}', [ProdiController::class, 'delete_ajax']);
-// });
-
-
 
 Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');

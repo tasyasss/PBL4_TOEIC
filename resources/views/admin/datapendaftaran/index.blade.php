@@ -4,12 +4,12 @@
     <!-- Main Content -->
     <div class="container-fluid">
         <!-- Tabel Pendaftaran Mahasiswa -->
-        
+
         <div class="row">
             <div class="col-xl-12 col-lg-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 font-weight-bold text-primary">Data Pendaftaran Mahasiswa</h6>      
+                        <h6 class="m-0 font-weight-bold text-primary">Data Pendaftaran Mahasiswa</h6>
 
                     </div>
                     <div class="card-body">
@@ -26,42 +26,6 @@
                                         <th class="border-0 font-weight-bold text-gray-700 py-3">Aksi</th>
                                     </tr>
                                 </thead>
-                                {{-- <tbody>
-                                <!-- Example Data Row 1 -->
-                                <tr class="border-bottom">
-                                    <td class="py-4 font-weight-bold">1</td>
-                                    <td class="py-4">20220001</td>
-                                    <td class="py-4">John Doe</td>
-                                    <td class="py-4">Teknik Informatika</td>
-                                    <td class="py-4">15 Juni 2023</td>
-                                    <td class="py-4"><span class="badge badge-success">Diterima</span></td>
-                                    <td class="py-4">
-                                        <button class="btn btn-primary btn-sm btn-rounded mr-1" data-toggle="modal" data-target="#editPendaftaranModal" data-id="1">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </button>
-                                        <button class="btn btn-danger btn-sm btn-rounded">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- Example Data Row 2 -->
-                                <tr class="border-bottom">
-                                    <td class="py-4 font-weight-bold">2</td>
-                                    <td class="py-4">20220002</td>
-                                    <td class="py-4">Jane Smith</td>
-                                    <td class="py-4">Sistem Informasi</td>
-                                    <td class="py-4">20 Juni 2023</td>
-                                    <td class="py-4"><span class="badge badge-warning">Proses</span></td>
-                                    <td class="py-4">
-                                        <button class="btn btn-primary btn-sm btn-rounded mr-1" data-toggle="modal" data-target="#editPendaftaranModal" data-id="2">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </button>
-                                        <button class="btn btn-danger btn-sm btn-rounded">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody> --}}
                             </table>
                         </div>
                     </div>
@@ -124,13 +88,13 @@
         </div>
     </div>
     <!-- Modal Container -->
-<div class="modal fade" id="modalContainer" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" id="modalContent">
-            <!-- Konten modal akan dimuat di sini -->
+    <div class="modal fade" id="modalContainer" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="modalContent">
+                <!-- Konten modal akan dimuat di sini -->
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Include CSS dan JS eksternal -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -139,81 +103,71 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
-
-    <script>
-      function modalAction(url) {
-    $.get(url)
-        .done(function(data) {
-            // Pastikan modal sebelumnya dihapus
-            $('body').find('#detailModal').remove();
-            
-            // Tambahkan modal baru ke body
-            $('body').append(data);
-            
-            // Tampilkan modal
-            $('#detailModal').modal('show');
-            
-            // Handle close button
-            $('#detailModal').on('click', '[data-dismiss="modal"]', function() {
-                $('#detailModal').modal('hide');
-            });
-            
-            // Auto close ketika klik di luar modal
-            $('#detailModal').on('hidden.bs.modal', function () {
-                $(this).remove();
-            });
-        })
-        .fail(function(xhr) {
-            console.error(xhr);
-            Swal.fire('Error!', 'Gagal memuat data detail', 'error');
-        });
-}
-
-
-        $(document).ready(function() {
-            $('#editPendaftaranModal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                var id = button.data('id');
-
-                var data = {
-                    '1': {
-                        mahasiswa_id: '1',
-                        tanggal_pendaftaran: '2025-05-20',
-                        jadwal_id: '1',
-                        status_id: '2'
-                    },
-                    '2': {
-                        mahasiswa_id: '2',
-                        tanggal_pendaftaran: '2025-05-21',
-                        jadwal_id: '2',
-                        status_id: '1'
-                    }
-                };
-
-                var item = data[id];
-                $('#edit_id').val(id);
-                $('#edit_mahasiswa_id').val(item.mahasiswa_id);
-                $('#edit_tanggal_pendaftaran').val(item.tanggal_pendaftaran);
-                $('#edit_jadwal_id').val(item.jadwal_id);
-                $('#edit_status_id').val(item.status_id);
-            });
-
-            $('#formTambahPendaftaran').on('submit', function(e) {
-                e.preventDefault();
-                alert('Data pendaftaran berhasil ditambahkan!');
-                $('#tambahPendaftaranModal').modal('hide');
-            });
-
-            $('#formEditPendaftaran').on('submit', function(e) {
-                e.preventDefault();
-                alert('Data pendaftaran berhasil diperbarui!');
-                $('#editPendaftaranModal').modal('hide');
-            });
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
 
 @push('js')
+    <script>
+        $(document).on('click', '[data-dismiss="modal"]', function() {
+            $('#modalContainer').modal('hide');
+        });
+    </script>
+
+    <script>
+        function modalAction(url) {
+            $('#modalContent').html('<div class="text-center p-5">Memuat data...</div>');
+            $('#modalContainer').modal('show');
+            $.get(url, function(res) {
+                $('#modalContent').html(res);
+            }).fail(function() {
+                $('#modalContainer').modal('hide');
+                Swal.fire('Error', 'Gagal memuat data detail.', 'error');
+            });
+        }
+    </script>
+
+    <script>
+        function showDeleteModal(id) {
+            $.get('/admin/pendaftaran/delete_ajax/' + id)
+                .done(function(response) {
+                    $('body').append(response);
+                    $('#deleteConfirmationModal').modal('show');
+
+                    $('#deleteConfirmationModal').on('hidden.bs.modal', function() {
+                        $(this).remove(); // Hapus modal dari DOM
+                    });
+                })
+                .fail(function() {
+                    Swal.fire('Error', 'Gagal memuat form konfirmasi hapus', 'error');
+                });
+        }
+
+        $(document).on('submit', '#formDeletePendaftaran', function(e) {
+            e.preventDefault();
+
+            var form = $(this);
+            var actionUrl = form.attr('action');
+
+            $.ajax({
+                url: actionUrl,
+                type: 'DELETE',
+                data: form.serialize(),
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#deleteConfirmationModal').modal('hide');
+                        $('#table_pendaftaran').DataTable().ajax.reload(null, false);
+                        Swal.fire('Sukses', response.message, 'success');
+                    } else {
+                        Swal.fire('Gagal', response.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Gagal', 'Terjadi kesalahan pada server.', 'error');
+                }
+            });
+        });
+    </script>
+
     <script>
         // ------ UNTUK DATATABLES ------
         $(document).ready(function() {
@@ -266,3 +220,4 @@
         });
     </script>
 @endpush
+@stack('js')

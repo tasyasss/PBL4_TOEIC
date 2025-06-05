@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\PendaftaranModel;
 use App\Models\JadwalModel;
+use App\Models\JurusanModel;
+use App\Models\KampusModel;
+use App\Models\ProdiModel;
 use App\Models\StatusModel;
 
 class Pendaftaran_ADMController extends Controller
@@ -50,11 +55,10 @@ class Pendaftaran_ADMController extends Controller
             // menambahkan kolom index
             ->addIndexColumn()
             ->addColumn('aksi', function ($dft) {
-                $btn =  '<button onclick="modalAction(\'' . url('/admin/pendaftaran/' . $dft->id . '/validasi_ajax') . '\')" class="btn btn-outline-success btn-sm"><i class="fas fa-check"></i> Validasi</button> ';
-                $btn .= '<button onclick="modalAction(\''.url('/admin/pendaftaran/'.$dft->id.'/show_ajax').'\')" class="btn btn-outline-info btn-sm"><i class="fas fa-info"></i> Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/admin/pendaftaran/' . $dft->id . '/edit_ajax') . '\')" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/admin/pendaftaran/' . $dft->id . '/delete_ajax') . '\')" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button> ';
-
+                $btn =  '<button onclick="modalAction(\'' . url('/admin/pendaftaran/validasi_ajax/' . $dft->id) . '\')" class="btn btn-outline-success btn-sm"><i class="fas fa-check"></i> Validasi</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/admin/pendaftaran/show_ajax/' . $dft->id) . '\')" class="btn btn-outline-info btn-sm"><i class="fas fa-info"></i> Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/admin/pendaftaran/edit_ajax/' . $dft->id) . '\')" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Edit</button> ';
+                $btn .= '<button onclick="showDeleteModal(' . $dft->id . ')" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button>';
                 return $btn;
             })
             ->rawColumns(['aksi'])
@@ -88,16 +92,116 @@ class Pendaftaran_ADMController extends Controller
 
     public function show_ajax($id)
     {
-        try {
-            $pendaftaran = PendaftaranModel::with(['mahasiswa', 'mahasiswa.prodi', 'jadwal', 'status'])
-                              ->findOrFail($id);
-            
-            return view('admin.datapendaftaran.show_ajax', compact('pendaftaran'));
-        } catch (\Exception $e) {
+        $pendaftaran = PendaftaranModel::with([
+            'mahasiswa.prodi',
+            'mahasiswa.jurusan',
+            'mahasiswa.kampus',
+            'status',
+            'jadwal'
+        ])->findOrFail($id);
+
+        return view('admin.datapendaftaran.show_ajax', compact('pendaftaran'));
+    }
+
+    public function edit_ajax($id)
+    {
+        $pendaftaran = PendaftaranModel::with(['mahasiswa', 'jadwal'])
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $prodi = ProdiModel::all();
+        $jurusan = JurusanModel::all();
+        $kampus = KampusModel::all();
+        $status = StatusModel::all();
+
+        return view('admin.datapendaftaran.edit_ajax', compact(
+            'pendaftaran',
+            'prodi',
+            'jurusan',
+            'kampus',
+            'status'
+        ));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi
+        $validator = Validator::make($request->all(), [
+            'mahasiswa_nim' => 'required|min:3|max:10',
+            'mahasiswa_nama' => 'required|max:100',
+            'alamat' => 'required|max:225',
+            'no_telp' => 'required|max:15',
+            'nik' => 'required|max:15',
+            'emai' => 'required|email|max:100',
+            'prodi_id' => 'required|numeric',
+            'jurusan_id' => 'required|numeric',
+            'kampus_id' => 'required|numeric',
+
+            'tanggal' => 'required|date',
+            'tanggal_pendaftaran' => 'required|date',
+            'status_id' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
             return response()->json([
-                'status' => false,
-                'message' => 'Data tidak ditemukan: ' . $e->getMessage()
-            ], 404);
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        DB::beginTransaction();
+        try {
+            $pendaftaran = PendaftaranModel::with('mahasiswa', 'jadwal')->findOrFail($id);
+
+            // Update Mahasiswa
+            $pendaftaran->mahasiswa->update([
+                'mahasiswa_nim' => $request->mahasiswa_nim,
+                'mahasiswa_nama' => $request->mahasiswa_nama,
+                'alamat' => $request->alamat,
+                'no_telp' => $request->no_telp,
+                'nik' => $request->nik,
+                'emai' => $request->emai,
+                'prodi_id' => $request->prodi_id,
+                'jurusan_id' => $request->jurusan_id,
+                'kampus_id' => $request->kampus_id,
+            ]);
+
+            // Update Jadwal
+            $pendaftaran->jadwal->update([
+                'tanggal' => $request->tanggal,
+            ]);
+
+            // Update Pendaftaran
+            $pendaftaran->update([
+                'tanggal_pendaftaran' => $request->tanggal_pendaftaran,
+                'status_id' => $request->status_id,
+            ]);
+
+            DB::commit();
+
+            return response()->json(['status' => 'success', 'message' => 'Data berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => 'error', 'message' => 'Gagal memperbarui data.']);
+        }
+    }
+
+    public function delete_ajax($id)
+    {
+        $pendaftaran = PendaftaranModel::findOrFail($id);
+        return view('admin.datapendaftaran.delete_ajax', compact('pendaftaran'));
+    }
+
+
+    public function destroy($id)
+    {
+        try {
+            $data = PendaftaranModel::findOrFail($id);
+            $data->delete();
+
+            return response()->json(['status' => 'success', 'message' => 'Data berhasil dihapus']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Gagal menghapus data']);
         }
     }
 }
