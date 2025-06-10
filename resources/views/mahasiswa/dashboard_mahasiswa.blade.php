@@ -29,7 +29,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Daftar TOEIC</h5>
                     <p class="card-text">Pertama kali mendaftar TOEIC?</p>
-                    <a href="{{ route('mahasiswa.pendaftaran.index') }}" class="btn btn-light btn-sm">Daftar</a>
+                    <a href="{{ route('mahasiswa.pendaftaran.read_formulir') }}" class="btn btn-light btn-sm">Daftar</a>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Info TOEIC</h5>
                     <p class="card-text">Sudah pernah mendaftar TOEIC?</p>
-                    <a href="https://itc-indonesia.com/toeic-ibt-from-home/" class="btn btn-light btn-sm" target="_blank">Selengkapnya</a>
+                    <a href="https://smartcart.id/sertifikat/english-certification" class="btn btn-light btn-sm" target="_blank">Selengkapnya</a>
                 </div>
             </div>
         </div>

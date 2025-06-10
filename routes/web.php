@@ -111,6 +111,10 @@ Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(functio
         Route::get('/show_ajax/{id}', [Pendaftaran_MHSController::class, 'show_ajax'])->name('mahasiswa.pendaftaran.show_ajax');
         Route::get('/edit_ajax/{id}', [Pendaftaran_MHSController::class, 'edit_ajax'])->name('mahasiswa.pendaftaran.edit_ajax');
         Route::delete('/delete_ajax/{id}', [Pendaftaran_MHSController::class, 'delete_ajax'])->name('mahasiswa.pendaftaran.delete_ajax');
+
+        Route::get('/read_formulir', [Pendaftaran_MHSController::class, 'read_formulir'])->name('mahasiswa.pendaftaran.read_formulir');
+        Route::post('/create_formulir', [Pendaftaran_MHSController::class, 'create_formulir'])->name('mahasiswa.pendaftaran.create_formulir');
+        Route::put('/update_formulir/{id}', [Pendaftaran_MHSController::class, 'update_formulir'])->name('mahasiswa.pendaftaran.update_formulir');
     });
 
     Route::prefix('profile')->group(function () {

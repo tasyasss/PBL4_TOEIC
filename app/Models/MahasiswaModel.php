@@ -49,4 +49,9 @@ class MahasiswaModel extends Model
     {
         return $this->belongsTo(KampusModel::class, 'kampus_id');
     }
+
+    public function pendaftaran()
+    {
+        return $this->hasMany(PendaftaranModel::class, 'mahasiswa_id');
+    }
 }
