@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+use App\Models\MahasiswaModel;
 
 class MahasiswaController extends Controller
 {
@@ -18,7 +20,10 @@ class MahasiswaController extends Controller
 
         $activeMenu = 'dashboard'; // Should match your sidebar menu item
 
-        return view('mahasiswa.dashboard_mahasiswa', compact('breadcrumb', 'activeMenu', 'page'));
+        // Ambil data mahasiswa yang sedang login
+        $mahasiswa = MahasiswaModel::where('users_id', auth()->user()->id)->first();
+
+        return view('mahasiswa.dashboard_mahasiswa', compact('breadcrumb', 'activeMenu', 'page', 'mahasiswa'));
     }
 
     public function help()
@@ -36,4 +41,4 @@ class MahasiswaController extends Controller
 
         return view('mahasiswa.help', compact('breadcrumb', 'activeMenu', 'page'));
     }
-}
+} 
