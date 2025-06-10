@@ -34,8 +34,14 @@ class AdminController extends Controller
         $totalDiterima = Pendaftaran::where('status_id', $idDiterima)->count();
         $totalDitolak = Pendaftaran::where('status_id', $idDitolak)->count();
 
-        // // Data untuk DataTable: hanya yang status 'diproses'
-        // $pendaftaranDiproses = Pendaftaran::where('status_id', $idDiproses)->get();
+        // Data untuk DataTable: hanya yang status 'diproses'
+        $pendaftaranDiproses = Pendaftaran::with(['mahasiswa', 'jadwal', 'status'])
+            ->whereHas('status', function($query) {
+                $query->where('status_nama', 'Diproses');
+            })
+            ->get();
+
+        //dd($pendaftaranDiproses);
 
         return view('admin.dashboard_admin', compact(
             'breadcrumb',
@@ -46,7 +52,7 @@ class AdminController extends Controller
             'totalDiproses',
             'totalDiterima',
             'totalDitolak',
-            // 'pendaftaranDiproses'
+            'pendaftaranDiproses'
         ));
     }
 

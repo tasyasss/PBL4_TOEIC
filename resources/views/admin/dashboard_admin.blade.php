@@ -53,26 +53,41 @@
     </div>
 
     <!-- Tabel Data -->
-    <table id="pendaftaran-table" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Jadwal</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        {{-- <tbody>
-            @foreach($pendaftaranDiproses as $data)
-            <tr>
-                <td>{{ $data->user->nama }}</td>
-                <td>{{ $data->user->email }}</td>
-                <td>{{ $data->jadwal->tanggal }}</td>
-                <td><span class="badge bg-warning text-dark">{{ ucfirst($data->status) }}</span></td>
-            </tr>
-            @endforeach
-        </tbody> --}}
-    </table>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Data Mahasiswa dalam Proses</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="pendaftaran-table" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Jadwal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pendaftaranDiproses as $key => $data)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $data->mahasiswa->mahasiswa_nama ?? 'N/A' }}</td>
+                            <td>{{ $data->mahasiswa->email ?? 'N/A' }}</td>
+                            <td>{{ $data->jadwal->tanggal ?? 'N/A' }}</td>
+                            <td>
+                                <span class="badge bg-warning text-dark">
+                                    {{ $data->status->status_nama ?? 'Diproses' }}
+                                </span>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- JavaScript untuk Grafik dan Tabel -->
@@ -82,9 +97,12 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-// Inisialisasi DataTable
 $(document).ready(function() {
-    $('#dataTable').DataTable();
+    $('#pendaftaran-table').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/Indonesian.json"
+        }
+    });
 });
 </script>   
 @endsection

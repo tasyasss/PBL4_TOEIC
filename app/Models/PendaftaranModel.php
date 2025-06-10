@@ -34,10 +34,4 @@ class PendaftaranModel extends Model
     {
         return $this->belongsTo(StatusModel::class, 'status_id');
     }
-
-    // untuk mengambil data user dari mahasiswa
-    // public function user()
-    // {
-    //     return $this->mahasiswa->user();
-    // }
 }
