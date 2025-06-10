@@ -239,7 +239,8 @@ class Pendaftaran_ADMController extends Controller
 
     public function validasi($id)
     {
-        $pendaftaran = PendaftaranModel::with(['mahasiswa.prodi', 'mahasiswa.jurusan', 'mahasiswa.kampus', 'jadwal', 'status'])->find($id);
+        $pendaftaran = PendaftaranModel::with(['mahasiswa', 'jadwal', 'status', 'mahasiswa.prodi', 'mahasiswa.jurusan', 'mahasiswa.kampus'])
+            ->findOrFail($id);
 
         if (!$pendaftaran) {
             return redirect()->back()->with('error', 'Data pendaftaran tidak ditemukan!');
@@ -257,7 +258,10 @@ class Pendaftaran_ADMController extends Controller
 
         $activeMenu = 'validasi';
 
-        return view('admin.datapendaftaran.validasi', compact('pendaftaran', 'breadcrumb', 'activeMenu', 'page'));
+        return view('admin.datapendaftaran.validasi', [
+            'pendaftaran' => $pendaftaran,
+            'mahasiswa' => $pendaftaran->mahasiswa
+        ], compact('pendaftaran', 'breadcrumb', 'activeMenu', 'page'));
     }
 
     public function validasi_proses(Request $request, $id)
