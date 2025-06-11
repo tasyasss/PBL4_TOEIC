@@ -43,6 +43,7 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
         Route::get('/delete_ajax/{id}', [DataMahasiswaController::class, 'delete_ajax'])->name('admin.mahasiswa.delete_ajax');
         Route::get('/{id}/show_ajax', [DataMahasiswaController::class, 'show_ajax'])->name('admin.mahasiswa.show_ajax');
         Route::post('/{id}/reset_password', [DataMahasiswaController::class, 'resetPassword'])->name('admin.mahasiswa.resetPassword');
+        Route::post('/import', [DataMahasiswaController::class, 'import'])->name('admin.mahasiswa.import');
     });
 
     Route::prefix('pendaftaran')->group(function () {
@@ -56,6 +57,7 @@ Route::middleware(['auth', 'authorize:ADM'])->prefix('admin')->group(function ()
 
         Route::get('/validasi/{id}', [Pendaftaran_ADMController::class, 'validasi'])->name('admin.pendaftaran.validasi');
         Route::post('/validasi/proses/{id}', [Pendaftaran_ADMController::class, 'validasi_proses'])->name('admin.pendaftaran.validasi_proses');
+        Route::get('/export', [Pendaftaran_ADMController::class, 'export'])->name('admin.pendaftaran.export');
     });
 
     Route::prefix('jadwal')->group(function () {

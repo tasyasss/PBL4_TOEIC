@@ -9,6 +9,15 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">Data Pendaftaran Mahasiswa</h6>
+                        <div class="float-right">
+                            <button class="btn btn-outline-success btn-sm"
+                                onclick="window.location.href='{{ route('admin.pendaftaran.export') }}'">
+                                <i class="fas fa-download"></i> Export Data
+                            </button>
+                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPendaftaranModal">
+                                <i class="fas fa-plus mr-1"></i> Tambah Data
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

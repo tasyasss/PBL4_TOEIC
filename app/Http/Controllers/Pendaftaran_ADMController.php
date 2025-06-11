@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 use App\Models\PendaftaranModel;
 use App\Models\JadwalModel;
@@ -276,5 +278,75 @@ class Pendaftaran_ADMController extends Controller
 
         return redirect()->route('admin.pendaftaran.index')
             ->with('success', 'Status pendaftaran berhasil diperbarui.');
+    }
+
+    public function export()
+    {
+        // Only get pendaftaran with status_id = 2 (Diterima)
+        $pendaftaran = PendaftaranModel::with(['mahasiswa', 'jadwal', 'status'])
+            ->where('status_id', 2)
+            ->get();
+
+        // If no data found with status Diterima
+        if ($pendaftaran->isEmpty()) {
+            return back()->with('error', 'Tidak ada data pendaftaran dengan status Diterima');
+        }
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set header with your requested columns
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'NIM');
+        $sheet->setCellValue('C1', 'NIK');
+        $sheet->setCellValue('D1', 'Nama Lengkap');
+        $sheet->setCellValue('E1', 'Nomor Telepon');
+        $sheet->setCellValue('F1', 'Email');
+        $sheet->setCellValue('G1', 'Alamat');
+        $sheet->setCellValue('H1', 'Program Studi');
+        $sheet->setCellValue('I1', 'Jurusan');
+        $sheet->setCellValue('J1', 'Kampus');
+        $sheet->setCellValue('K1', 'Tanggal Ujian');
+        $sheet->setCellValue('L1', 'Jam Ujian');
+        $sheet->setCellValue('M1', 'Status');
+
+        // Loop through pendaftaran data and fill the rows
+        $row = 2; // Start at row 2 to skip header
+        foreach ($pendaftaran as $data) {
+            $sheet->setCellValue('A' . $row, $row - 1); // No
+            $sheet->setCellValue('B' . $row, $data->mahasiswa->mahasiswa_nim ?? '-'); // NIM
+            $sheet->setCellValue('C' . $row, $data->mahasiswa->nik ?? '-'); // NIK
+            $sheet->setCellValue('D' . $row, $data->mahasiswa->mahasiswa_nama ?? '-'); // Nama Lengkap
+            $sheet->setCellValue('E' . $row, $data->mahasiswa->no_telp ?? '-'); // Nomor Telepon
+            $sheet->setCellValue('F' . $row, $data->mahasiswa->email ?? '-'); // Email
+            $sheet->setCellValue('G' . $row, $data->mahasiswa->alamat ?? '-'); // Alamat
+            $sheet->setCellValue('H' . $row, $data->mahasiswa->prodi->prodi_nama ?? '-'); // Program Studi
+            $sheet->setCellValue('I' . $row, $data->mahasiswa->jurusan->jurusan_nama ?? '-'); // Jurusan
+            $sheet->setCellValue('J' . $row, $data->mahasiswa->kampus->kampus_nama ?? '-'); // Kampus
+            $sheet->setCellValue('K' . $row, $data->jadwal ? \Carbon\Carbon::parse($data->jadwal->tanggal)->format('d-m-Y') : '-'); // Tanggal Ujian
+            $sheet->setCellValue('L' . $row, $data->jadwal ? \Carbon\Carbon::parse($data->jadwal->tanggal)->format('H:i') : '-'); // Jam Ujian
+            $sheet->setCellValue('M' . $row, $data->status->status_nama ?? '-'); // Status
+
+            $row++;
+        }
+
+        // Auto-size columns for better readability
+        foreach (range('A', 'M') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        // Add title and filter info
+        $sheet->setCellValue('A' . $row, 'Data hanya menampilkan pendaftaran dengan status Diterima');
+        $sheet->mergeCells('A' . $row . ':M' . $row);
+        $sheet->getStyle('A' . $row)->getFont()->setItalic(true);
+
+        // Write the spreadsheet to file
+        $writer = new Xlsx($spreadsheet);
+
+        // Output the file to download
+        $fileName = 'data_pendaftaran_diterima.xlsx';
+        $writer->save($fileName);
+
+        return response()->download($fileName)->deleteFileAfterSend(true);
     }
 }
