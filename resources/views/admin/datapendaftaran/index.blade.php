@@ -4,13 +4,11 @@
     <!-- Main Content -->
     <div class="container-fluid">
         <!-- Tabel Pendaftaran Mahasiswa -->
-
         <div class="row">
             <div class="col-xl-12 col-lg-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">Data Pendaftaran Mahasiswa</h6>
-
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -34,18 +32,16 @@
         </div>
     </div>
 
-
     <!-- Modal Edit -->
-    <div class="modal fade" id="editPendaftaranModal" tabindex="-1" role="dialog" aria-labelledby="editPendaftaranLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="editPendaftaranModal" tabindex="-1" role="dialog" aria-labelledby="editPendaftaranLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="formEditPendaftaran">
                 <input type="hidden" id="edit_id" name="id">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Pendaftaran</h5>
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -59,8 +55,7 @@
                         </div>
                         <div class="form-group">
                             <label for="edit_tanggal_pendaftaran">Tanggal Pendaftaran</label>
-                            <input type="date" class="form-control" id="edit_tanggal_pendaftaran"
-                                name="tanggal_pendaftaran" required>
+                            <input type="date" class="form-control" id="edit_tanggal_pendaftaran" name="tanggal_pendaftaran" required>
                         </div>
                         <div class="form-group">
                             <label for="edit_jadwal_id">Jadwal</label>
@@ -87,6 +82,10 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal Container untuk Delete -->
+    <div id="deleteModalContainer"></div>
+
     <!-- Modal Container -->
     <div class="modal fade" id="modalContainer" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -126,98 +125,96 @@
         }
     </script>
 
-    <script>
-        function showDeleteModal(id) {
-            $.get('/admin/pendaftaran/delete_ajax/' + id)
-                .done(function(response) {
-                    $('body').append(response);
-                    $('#deleteConfirmationModal').modal('show');
+<script>
+    $(document).ready(function() {
+        // Inisialisasi DataTable
+        var dataPendaftaran = $('#table_pendaftaran').DataTable({
+            serverSide: true,
+            ajax: {
+                "url": "{{ url('admin/pendaftaran/list') }}",
+                "dataType": "json",
+                "type": "POST"
+            },
+            columns: [{
+                data: "DT_RowIndex",
+                className: "text-center",
+                orderable: false,
+                searchable: false
+            }, {
+                data: "mahasiswa.mahasiswa_nim",
+                className: "",
+                orderable: true,
+                searchable: true
+            }, {
+                data: "mahasiswa.mahasiswa_nama",
+                className: "",
+                orderable: true,
+                searchable: true
+            }, {
+                data: "mahasiswa.prodi.prodi_nama",
+                className: "",
+                orderable: false,
+                searchable: false
+            }, {
+                data: "tanggal_pendaftaran",
+                className: "",
+                orderable: false,
+                searchable: false
+            }, {
+                data: "status.status_nama",
+                className: "",
+                orderable: false,
+                searchable: false,
+            }, {
+                data: "aksi",
+                className: "",
+                orderable: false,
+                searchable: false
+            }]
+        });
+    });
 
-                    $('#deleteConfirmationModal').on('hidden.bs.modal', function() {
-                        $(this).remove(); // Hapus modal dari DOM
-                    });
-                })
-                .fail(function() {
-                    Swal.fire('Error', 'Gagal memuat form konfirmasi hapus', 'error');
-                });
-        }
+    // Fungsi untuk menampilkan modal delete
+    function showDeleteModal(id) {
+        // Hapus modal sebelumnya jika ada
+        $('#deleteModalContainer').empty();
+        
+        // Load konten modal
+        $.get('/admin/pendaftaran/delete_ajax/' + id, function(response) {
+            $('#deleteModalContainer').html(response);
+            $('#deleteConfirmationModal').modal('show');
+        }).fail(function() {
+            Swal.fire('Error', 'Gagal memuat form konfirmasi hapus', 'error');
+        });
+    }
 
-        $(document).on('submit', '#formDeletePendaftaran', function(e) {
-            e.preventDefault();
+    // Event handler untuk tombol close modal (gunakan event delegation)
+    $(document).on('click', '[data-dismiss="modal"]', function() {
+        $(this).closest('.modal').modal('hide');
+    });
 
-            var form = $(this);
-            var actionUrl = form.attr('action');
-
-            $.ajax({
-                url: actionUrl,
-                type: 'DELETE',
-                data: form.serialize(),
-                success: function(response) {
-                    if (response.status === 'success') {
-                        $('#deleteConfirmationModal').modal('hide');
-                        $('#table_pendaftaran').DataTable().ajax.reload(null, false);
-                        Swal.fire('Sukses', response.message, 'success');
-                    } else {
-                        Swal.fire('Gagal', response.message, 'error');
-                    }
-                },
-                error: function() {
-                    Swal.fire('Gagal', 'Terjadi kesalahan pada server.', 'error');
+    // Handle submit form delete
+    $(document).on('submit', '#formDeletePendaftaran', function(e) {
+        e.preventDefault();
+        var form = $(this);
+        
+        $.ajax({
+            url: form.attr('action'),
+            type: 'DELETE',
+            data: form.serialize(),
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#deleteConfirmationModal').modal('hide');
+                    $('#table_pendaftaran').DataTable().ajax.reload(null, false);
+                    Swal.fire('Sukses', response.message, 'success');
+                } else {
+                    Swal.fire('Gagal', response.message, 'error');
                 }
-            });
+            },
+            error: function() {
+                Swal.fire('Gagal', 'Terjadi kesalahan pada server.', 'error');
+            }
         });
-    </script>
-
-    <script>
-        // ------ UNTUK DATATABLES ------
-        $(document).ready(function() {
-            var dataPendaftaran = $('#table_pendaftaran').DataTable({
-                // serverSide: true, jika ingin menggunakan server side processing
-                serverSide: true,
-                ajax: {
-                    "url": "{{ url('admin/pendaftaran/list') }}",
-                    "dataType": "json",
-                    "type": "POST"
-                },
-                columns: [{
-                    // nomor urut dari laravel datatable addIndexColumn()
-                    data: "DT_RowIndex",
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "mahasiswa.mahasiswa_nim",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    data: "mahasiswa.mahasiswa_nama",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    data: "mahasiswa.prodi.prodi_nama",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "tanggal_pendaftaran",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "status.status_nama",
-                    className: "",
-                    orderable: false,
-                    searchable: false,
-                }, {
-                    data: "aksi",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }]
-            });
-        });
-    </script>
+    });
+</script>
 @endpush
-@stack('js')
