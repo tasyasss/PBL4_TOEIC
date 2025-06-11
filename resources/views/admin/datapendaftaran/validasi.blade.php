@@ -217,9 +217,8 @@
                                             @else --}}
                                             @if ($pendaftaran->mahasiswa && $pendaftaran->mahasiswa->file_ktm)
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="{{ asset('storage/dokumen/ktm_mahasiswa/' . $pendaftaran->mahasiswa->file_ktm) }}"
-                                                        class="btn btn-sm btn-outline-primary view-document mr-2"
-                                                        target="_blank">
+                                                    <a href="#" class="btn btn-sm btn-outline-primary view-document mr-2"
+                                                        data-url={{ asset('storage/dokumen/ktm_mahasiswa/' . $pendaftaran->mahasiswa->file_ktm) }}>
                                                         <i class="fas fa-eye"></i> Lihat
                                                     </a>
                                                     <div class="form-check">
@@ -250,9 +249,8 @@
                                             @else --}}
                                             @if ($pendaftaran->mahasiswa && $pendaftaran->mahasiswa->file_ktp)
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="{{ asset('storage/dokumen/ktp_mahasiswa/' . $pendaftaran->mahasiswa->file_ktp) }}"
-                                                        class="btn btn-sm btn-outline-primary view-document mr-2"
-                                                        target="_blank">
+                                                    <a href="#" class="btn btn-sm btn-outline-primary view-document mr-2"
+                                                        data-url='{{ asset('storage/dokumen/ktp_mahasiswa/' . $pendaftaran->mahasiswa->file_ktp) }}'>
                                                         <i class="fas fa-eye"></i> Lihat
                                                     </a>
                                                     <div class="form-check">
@@ -283,9 +281,8 @@
                                             @else --}}
                                             @if ($pendaftaran->mahasiswa && $pendaftaran->mahasiswa->file_pas_foto)
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="{{ asset('storage/dokumen/pas_foto_mahasiswa/' . $pendaftaran->mahasiswa->file_pas_foto) }}"
-                                                        class="btn btn-sm btn-outline-primary view-document mr-2"
-                                                        target="_blank">
+                                                    <a href="#" class="btn btn-sm btn-outline-primary view-document mr-2"
+                                                        data-url="{{ asset('storage/dokumen/pas_foto_mahasiswa/' . $pendaftaran->mahasiswa->file_pas_foto) }}">
                                                         <i class="fas fa-eye"></i> Lihat
                                                     </a>
                                                     <div class="form-check">
@@ -368,6 +365,21 @@
                     <i class="fas fa-exclamation-circle"></i> Data pendaftaran tidak ditemukan!
                 </div>
             @endif
+        </div>
+    </div>
+
+    <!-- Modal Preview Dokumen -->
+    <div class="modal fade" id="modalPreviewDokumen" tabindex="-1" aria-labelledby="modalPreviewDokumenLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Preview Dokumen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="previewImage" src="" class="img-fluid rounded" alt="Dokumen">
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -555,6 +567,15 @@
                     });
                 // $('#form-validasi').submit();
             }
+
+            // Tampilkan gambar dokumen di modal saat tombol "Lihat" diklik
+            $(document).on('click', '.view-document', function(e) {
+                e.preventDefault();
+
+                const imageUrl = $(this).data('url');
+                $('#previewImage').attr('src', imageUrl);
+                $('#modalPreviewDokumen').modal('show');
+            });
         });
     </script>
 @endpush
