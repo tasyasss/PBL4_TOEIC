@@ -164,10 +164,10 @@
                                             <div class="col-md-8">
                                                 @if ($mahasiswa->file_ktm)
                                                     <div class="d-flex align-items-center">
-                                                        <a href="{{ asset('storage/dokumen/ktm_mahasiswa/' . $mahasiswa->file_ktm) }}"
-                                                            target="_blank" class="btn btn-sm btn-success mr-2">
+                                                        <button type="button" class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
+                                                            data-image="{{ asset('storage/dokumen/ktm_mahasiswa/' . $mahasiswa->file_ktm) }}">
                                                             <i class="fas fa-eye"></i> Lihat
-                                                        </a>
+                                                        </button>
                                                         <span class="text-success">Dokumen sudah diunggah</span>
                                                     </div>
                                                 @else
@@ -181,10 +181,10 @@
                                             <div class="col-md-8">
                                                 @if ($mahasiswa->file_ktp)
                                                     <div class="d-flex align-items-center">
-                                                        <a href="{{ asset('storage/dokumen/ktp_mahasiswa/' . $mahasiswa->file_ktp) }}"
-                                                            target="_blank" class="btn btn-sm btn-success mr-2">
+                                                        <button type="button" class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
+                                                            data-image="{{ asset('storage/dokumen/ktp_mahasiswa/' . $mahasiswa->file_ktp) }}">
                                                             <i class="fas fa-eye"></i> Lihat
-                                                        </a>
+                                                        </button>
                                                         <span class="text-success">Dokumen sudah diunggah</span>
                                                     </div>
                                                 @else
@@ -197,10 +197,10 @@
                                             <div class="col-md-8">
                                                 @if ($mahasiswa->file_pas_foto)
                                                     <div class="d-flex align-items-center">
-                                                        <a href="{{ asset('storage/dokumen/pas_foto_mahasiswa/' . $mahasiswa->file_pas_foto) }}"
-                                                            target="_blank" class="btn btn-sm btn-success mr-2">
+                                                        <button type="button" class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
+                                                            data-image="{{ asset('storage/dokumen/pas_foto_mahasiswa/' . $mahasiswa->file_pas_foto) }}">
                                                             <i class="fas fa-eye"></i> Lihat
-                                                        </a>
+                                                        </button>
                                                         <span class="text-success">Dokumen sudah diunggah</span>
                                                     </div>
                                                 @else
@@ -292,9 +292,30 @@
             </div>
         @endif
     </div>
+
+    <!-- Modal Preview Dokumen -->
+    <div class="modal fade" id="modalPreviewDokumen" tabindex="-1" role="dialog" aria-labelledby="modalLabelDokumen"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pratinjau Dokumen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="previewDokumenImage" src="" class="img-fluid rounded shadow" alt="Dokumen">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
-@push('scripts')
+@push('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
         // SweetAlert untuk notifikasi
         document.addEventListener('DOMContentLoaded', function() {
@@ -335,6 +356,20 @@
                     jadwalSelect.focus();
                 }
             });
+        });
+
+        // Script untuk preview dokumen
+        $(document).ready(function () {
+            $('.btn-preview-dokumen').on('click', function () {
+                const imageUrl = $(this).data('image');
+                $('#previewDokumenImage').attr('src', imageUrl);
+                $('#modalPreviewDokumen').modal('show');
+            });
+        });
+
+        // Script untuk menutup modal ketika tombol close diklik
+        $(document).on('click', '#modalPreviewDokumen .close', function () {
+            $('#modalPreviewDokumen').modal('hide');
         });
     </script>
 @endpush

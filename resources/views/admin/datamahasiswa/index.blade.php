@@ -57,7 +57,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Import Data Mahasiswa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" onclick="closeImportModal()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeImportModal()" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Import</button>
                     </div>
                 </form>
@@ -96,6 +96,11 @@
         // Fungsi untuk membuka modal import
         function openImportModal() {
             $('#importModal').modal('show');
+        }
+
+        // Fungsi untuk menutup modal import
+        function closeImportModal() {
+            $('#importModal').modal('hide');
         }
 
         // Fungsi untuk mengirimkan file menggunakan AJAX
