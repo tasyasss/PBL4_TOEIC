@@ -34,7 +34,7 @@
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="text" class="form-control flex-grow-1 mr-2" id="mahasiswa_nim"
                                                 name="mahasiswa_nim" maxlength="15"
-                                                value="{{ $mahasiswa->mahasiswa_nim ?? '' }}">
+                                                value="{{ $mahasiswa->mahasiswa_nim ?? '' }}" readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="mahasiswa_nim_checkbox"
                                                     name="mahasiswa_nim_checkbox">
@@ -46,7 +46,7 @@
                                         </label>
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="text" class="form-control flex-grow-1 mr-2" id="nik"
-                                                name="nik" maxlength="15" value="{{ $mahasiswa->nik ?? '' }}">
+                                                name="nik" maxlength="15" value="{{ $mahasiswa->nik ?? '' }}" readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="nik_checkbox"
                                                     name="nik_checkbox">
@@ -59,7 +59,7 @@
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="text" class="form-control flex-grow-1 mr-2" id="mahasiswa_nama"
                                                 name="mahasiswa_nama" maxlength="15"
-                                                value="{{ $mahasiswa->mahasiswa_nama ?? '' }}">
+                                                value="{{ $mahasiswa->mahasiswa_nama ?? '' }}" readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="mahasiswa_nama_checkbox"
                                                     name="mahasiswa_nama_checkbox">
@@ -72,7 +72,8 @@
                                         </label>
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="text" class="form-control flex-grow-1 mr-2" id="no_telp"
-                                                name="no_telp" maxlength="15" value="{{ $mahasiswa->no_telp ?? '' }}">
+                                                name="no_telp" maxlength="15" value="{{ $mahasiswa->no_telp ?? '' }}"
+                                                readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="no_telp_checkbox"
                                                     name="no_telp_checkbox">
@@ -84,7 +85,8 @@
                                         </label>
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="email" class="form-control flex-grow-1 mr-2" id="email"
-                                                name="email" maxlength="15" value="{{ $mahasiswa->email ?? '' }}">
+                                                name="email" maxlength="15" value="{{ $mahasiswa->email ?? '' }}"
+                                                readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="email_checkbox"
                                                     name="email_checkbox">
@@ -96,7 +98,8 @@
                                         </label>
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="alamat" class="form-control flex-grow-1 mr-2" id="alamat"
-                                                name="alamat" maxlength="15" value="{{ $mahasiswa->alamat ?? '' }}">
+                                                name="alamat" maxlength="15" value="{{ $mahasiswa->alamat ?? '' }}"
+                                                readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="alamat_checkbox"
                                                     name="alamat_checkbox">
@@ -110,7 +113,7 @@
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="prodi" class="form-control flex-grow-1 mr-2" id="prodi"
                                                 name="prodi" maxlength="15"
-                                                value="{{ $mahasiswa->prodi->prodi_nama ?? '' }}">
+                                                value="{{ $mahasiswa->prodi->prodi_nama ?? '' }}" readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="prodi_checkbox"
                                                     name="prodi_checkbox">
@@ -123,7 +126,7 @@
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="jurusan" class="form-control flex-grow-1 mr-2" id="jurusan"
                                                 name="jurusan" maxlength="15"
-                                                value="{{ $mahasiswa->jurusan->jurusan_nama ?? '' }}">
+                                                value="{{ $mahasiswa->jurusan->jurusan_nama ?? '' }}" readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="jurusan_checkbox"
                                                     name="jurusan_checkbox">
@@ -136,7 +139,7 @@
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="kampus" class="form-control flex-grow-1 mr-2" id="kampus"
                                                 name="kampus" maxlength="15"
-                                                value="{{ $mahasiswa->kampus->kampus_nama ?? '' }}">
+                                                value="{{ $mahasiswa->kampus->kampus_nama ?? '' }}" readonly>
                                             <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="kampus_checkbox"
                                                     name="kampus_checkbox">
@@ -171,7 +174,8 @@
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="tanggal" class="form-control flex-grow-1 mr-2" id="tanggal"
                                                 name="tanggal" maxlength="15"
-                                                value="{{ $jadwal && $jadwal->tanggal ? \Carbon\Carbon::parse($jadwal->tanggal)->translatedFormat('l, d F Y') : '-' }}">
+                                                value="{{ $jadwal && $jadwal->tanggal ? \Carbon\Carbon::parse($jadwal->tanggal)->translatedFormat('l, d F Y') : '-' }}"
+                                                readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -180,7 +184,8 @@
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="jam" class="form-control flex-grow-1 mr-2" id="jam"
                                                 name="jam" maxlength="15"
-                                                value="{{ $jadwal && $jadwal->tanggal ? \Carbon\Carbon::parse($jadwal->tanggal)->format('H:i') : '-' }}">
+                                                value="{{ $jadwal && $jadwal->tanggal ? \Carbon\Carbon::parse($jadwal->tanggal)->format('H:i') : '-' }}"
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -370,18 +375,46 @@
 @push('js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            console.log("READY!");
+            emailjs.init('YBVRRlRqt0OMCr-de'); // Replace with your actual EmailJS user ID
+
             $('#btn-simpan').click(function(e) {
-                console.log("Tombol diklik!"); 
                 e.preventDefault();
+
+                const mahasiswaEmail = $('#email').val();
+                const mahasiswaNama = $('#mahasiswa_nama').val();
+                const mahasiswaNim = $('#mahasiswa_nim').val();
+                const mahasiswaNik = $('#nik').val();
+                const statusIdToSend = $('#status_id').val();
+
+                const tanggalDB = $('#tanggal').val(); // Assuming this is in 'YYYY-MM-DD' format
+                const date = new Date(tanggalDB);
+
+                // Konfigurasi format hari, tanggal, bulan, tahun
+                const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus',
+                    'September', 'Oktober', 'November', 'Desember'
+                ];
+
+                const hari = days[date.getDay()]; // "Senin"
+                const tanggal = date.getDate(); // 16
+                const bulan = months[date.getMonth()]; // "Juni"
+                const tahun = date.getFullYear(); // 2025
+
+                const jam = String(date.getHours()).padStart(2, '0'); // "08"
+                const menit = String(date.getMinutes()).padStart(2, '0'); // "00"
+
+                // Format akhir
+                const tanggalFormatted = `${hari}, ${tanggal} ${bulan} ${tahun}`; // "Senin, 16 Juni 2025"
+                const jamFormatted = `${jam}:${menit}`; // "08:00"
 
                 const checkboxes = $('.form-check-input[type="checkbox"]');
                 const checkedBoxes = $('.form-check-input[type="checkbox"]:checked');
 
-                // Jika tidak ada checkbox sama sekali
+                // If no checkboxes at all
                 if (checkboxes.length === 0) {
                     Swal.fire({
                         icon: 'warning',
@@ -391,7 +424,7 @@
                     return;
                 }
 
-                // Jika tidak ada yang dicentang
+                // If none checked
                 if (checkedBoxes.length === 0) {
                     Swal.fire({
                         title: 'Validasi Data',
@@ -402,14 +435,23 @@
                         cancelButtonText: 'Kembali'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $('#status_id').val(3); // ditolak
-                            $('#form-validasi').submit();
+                            $('#status_id').val(3); // rejected
+                            sendEmailNotification(
+                                mahasiswaEmail,
+                                mahasiswaNama,
+                                mahasiswaNim,
+                                mahasiswaNik,
+                                tanggalFormatted,
+                                jamFormatted,
+                                'ditolak'
+                            );
+                            // $('#form-validasi').submit();
                         }
                     });
                     return;
                 }
 
-                // Jika semua dicentang
+                // If all checked
                 if (checkedBoxes.length === checkboxes.length) {
                     Swal.fire({
                         title: 'Validasi Data',
@@ -420,28 +462,99 @@
                         cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $('#status_id').val(2); // diterima
-                            $('#form-validasi').submit();
+                            $('#status_id').val(2); // accepted
+                            sendEmailNotification(
+                                mahasiswaEmail,
+                                mahasiswaNama,
+                                mahasiswaNim,
+                                mahasiswaNik,
+                                tanggalFormatted,
+                                jamFormatted,
+                                'diterima'
+                            );
+                            // $('#form-validasi').submit();
                         }
                     });
                 }
-                // Jika hanya sebagian dicentang
+                // If partially checked
                 else {
                     Swal.fire({
                         title: 'Validasi Data',
                         text: "Hanya sebagian data yang divalidasi. Apa pendaftaran akan ditolak?",
-                        icon: 'warning',
+                        icon: (statusIdToSend === 2) ? 'question' : 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Ya, Tolak Pendaftaran',
-                        cancelButtonText: 'Kembali'
+                        cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $('#status_id').val(3); // ditolak
-                            $('#form-validasi').submit();
+                            $('#status_id').val(3); // accepted
+                            sendEmailNotification(
+                                mahasiswaEmail,
+                                mahasiswaNama,
+                                mahasiswaNim,
+                                mahasiswaNik,
+                                tanggalFormatted,
+                                jamFormatted,
+                                'ditolak'
+                            );
+                            // $('#form-validasi').submit();
                         }
                     });
                 }
             });
+
+            // Function to send email notification
+            function sendEmailNotification(
+                email,
+                nama,
+                nim,
+                nik,
+                tanggalFormatted,
+                jamFormatted,
+                status
+            ) {
+                const templateParams = {
+                    to_email: email,
+                    to_name: nama,
+                    nim: nim,
+                    nik: nik,
+                    status: status,
+                    tanggalFormatted: tanggalFormatted || 'Akan diinformasikan',
+                    jamFormatted: jamFormatted || 'Akan diinformasikan',
+                };
+
+                // Use your specific template IDs
+                const templateId = status === 'diterima' ?
+                    'template_d54bd1c' :
+                    'template_cw84rvf';
+
+                console.log('Mengirim email dengan template:', templateId, 'dan params:', templateParams);
+
+
+                emailjs.send('service_yost8ss', templateId, templateParams)
+                    .then(function(response) {
+                        console.log('Email berhasil dikirim', response);
+                        // $('#form-validasi').submit();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Status pendaftaran berhasil diperbarui dan email notifikasi telah dikirim',
+                            timer: 3000
+                        }).then((result) => {
+                            $('#form-validasi').submit();
+                        });
+                    }, function(error) {
+                        console.error('Gagal mengirim email', error);
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Email Gagal Dikirim',
+                            text: 'Status berhasil diperbarui tetapi email notifikasi gagal dikirim',
+                        }).then((result) => {
+                            $('#form-validasi').submit();
+                        });
+                    });
+                // $('#form-validasi').submit();
+            }
         });
     </script>
 @endpush
