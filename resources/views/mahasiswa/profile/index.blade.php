@@ -87,11 +87,21 @@
                                     <input type="text" class="form-control" id="alamat" name="alamat"
                                         value="{{ auth()->user()->mahasiswa->alamat }}" readonly>
                                 </div>
-                                {{-- <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username"
-                                        value="{{ auth()->user()->mahasiswa->username }}" readonly>
-                                </div> --}}
+                                <div class="mb-3">
+                                    <label for="prodi" class="form-label">Program Studi</label>
+                                    <input type="text" class="form-control" id="prodi" name="prodi"
+                                        value="{{ auth()->user()->mahasiswa->prodi->prodi_nama }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="jurusan" class="form-label">Jurusan</label>
+                                    <input type="text" class="form-control" id="jurusan" name="jurusan"
+                                        value="{{ auth()->user()->mahasiswa->jurusan->jurusan_nama }}" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="kampus" class="form-label">Kampus</label>
+                                    <input type="text" class="form-control" id="kampus" name="kampus"
+                                        value="{{ auth()->user()->mahasiswa->kampus->kampus_nama }}" readonly>
+                                </div>
                             @endif
                         @endauth
                     </div>

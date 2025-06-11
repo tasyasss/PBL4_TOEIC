@@ -1,3 +1,13 @@
+@php
+use App\Models\ProdiModel as Prodi;
+use App\Models\JurusanModel as Jurusan;
+use App\Models\KampusModel as Kampus;
+
+$prodis = Prodi::all();
+$jurusans = Jurusan::all();
+$kampuses = Kampus::all();
+@endphp
+
 <!-- Edit Profil -->
 <div class="tab-pane fade" id="editProfile" role="tabpanel" aria-labelledby="editProfile-tab">
     <div class="card">
@@ -11,7 +21,7 @@
                         <div class="mb-3">
                             <label for="nim" class="form-label">NIM</label>
                             <input type="text" class="form-control" id="nim" name="nim"
-                                value="{{ auth()->user()->mahasiswa->mahasiswa_nim }}" readonly>
+                                value="{{ auth()->user()->mahasiswa->mahasiswa_nim }}" z>
                         </div>
                         <div class="mb-3">
                             <label for="nik" class="form-label">NIK</label>
@@ -29,8 +39,8 @@
                                 value="{{ auth()->user()->mahasiswa->email }}">
                         </div>
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Nomor Telepon</label>
-                            <input type="text" class="form-control" id="phone" name="phone"
+                            <label for="no_telp" class="form-label">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="no_telp" name="no_telp"
                                 value="{{ auth()->user()->mahasiswa->no_telp }}">
                         </div>
                         <div class="mb-3">
@@ -38,11 +48,39 @@
                             <input type="text" class="form-control" id="alamat" name="alamat"
                                 value="{{ auth()->user()->mahasiswa->alamat }}">
                         </div>
-                        {{-- <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                value="{{ auth()->user()->mahasiswa->username }}">
-                        </div> --}}
+                        <div class="mb-3">
+                            <label for="prodi" class="form-label">Program Studi</label>
+                            <select class="form-control" id="prodi_id" name="prodi_id">
+                                @foreach ($prodis as $prodi)
+                                    <option value="{{ $prodi->id }}"
+                                        {{ auth()->user()->mahasiswa->prodi_id == $prodi->id ? 'selected' : '' }}>
+                                        {{ $prodi->prodi_nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jurusan_id" class="form-label">Jurusan</label>
+                            <select class="form-control" id="jurusan_id" name="jurusan_id">
+                                @foreach ($jurusans as $jurusan)
+                                    <option value="{{ $jurusan->id }}"
+                                        {{ auth()->user()->mahasiswa->jurusan_id == $jurusan->id ? 'selected' : '' }}>
+                                        {{ $jurusan->jurusan_nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="kampus_id" class="form-label">Kampus</label>
+                            <select class="form-control" id="kampus_id" name="kampus_id">
+                                @foreach ($kampuses as $kampus)
+                                    <option value="{{ $kampus->id }}"
+                                        {{ auth()->user()->mahasiswa->kampus_id == $kampus->id ? 'selected' : '' }}>
+                                        {{ $kampus->kampus_nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="foto_profil" class="form-label">Foto Profil</label>
                             <input type="file" class="form-control" id="foto_profil" name="foto_profil" accept="image/*">
