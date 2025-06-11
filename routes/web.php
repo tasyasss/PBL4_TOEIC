@@ -117,7 +117,8 @@ Route::middleware(['auth', 'authorize:MHS'])->prefix('mahasiswa')->group(functio
         Route::get('/read_formulir', [Pendaftaran_MHSController::class, 'read_formulir'])->name('mahasiswa.pendaftaran.read_formulir');
         Route::get('/create_formulir', [Pendaftaran_MHSController::class, 'create_formulir'])->name('mahasiswa.pendaftaran.create_formulir');
         Route::post('/create_formulir_proses', [Pendaftaran_MHSController::class, 'create_formulir_proses'])->name('mahasiswa.pendaftaran.create_formulir_proses');
-        Route::put('/update_formulir/{id}', [Pendaftaran_MHSController::class, 'update_formulir'])->name('mahasiswa.pendaftaran.update_formulir');
+        Route::get('/edit_formulir/{id}', [Pendaftaran_MHSController::class, 'edit_formulir'])->name('mahasiswa.pendaftaran.edit_formulir');
+        Route::put('/edit_formulir_proses/{id}', [Pendaftaran_MHSController::class, 'edit_formulir_proses'])->name('mahasiswa.pendaftaran.edit_formulir_proses');
     });
 
     Route::prefix('profile')->group(function () {

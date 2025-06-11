@@ -22,7 +22,7 @@
 
     <!-- Nav Item - Profil -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('mahasiswa.profile.index') }}"> 
+        <a class="nav-link" href="{{ route('mahasiswa.profile.index') }}">
             <i class="fas fa-fw fa-user"></i>
             <span>Profil</span></a>
     </li>
@@ -31,13 +31,13 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Pendaftaran -->
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         @php
             $mahasiswa = Auth::user()->mahasiswa ?? null;
             $pendaftaran = $mahasiswa->pendaftaran->last() ?? null;
         @endphp
 
-        @if(!$pendaftaran)
+        @if (!$pendaftaran)
             <!-- Jika belum pernah mendaftar -->
             <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.create_formulir') }}">
                 <i class="fas fa-fw fa-folder-plus"></i>
@@ -46,13 +46,39 @@
         @elseif(in_array($pendaftaran->status_id, [1, 2]))
             <!-- Jika sudah mendaftar dengan status Diproses (1) atau Diterima (2) -->
             <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.read_formulir') }}">
-                <i class="fas fa-fw fa-file-alt"></i>
+                <i class="fas fa-fw fa-folder-plus"></i>
                 <span>Pendaftaran</span>
             </a>
-        @else
-            <!-- Untuk status lainnya (misal ditolak) -->
+        @elseif($pendaftaran->status_id == 3)
+            <!-- Untuk status ditolak -->
+            <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.edit_formulir') . $pendaftaran->id }}">
+                <i class="fas fa-fw fa-folder-plus"></i>
+                <span>Pendaftaran</span>
+            </a>
+        @endif
+    </li> --}}
+    <li class="nav-item">
+        @php
+            $mahasiswa = Auth::user()->mahasiswa ?? null;
+            $pendaftaran = $mahasiswa->pendaftaran->last() ?? null;
+        @endphp
+
+        @if (!$pendaftaran)
+            <!-- Jika belum pernah mendaftar -->
             <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.create_formulir') }}">
-                <i class="fas fa-fw fa-redo"></i>
+                <i class="fas fa-fw fa-folder-plus"></i>
+                <span>Pendaftaran</span>
+            </a>
+        @elseif(in_array($pendaftaran->status_id, [1, 2]))
+            <!-- Jika sudah mendaftar dengan status Diproses (1) atau Diterima (2) -->
+            <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.read_formulir') }}">
+                <i class="fas fa-fw fa-folder-open"></i>
+                <span>Pendaftaran</span>
+            </a>
+        @elseif($pendaftaran->status_id == 3)
+            <!-- Untuk status ditolak -->
+            <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.edit_formulir', $pendaftaran->id) }}">
+                <i class="fas fa-fw fa-edit"></i>
                 <span>Pendaftaran</span>
             </a>
         @endif
@@ -70,7 +96,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-    
+
     <!-- Nav Item - Logout with Confirmation Modal -->
     <li class="nav-item">
         <a class="nav-link" href="#" id="logout-link">
@@ -102,7 +128,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('logout-link').addEventListener('click', function(e) {
             e.preventDefault();
-            
+
             Swal.fire({
                 title: 'Apakah Anda yakin?',
                 text: "Anda akan keluar dari sistem!",
@@ -135,7 +161,7 @@
         border: none !important;
         margin-right: 10px !important;
     }
-    
+
     .btn-cancel {
         background-color: #d33 !important;
         color: white !important;

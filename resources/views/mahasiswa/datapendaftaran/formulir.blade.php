@@ -16,9 +16,12 @@
             </div>
         @else
             <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between align-items-center bg-success">
-                    <h6 class="m-0 font-weight-bold text-primary text-light">Anda Sudah Pernah Mendaftar TOEIC Yang Pertama
+                {{-- <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #8aff99;">
+                    <h6 class="m-0 font-weight-bold text-primary text-dark">Anda Telah Mendaftar TOEIC Yang Pertama
                     </h6>
+                </div> --}}
+                <div class="alert alert-info">
+                    Anda Telah Mendaftar TOEIC Yang Pertama
                 </div>
                 <div class="card-body">
                     <div class="row">

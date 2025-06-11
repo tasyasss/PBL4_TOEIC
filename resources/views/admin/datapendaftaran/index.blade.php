@@ -14,9 +14,9 @@
                                 onclick="window.location.href='{{ route('admin.pendaftaran.export') }}'">
                                 <i class="fas fa-download"></i> Export Data
                             </button>
-                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPendaftaranModal">
+                            {{-- <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPendaftaranModal">
                                 <i class="fas fa-plus mr-1"></i> Tambah Data
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
                     <div class="card-body">

@@ -22,7 +22,7 @@ class Pendaftaran_ADMController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Pendaftaran',
+            'title' => 'Validasi Pendaftaran',
             'list' => ['Home', 'Pendaftaran'],
         ];
 
@@ -59,9 +59,8 @@ class Pendaftaran_ADMController extends Controller
             ->addIndexColumn()
             ->addColumn('aksi', function ($dft) {
                 $btn =  '<a href="' . url('/admin/pendaftaran/validasi/' . $dft->id) . '" class="btn btn-outline-success btn-sm"><i class="fas fa-check"></i> Validasi </a> ';
-                // $btn =  '<button onclick="modalAction(\'' . url('/admin/pendaftaran/validasi_ajax/' . $dft->id) . '\')" class="btn btn-outline-success btn-sm"><i class="fas fa-check"></i> Validasi</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/admin/pendaftaran/show_ajax/' . $dft->id) . '\')" class="btn btn-outline-info btn-sm"><i class="fas fa-info"></i> Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/admin/pendaftaran/edit_ajax/' . $dft->id) . '\')" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Edit</button> ';
+                // $btn .= '<button onclick="modalAction(\'' . url('/admin/pendaftaran/show_ajax/' . $dft->id) . '\')" class="btn btn-outline-info btn-sm"><i class="fas fa-info"></i> Detail</button> ';
+                // $btn .= '<button onclick="modalAction(\'' . url('/admin/pendaftaran/edit_ajax/' . $dft->id) . '\')" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Edit</button> ';
                 $btn .= '<button onclick="showDeleteModal(' . $dft->id . ')" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button>';
                 return $btn;
             })
@@ -211,33 +210,6 @@ class Pendaftaran_ADMController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Gagal menghapus data']);
         }
     }
-
-    // public function validasi(string $id)
-    // {
-    //     $mahasiswa = MahasiswaModel::all();
-    //     $jadwal = JadwalModel::all();
-    //     $status = StatusModel::all();
-    //     $pendaftaran = PendaftaranModel::with([
-    //         'mahasiswa.prodi',
-    //         'mahasiswa.jurusan',
-    //         'mahasiswa.kampus',
-    //         'status',
-    //         'jadwal'
-    //     ])->findOrFail($id);
-
-    //     $breadcrumb = (object) [
-    //         'title' => 'Edit Barang',
-    //         'list'  => ['Home', 'Barang', 'Edit']
-    //     ];
-
-    //     $page = (object) [
-    //         'title' => 'Edit barang'
-    //     ];
-
-    //     $activeMenu = 'barang'; // set menu yang sedang aktif
-
-    //     return view('admin.datapendaftaran.validasi', compact('breadcrumb', 'activeMenu', 'page'));
-    // }
 
     public function validasi($id)
     {
