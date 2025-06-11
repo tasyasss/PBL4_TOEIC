@@ -6,7 +6,7 @@
             $mahasiswa = Auth::user()->load('mahasiswa.pendaftaran')->mahasiswa;
             $pendaftaran = null;
             if ($mahasiswa && $mahasiswa->pendaftaran) {
-                $pendaftaran = $mahasiswa->pendaftaran->where('status_id', 2)->first(); // Hanya ambil yang status diterima
+                $pendaftaran = $mahasiswa->pendaftaran->whereIn('status_id', [1, 2])->first();
             }
         @endphp
 
@@ -17,7 +17,8 @@
         @else
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center bg-success">
-                    <h6 class="m-0 font-weight-bold text-primary text-light">Anda Sudah Pernah Mendaftar TOEIC Yang Pertama</h6>
+                    <h6 class="m-0 font-weight-bold text-primary text-light">Anda Sudah Pernah Mendaftar TOEIC Yang Pertama
+                    </h6>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -197,45 +198,29 @@
                                     </h6>
                                 </div>
                                 <div class="card-body">
-                                    @if ($pendaftaran && $pendaftaran->status_id != 1)
+                                    @if ($pendaftaran && $pendaftaran->jadwal)
                                         <!-- Tampilkan jadwal yang sudah fix -->
                                         <div class="form-group row">
-                                            <label class="col-md-4 col-form-label font-weight-bold">Tanggal</label>
+                                            <label class="col-md-4 col-form-label font-weight-bold">Tanggal Ujian</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                    value="{{ $pendaftaran->jadwal->tanggal ? \Carbon\Carbon::parse($pendaftaran->jadwal->tanggal)->translatedFormat('l, d F Y') : '-' }}"
+                                                    value="{{ \Carbon\Carbon::parse($pendaftaran->jadwal->tanggal)->translatedFormat('l, d F Y') }}"
                                                     disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-md-4 col-form-label font-weight-bold">Jam</label>
+                                            <label class="col-md-4 col-form-label font-weight-bold">Jam Ujian</label>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control"
-                                                    value="{{ $pendaftaran->jadwal->tanggal ? \Carbon\Carbon::parse($pendaftaran->jadwal->tanggal)->format('H:i') : '-' }}"
+                                                    value="{{ \Carbon\Carbon::parse($pendaftaran->jadwal->tanggal)->format('H:i') }} WIB"
                                                     disabled>
                                             </div>
                                         </div>
                                     @else
-                                        <!-- Tampilkan dropdown jadwal -->
-                                        <div class="form-group row">
-                                            <label for="jadwal_id" class="col-md-4 col-form-label font-weight-bold">Pilih
-                                                Jadwal</label>
-                                            <div class="col-md-8">
-                                                <select class="form-control" id="jadwal_id" name="jadwal_id" required>
-                                                    <option value="">-- Pilih Jadwal --</option>
-                                                    @foreach ($jadwal as $j)
-                                                        <option value="{{ $j->id }}"
-                                                            {{ $pendaftaran && $pendaftaran->status_id == 1 && $pendaftaran->jadwal_id == $j->id ? 'selected' : '' }}>
-                                                            {{ \Carbon\Carbon::parse($j->tanggal)->translatedFormat('l, d F Y H:i') }}
-                                                            (Kuota: {{ $j->kuota }})
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($pendaftaran && $pendaftaran->status_id == 1)
-                                                    <small class="text-muted">Anda masih bisa mengubah jadwal selama
-                                                        status masih "Diproses"</small>
-                                                @endif
-                                            </div>
+                                        <!-- Tampilan jika belum memilih jadwal -->
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle"></i> Jadwal ujian akan ditentukan setelah
+                                            pendaftaran diverifikasi
                                         </div>
                                     @endif
                                 </div>

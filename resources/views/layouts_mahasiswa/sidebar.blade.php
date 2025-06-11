@@ -32,9 +32,30 @@
 
     <!-- Nav Item - Pendaftaran -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.read_formulir') }}">
-            <i class="fas fa-fw fa-folder-plus"></i>
-            <span>Pendaftaran</span></a>
+        @php
+            $mahasiswa = Auth::user()->mahasiswa ?? null;
+            $pendaftaran = $mahasiswa->pendaftaran->last() ?? null;
+        @endphp
+
+        @if(!$pendaftaran)
+            <!-- Jika belum pernah mendaftar -->
+            <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.create_formulir') }}">
+                <i class="fas fa-fw fa-folder-plus"></i>
+                <span>Pendaftaran</span>
+            </a>
+        @elseif(in_array($pendaftaran->status_id, [1, 2]))
+            <!-- Jika sudah mendaftar dengan status Diproses (1) atau Diterima (2) -->
+            <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.read_formulir') }}">
+                <i class="fas fa-fw fa-file-alt"></i>
+                <span>Pendaftaran</span>
+            </a>
+        @else
+            <!-- Untuk status lainnya (misal ditolak) -->
+            <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.create_formulir') }}">
+                <i class="fas fa-fw fa-redo"></i>
+                <span>Pendaftaran</span>
+            </a>
+        @endif
     </li>
 
     <!-- Divider -->

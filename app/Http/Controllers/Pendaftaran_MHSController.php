@@ -251,102 +251,98 @@ class Pendaftaran_MHSController extends Controller
         ], compact('pendaftaran', 'jadwal', 'breadcrumb', 'page', 'activeMenu'));
     }
 
-    public function store(Request $request)
+    public function create_formulir()
     {
-        // Validasi input
-        $request->validate([
-            'jadwal_id' => 'required|exists:jadwal,id',
-        ]);
+        // return view('mahasiswa.datapendaftaran.formulir_create', [
+        //     'jadwal' => [],
+        //     'mahasiswa' => Auth::user()->mahasiswa
+        // ]);
 
         $mahasiswa = Auth::user()->mahasiswa;
 
-        // Cek apakah mahasiswa sudah pernah mendaftar
         if ($mahasiswa->pendaftaran()->exists()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Anda sudah melakukan pendaftaran sebelumnya'
-            ], 422);
+            return redirect()->route('mahasiswa.pendaftaran.read_formulir')
+                ->with('error', 'Anda sudah memiliki pendaftaran aktif');
         }
 
-        // Cek kelengkapan dokumen
-        if (!$mahasiswa->file_ktm || !$mahasiswa->file_ktp || !$mahasiswa->file_pas_foto) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Harap lengkapi semua dokumen (KTM, KTP, Pas Foto) sebelum mendaftar'
-            ], 422);
-        }
+        $jadwal = JadwalModel::where('tanggal', '>', now())
+            ->where('kuota', '>', 0)
+            ->orderBy('tanggal')
+            ->get();
 
-        try {
-            // Buat pendaftaran baru dengan status 1 (Diproses)
-            $pendaftaran = PendaftaranModel::create([
-                'mahasiswa_id' => $mahasiswa->id,
-                'jadwal_id' => $request->jadwal_id,
-                'status_id' => 1, // Status Diproses
-                'tanggal_pendaftaran' => Carbon::now(),
-            ]);
+        $breadcrumb = (object) [
+            'title' => 'Formulir Pendaftaran TOIEC',
+            'list' => ['Home', 'Pendaftaran'],
+        ];
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Pendaftaran berhasil disimpan',
-                'data' => $pendaftaran,
-                'redirect' => route('mahasiswa.pendaftaran.show', $pendaftaran->id)
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal menyimpan pendaftaran: ' . $e->getMessage()
-            ], 500);
-        }
+        $page = (object) [
+            'title' => 'Pendaftaran',
+        ];
+
+        $activeMenu = 'pendaftaran';
+
+        return view('mahasiswa.datapendaftaran.formulir_create', compact('jadwal', 'breadcrumb', 'page', 'activeMenu'));
     }
 
-    /**
-     * Mengupdate pendaftaran yang sudah ada
-     */
-    public function update(Request $request, $id)
+    // public function create_formulir_proses(Request $request)
+    // {
+    //     $mahasiswa = Auth::user()->mahasiswa;
+
+    //     if ($mahasiswa->pendaftaran()->exists()) {
+    //         return redirect()->route('mahasiswa.pendaftaran.read_formulir')
+    //             ->with('error', 'Anda sudah memiliki pendaftaran aktif');
+    //     }
+
+    //     $validated = $request->validate([
+    //         'jadwal_id' => 'required|exists:jadwal,id'
+    //     ]);
+
+    //     try {
+    //         $pendaftaran = PendaftaranModel::create([
+    //             'mahasiswa_id' => $mahasiswa->id,
+    //             'jadwal_id' => $request->jadwal_id,
+    //             'tanggal_pendaftaran' => now(),
+    //             'status_id' => 1 // Status Diproses
+    //         ]);
+
+    //         return redirect()->route('mahasiswa.pendaftaran.read_formulir')
+    //             ->with('success', 'Pendaftaran TOEIC berhasil dikirim. Status: Diproses');
+    //     } catch (\Exception $e) {
+    //         return back()->withInput()
+    //             ->with('error', 'Gagal menyimpan pendaftaran: ' . $e->getMessage());
+    //     }
+    // }
+
+    public function create_formulir_proses(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'jadwal_id' => 'required|exists:jadwal,id',
-        ]);
-
-        $mahasiswa = Auth::user()->mahasiswa;
-        $pendaftaran = PendaftaranModel::findOrFail($id);
-
-        // Validasi kepemilikan pendaftaran
-        if ($pendaftaran->mahasiswa_id != $mahasiswa->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Anda tidak memiliki akses ke pendaftaran ini'
-            ], 403);
-        }
-
-        // Validasi status pendaftaran (hanya bisa update jika status diproses)
-        if ($pendaftaran->status_id != 1) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Pendaftaran tidak dapat diubah karena status sudah ditentukan'
-            ], 422);
-        }
-
         try {
-            // Update data pendaftaran
-            $pendaftaran->update([
-                'jadwal_id' => $request->jadwal_id,
-                'tanggal_pendaftaran' => Carbon::now(),
-                // Status tetap 1 (Diproses)
+            // Validasi
+            $request->validate([
+                'jadwal_id' => 'required|exists:jadwal,id'
             ]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Pendaftaran berhasil diperbarui',
-                'data' => $pendaftaran,
-                'redirect' => route('mahasiswa.pendaftaran.show', $pendaftaran->id)
+            // Cek apakah sudah pernah mendaftar
+            if (Auth::user()->mahasiswa->pendaftaran()->exists()) {
+                return redirect()
+                    ->route('mahasiswa.pendaftaran.read_formulir')
+                    ->with('error', 'Anda sudah memiliki pendaftaran aktif');
+            }
+
+            // Buat pendaftaran
+            PendaftaranModel::create([
+                'tanggal_pendaftaran' => now(),
+                'mahasiswa_id' => Auth::user()->mahasiswa->id,
+                'jadwal_id' => $request->jadwal_id,
+                'status_id' => 1 // Status Diproses
             ]);
+
+            return redirect()
+                ->route('mahasiswa.pendaftaran.create_formulir')
+                ->with('success', 'Pendaftaran TOEIC berhasil dikirim! Status: Diproses');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal memperbarui pendaftaran: ' . $e->getMessage()
-            ], 500);
+            return back()
+                ->withInput()
+                ->with('error', 'Gagal menyimpan pendaftaran: ' . $e->getMessage());
         }
     }
 }

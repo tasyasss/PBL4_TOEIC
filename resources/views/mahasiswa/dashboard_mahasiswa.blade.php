@@ -25,11 +25,24 @@
 
         <!-- Card 2: Daftar TOEIC -->
         <div class="col-md-4">
+            @php
+                $mahasiswa = Auth::user()->load('mahasiswa.pendaftaran')->mahasiswa;
+                $pendaftaran = null;
+                if ($mahasiswa && $mahasiswa->pendaftaran) {
+                    $pendaftaran = $mahasiswa->pendaftaran->whereIn('status_id', [1, 2])->first();
+                }
+            @endphp
             <div class="card shadow-sm text-white bg-success">
                 <div class="card-body text-center">
                     <h5 class="card-title">Daftar TOEIC</h5>
                     <p class="card-text">Pertama kali mendaftar TOEIC?</p>
-                    <a href="{{ route('mahasiswa.pendaftaran.read_formulir') }}" class="btn btn-light btn-sm">Daftar</a>
+                    @if(!$pendaftaran)
+                        <a href="{{ route('mahasiswa.pendaftaran.create_formulir') }}" class="btn btn-light btn-sm">Daftar</a>
+                    @elseif($pendaftaran && in_array($pendaftaran->status_id, [1, 2]))
+                        <a href="{{ route('mahasiswa.pendaftaran.read_formulir') }}" class="btn btn-light btn-sm">Lihat Pendaftaran</a>
+                    @else
+                        <a href="{{ route('mahasiswa.pendaftaran.edit_formulir') }}" class="btn btn-light btn-sm">Daftar</a>
+                    @endif
                 </div>
             </div>
         </div>
