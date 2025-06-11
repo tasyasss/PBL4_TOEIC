@@ -2,7 +2,7 @@
     @csrf
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
+            <div class="modal-header bg-success text-white">
                 <h5 class="modal-title">Tambah Data Kampus</h5>
                 <button type="button" class="close text-white" onclick="closeModal()">&times;</button>
             </div>
@@ -17,8 +17,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="closeModal()" class="btn btn-secondary">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" onclick="closeModal()" class="btn btn-outline-danger">Batal</button>
+                <button type="submit" class="btn btn-outline-success">Simpan</button>
             </div>
         </div>
     </div>

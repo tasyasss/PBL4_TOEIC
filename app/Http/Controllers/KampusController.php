@@ -12,7 +12,16 @@ class KampusController extends Controller
     public function index()
     {
         $kampus = KampusModel::all();
-        return view('admin.kampus.index', compact('kampus'));
+        $breadcrumb = (object) [
+            'title' => 'Kampus',
+            'list' => ['Home', 'Kampus'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Kampus',
+        ];
+        $activeMenu = 'kampus';
+        return view('admin.kampus.index', compact('kampus', 'breadcrumb', 'page', 'activeMenu'));
     }
 
     public function list(Request $request)
@@ -25,8 +34,10 @@ class KampusController extends Controller
                 $editUrl = url('admin/kampus/edit_ajax/' . $row->id);
                 $deleteUrl = url('admin/kampus/delete_ajax/' . $row->id);
                 return '
-                    <button class="btn btn-sm btn-warning" onclick="modalAction(\'' . $editUrl . '\')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteConfirm(\'' . $deleteUrl . '\')">Hapus</button>
+                    
+
+                    <button onclick="modalAction(`' . $editUrl . '`)" class="btn btn-outline-warning btn-sm"><i class="fas fa-edit"></i> Edit</button>
+                    <button onclick="deleteConfirm(`' . $deleteUrl . '`)" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i> Hapus</button>
                 ';
             })
             ->rawColumns(['aksi'])

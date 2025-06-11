@@ -3,9 +3,9 @@
     @method('PUT')
     
     <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header bg-warning text-dark">
             <h5 class="modal-title">Edit Data Jadwal</h5>
-            <button type="button" class="close" onclick="closeModal()">&times;</button>
+            <button type="button" class="close" onclick="closeModal()" style="color: white;">&times;</button>
         </div>
         <div class="modal-body">
             <input type="hidden" name="id" id="edit_id" value="{{ $jadwal->id }}">
@@ -27,8 +27,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
-            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+            <button type="button" class="btn btn-outline-danger" onclick="closeModal()">Batal</button>
+            <button type="submit" class="btn btn-outline-success">Perbarui</button>
         </div>
     </div>
 </form>

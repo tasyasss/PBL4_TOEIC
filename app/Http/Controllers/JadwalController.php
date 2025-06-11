@@ -11,7 +11,16 @@ class JadwalController extends Controller
 {
     public function index()
     {
-        return view('admin.jadwal.index');
+        $breadcrumb = (object) [
+            'title' => 'Jadwal TOEIC',
+            'list' => ['Home', 'Jadwal'],
+        ];
+
+        $page = (object) [
+            'title' => 'Halaman Jadwal',
+        ];
+        $activeMenu = 'jadwal';
+        return view('admin.jadwal.index', compact('breadcrumb', 'activeMenu', 'page'));
     }
 
     public function list(Request $request)

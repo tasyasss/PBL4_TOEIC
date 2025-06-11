@@ -2,7 +2,7 @@
     @csrf
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-warning text-dark">
                 <h5 class="modal-title">Edit Data Jurusan</h5>
                 <button type="button" class="close" onclick="closeModal()">&times;</button>
             </div>
@@ -17,8 +17,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
-                <button type="submit" class="btn btn-primary">Perbarui</button>
+                <button type="button" class="btn btn-outline-danger" onclick="closeModal()">Batal</button>
+                <button type="submit" class="btn btn-outline-success">Perbarui</button>
             </div>
         </div>
     </div>

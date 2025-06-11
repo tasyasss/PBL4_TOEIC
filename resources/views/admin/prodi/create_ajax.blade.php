@@ -2,7 +2,7 @@
     @csrf
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="background-color: #224abe; color: white;">
+            <div class="modal-header bg-success text-white">
                 <h5 class="modal-title">Tambah Data Prodi</h5>
                 <button type="button" class="close" onclick="closeModal()" style="color: white;">&times;</button>
             </div>
@@ -17,8 +17,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="closeModal()" class="btn btn-danger">Batal</button>
-                <button type="button" onclick="storeProdi()" class="btn btn-success">Simpan</button>
+                <button type="button" onclick="closeModal()" class="btn btn-outline-danger">Batal</button>
+                <button type="button" onclick="storeProdi()" class="btn btn-outline-success">Simpan</button>
             </div>
         </div>
     </div>

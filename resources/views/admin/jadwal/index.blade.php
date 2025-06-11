@@ -80,13 +80,13 @@
                     data: "id", 
                     render: function(data) {
                         return `
-                            <button class="btn btn-sm btn-warning mr-1" 
+                            <button class="btn btn-sm btn-outline-warning mr-1" 
                                 onclick="modalAction('{{ route('admin.jadwal.edit_ajax', '') }}/${data}')">
-                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-edit"></i> Edit
                             </button>
-                            <button class="btn btn-sm btn-danger" 
+                            <button class="btn btn-sm btn-outline-danger" 
                                 onclick="deleteConfirm('{{ route('admin.jadwal.delete_ajax', '') }}/${data}')">
-                                <i class="fas fa-trash"></i>
+                                <i class="fas fa-trash"></i> Hapus
                             </button>
                         `;
                     },
