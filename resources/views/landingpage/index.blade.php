@@ -42,20 +42,20 @@
                         <div class="col-3 px-0">
                             <div class="bg-primary text-center p-4">
                                 <h1 class="text-white" data-toggle="counter-up">1234</h1>
-                                <h6 class="text-uppercase text-white">100% <span class="d-block">AKSES ONLINE</span></h6>
+                                <h6 class="text-uppercase text-white">100% <span class="d-block">ONLINE ACCESS</span></h6>
                             </div>
                         </div>
                         <div class="col-3 px-0">
                             <div class="bg-secondary text-center p-4">
                                 <h1 class="text-white" data-toggle="counter-up">123</h1>
-                                <h6 class="text-uppercase text-white">VERIFIED<span class="d-block">OLEH UPA BAHASA</span>
+                                <h6 class="text-uppercase text-white">VERIFIED<span class="d-block">BY UPA BAHASA</span>
                                 </h6>
                             </div>
                         </div>
                         <div class="col-3 px-0">
                             <div class="bg-warning text-center p-4">
                                 <h1 class="text-white" data-toggle="counter-up">1234</h1>
-                                <h6 class="text-uppercase text-white">SERTIFIKAT<span class="d-block">RESMI DARI ITC</span>
+                                <h6 class="text-uppercase text-white">OFFICIAL CERTIFICATE<span class="d-block">FROM ITC</span>
                                 </h6>
                             </div>
                         </div>
@@ -130,78 +130,43 @@
             </div>
             <div class="owl-carousel team-carousel position-relative" style="padding: 0 30px;">
                 <div class="team-item">
-                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/team-1.jpg') }}" alt="">
+                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/nata.jpg') }}" alt="">
                     <div class="bg-light text-center p-4">
-                        <h5 class="mb-3">Anastasya</h5>
-                        <p class="mb-2">BackEnd</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        <h5 class="mb-3">An Naastasya Sakina</h5>
+                        <p class="mb-2">2341760131</p>
                     </div>
                 </div>
                 <div class="team-item">
-                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/team-1.jpg') }}" alt="">
+                    <img class="img-fluid w-10" src="{{ asset('landingpage/img/titan1.jpg') }}" alt="">
                     <div class="bg-light text-center p-4">
-                        <h5 class="mb-3">Titania</h5>
-                        <p class="mb-2">BackEnd</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        <h5 class="mb-3">Titania Aurellia P. D.</h5>
+                        <p class="mb-2">2341760112</p>
                     </div>
                 </div>
                  <div class="team-item">
-                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/team-1.jpg') }}" alt="">
+                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/vera1.jpg') }}" alt="">
                     <div class="bg-light text-center p-4">
-                        <h5 class="mb-3">Vera</h5>
-                        <p class="mb-2">FrontEnd</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        <h5 class="mb-3">Vera Efita Hudi Putri</h5>
+                        <p class="mb-2">2341760047</p>
                     </div>
                 </div>
                  <div class="team-item">
-                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/team-2.jpg') }}" alt="">
+                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/zaki.jpg') }}" alt="">
                     <div class="bg-light text-center p-4">
-                        <h5 class="mb-3">Zaki</h5>
-                        <p class="mb-2">FrontEnd</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        <h5 class="mb-3">Mochamad Zacky Y. A.</h5>
+                        <p class="mb-2">2341760147</p>
                     </div>
                 </div>
                  <div class="team-item">
-                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/team-2.jpg') }}" alt="">
+                    <img class="img-fluid w-100" src="{{ asset('landingpage/img/ivan.jpg') }}" alt="">
                     <div class="bg-light text-center p-4">
-                        <h5 class="mb-3">Ivan</h5>
-                        <p class="mb-2">FrontEnd</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        <h5 class="mb-3">Ivan Rizal Ahmadi</h5>
+                        <p class="mb-2">2341760128</p>
                     </div>
                 </div>
                 <!-- Add more team items as necessary -->
             </div>
         </div>
     </div>
-    <!-- Team End -->
+    <!-- Team End -->
 @endsection
