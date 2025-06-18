@@ -17,7 +17,8 @@ class PendaftaranModel extends Model
         'tanggal_pendaftaran',
         'mahasiswa_id',
         'jadwal_id',
-        'status_id'
+        'status_id',
+        'keterangan'
     ];
 
     public function mahasiswa()

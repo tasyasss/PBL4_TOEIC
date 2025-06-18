@@ -238,17 +238,32 @@ class Pendaftaran_ADMController extends Controller
         ], compact('pendaftaran', 'breadcrumb', 'activeMenu', 'page'));
     }
 
+    // public function validasi_proses(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'status_id' => 'required|in:2,3', // 2 = diterima, 3 = ditolak
+    //     ]);
+
+    //     $pendaftaran = PendaftaranModel::findOrFail($id);
+    //     $pendaftaran->status_id = $request->status_id;
+    //     $pendaftaran->save();
+
+    //     return redirect()->route('admin.pendaftaran.index')
+    //         ->with('success', 'Status pendaftaran berhasil diperbarui.');
+    // }
     public function validasi_proses(Request $request, $id)
     {
         $request->validate([
             'status_id' => 'required|in:2,3', // 2 = diterima, 3 = ditolak
+            'keterangan' => 'nullable|string',
         ]);
 
         $pendaftaran = PendaftaranModel::findOrFail($id);
         $pendaftaran->status_id = $request->status_id;
+        $pendaftaran->keterangan = $request->keterangan;
         $pendaftaran->save();
 
-        return redirect()->route('admin.pendaftaran.index')
+        return redirect()->route('admin.pendaftaran.validasi', $id)
             ->with('success', 'Status pendaftaran berhasil diperbarui.');
     }
 

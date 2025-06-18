@@ -90,13 +90,13 @@
                         data: $(form).serialize(),
                         success: function(response) {
                             if (response.status) { // jika sukses
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil',
-                                    text: response.message,
-                                }).then(function() {
+                                // Swal.fire({
+                                //     icon: 'success',
+                                //     title: 'Berhasil',
+                                //     text: response.message,
+                                // }).then(function() {
                                     window.location = response.redirect;
-                                });
+                                // });
                             } else { // jika error
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

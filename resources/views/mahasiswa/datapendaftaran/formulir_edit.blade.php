@@ -164,7 +164,8 @@
                                             <div class="col-md-8">
                                                 @if ($mahasiswa->file_ktm)
                                                     <div class="d-flex align-items-center">
-                                                        <button type="button" class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
                                                             data-image="{{ asset('storage/dokumen/ktm_mahasiswa/' . $mahasiswa->file_ktm) }}">
                                                             <i class="fas fa-eye"></i> Lihat
                                                         </button>
@@ -181,7 +182,8 @@
                                             <div class="col-md-8">
                                                 @if ($mahasiswa->file_ktp)
                                                     <div class="d-flex align-items-center">
-                                                        <button type="button" class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
                                                             data-image="{{ asset('storage/dokumen/ktp_mahasiswa/' . $mahasiswa->file_ktp) }}">
                                                             <i class="fas fa-eye"></i> Lihat
                                                         </button>
@@ -197,7 +199,8 @@
                                             <div class="col-md-8">
                                                 @if ($mahasiswa->file_pas_foto)
                                                     <div class="d-flex align-items-center">
-                                                        <button type="button" class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-success mr-2 btn-preview-dokumen"
                                                             data-image="{{ asset('storage/dokumen/pas_foto_mahasiswa/' . $mahasiswa->file_pas_foto) }}">
                                                             <i class="fas fa-eye"></i> Lihat
                                                         </button>
@@ -260,6 +263,15 @@
                                             </div>
 
                                             <div class="form-group row">
+                                                <label class="col-md-4 col-form-label font-weight-bold">Keterangan
+                                                    Validasi</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" id="keterangan"
+                                                        value="{{ $pendaftaran->keterangan ?? '-' }}" disabled>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
                                                 <label class="col-md-4 col-form-label font-weight-bold">Terakhir
                                                     Diperbarui</label>
                                                 <div class="col-md-8">
@@ -313,8 +325,8 @@
 @endsection
 
 @push('js')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
         // SweetAlert untuk notifikasi
@@ -359,8 +371,8 @@
         });
 
         // Script untuk preview dokumen
-        $(document).ready(function () {
-            $('.btn-preview-dokumen').on('click', function () {
+        $(document).ready(function() {
+            $('.btn-preview-dokumen').on('click', function() {
                 const imageUrl = $(this).data('image');
                 $('#previewDokumenImage').attr('src', imageUrl);
                 $('#modalPreviewDokumen').modal('show');
@@ -368,7 +380,7 @@
         });
 
         // Script untuk menutup modal ketika tombol close diklik
-        $(document).on('click', '#modalPreviewDokumen .close', function () {
+        $(document).on('click', '#modalPreviewDokumen .close', function() {
             $('#modalPreviewDokumen').modal('hide');
         });
     </script>

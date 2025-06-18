@@ -35,10 +35,10 @@
                                             <input type="text" class="form-control flex-grow-1 mr-2" id="mahasiswa_nim"
                                                 name="mahasiswa_nim" maxlength="15"
                                                 value="{{ $mahasiswa->mahasiswa_nim ?? '' }}" readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="mahasiswa_nim_checkbox"
                                                     name="mahasiswa_nim_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -47,10 +47,10 @@
                                         <div class="col-md-9 d-flex align-items-center">
                                             <input type="text" class="form-control flex-grow-1 mr-2" id="nik"
                                                 name="nik" maxlength="15" value="{{ $mahasiswa->nik ?? '' }}" readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="nik_checkbox"
                                                     name="nik_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -60,10 +60,10 @@
                                             <input type="text" class="form-control flex-grow-1 mr-2" id="mahasiswa_nama"
                                                 name="mahasiswa_nama" maxlength="15"
                                                 value="{{ $mahasiswa->mahasiswa_nama ?? '' }}" readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="mahasiswa_nama_checkbox"
                                                     name="mahasiswa_nama_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -74,10 +74,10 @@
                                             <input type="text" class="form-control flex-grow-1 mr-2" id="no_telp"
                                                 name="no_telp" maxlength="15" value="{{ $mahasiswa->no_telp ?? '' }}"
                                                 readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="no_telp_checkbox"
                                                     name="no_telp_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -87,10 +87,10 @@
                                             <input type="email" class="form-control flex-grow-1 mr-2" id="email"
                                                 name="email" maxlength="15" value="{{ $mahasiswa->email ?? '' }}"
                                                 readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="email_checkbox"
                                                     name="email_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -100,10 +100,10 @@
                                             <input type="alamat" class="form-control flex-grow-1 mr-2" id="alamat"
                                                 name="alamat" maxlength="15" value="{{ $mahasiswa->alamat ?? '' }}"
                                                 readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="alamat_checkbox"
                                                     name="alamat_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -114,10 +114,10 @@
                                             <input type="prodi" class="form-control flex-grow-1 mr-2" id="prodi"
                                                 name="prodi" maxlength="15"
                                                 value="{{ $mahasiswa->prodi->prodi_nama ?? '' }}" readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="prodi_checkbox"
                                                     name="prodi_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -127,10 +127,10 @@
                                             <input type="jurusan" class="form-control flex-grow-1 mr-2" id="jurusan"
                                                 name="jurusan" maxlength="15"
                                                 value="{{ $mahasiswa->jurusan->jurusan_nama ?? '' }}" readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="jurusan_checkbox"
                                                     name="jurusan_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="form-group row align-items-center">
@@ -140,10 +140,10 @@
                                             <input type="kampus" class="form-control flex-grow-1 mr-2" id="kampus"
                                                 name="kampus" maxlength="15"
                                                 value="{{ $mahasiswa->kampus->kampus_nama ?? '' }}" readonly>
-                                            <div class="form-check ml-2">
+                                            {{-- <div class="form-check ml-2">
                                                 <input class="form-check-input" type="checkbox" id="kampus_checkbox"
                                                     name="kampus_checkbox">
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -202,29 +202,13 @@
                                         <div class="col-md-4 text-center mb-3">
                                             <i class="fas fa-id-card fa-3x text-primary mb-2"></i>
                                             <p class="font-weight-bold mb-1">KTM</p>
-                                            {{-- @if ($pendaftaran->$mahasiswa && $pendaftaran->$mahasiswa->file_ktm)
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="{{ asset('storage/dokumen/ktm_mahasiswa/' . $pendaftaran->$mahasiswa->file_ktm) }}"
-                                                        class="btn btn-sm btn-outline-primary view-document mr-2"
-                                                        target="_blank">
-                                                        <i class="fas fa-eye"></i> Lihat
-                                                    </a>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="ktm_checkbox"
-                                                            name="ktm_checkbox">
-                                                    </div>
-                                                </div>
-                                            @else --}}
                                             @if ($pendaftaran->mahasiswa && $pendaftaran->mahasiswa->file_ktm)
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="#" class="btn btn-sm btn-outline-primary view-document mr-2"
+                                                    <a href="#"
+                                                        class="btn btn-sm btn-outline-primary view-document mr-2"
                                                         data-url={{ asset('storage/dokumen/ktm_mahasiswa/' . $pendaftaran->mahasiswa->file_ktm) }}>
                                                         <i class="fas fa-eye"></i> Lihat
                                                     </a>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="ktm_checkbox"
-                                                            name="ktm_checkbox">
-                                                    </div>
                                                 </div>
                                             @else
                                                 <span class="text-danger">Belum diupload</span>
@@ -234,29 +218,13 @@
                                         <div class="col-md-4 text-center mb-3">
                                             <i class="fas fa-address-card fa-3x text-success mb-2"></i>
                                             <p class="font-weight-bold mb-1">KTP</p>
-                                            {{-- @if ($pendaftaran->$mahasiswa && $pendaftaran->$mahasiswa->file_ktp)
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="{{ asset('storage/dokumen/ktp_mahasiswa/' . $pendaftaran->$mahasiswa->file_ktp) }}"
-                                                        class="btn btn-sm btn-outline-success view-document mr-2"
-                                                        target="_blank">
-                                                        <i class="fas fa-eye"></i> Lihat
-                                                    </a>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="ktp_checkbox"
-                                                            name="ktp_checkbox">
-                                                    </div>
-                                                </div>
-                                            @else --}}
                                             @if ($pendaftaran->mahasiswa && $pendaftaran->mahasiswa->file_ktp)
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="#" class="btn btn-sm btn-outline-primary view-document mr-2"
+                                                    <a href="#"
+                                                        class="btn btn-sm btn-outline-primary view-document mr-2"
                                                         data-url='{{ asset('storage/dokumen/ktp_mahasiswa/' . $pendaftaran->mahasiswa->file_ktp) }}'>
                                                         <i class="fas fa-eye"></i> Lihat
                                                     </a>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" id="ktp_checkbox"
-                                                            name="ktp_checkbox">
-                                                    </div>
                                                 </div>
                                             @else
                                                 <span class="text-danger">Belum diupload</span>
@@ -266,29 +234,13 @@
                                         <div class="col-md-4 text-center mb-3">
                                             <i class="fas fa-camera fa-3x text-info mb-2"></i>
                                             <p class="font-weight-bold mb-1">Pas Foto</p>
-                                            {{-- @if ($pendaftaran->$mahasiswa && $pendaftaran->$mahasiswa->file_pas_foto)
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="{{ asset('storage/dokumen/pas_foto_mahasiswa/' . $pendaftaran->$mahasiswa->file_pas_foto) }}"
-                                                        class="btn btn-sm btn-outline-info view-document mr-2"
-                                                        target="_blank">
-                                                        <i class="fas fa-eye"></i> Lihat
-                                                    </a>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="pas_foto_checkbox" name="pas_foto_checkbox">
-                                                    </div>
-                                                </div>
-                                            @else --}}
                                             @if ($pendaftaran->mahasiswa && $pendaftaran->mahasiswa->file_pas_foto)
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <a href="#" class="btn btn-sm btn-outline-primary view-document mr-2"
+                                                    <a href="#"
+                                                        class="btn btn-sm btn-outline-primary view-document mr-2"
                                                         data-url="{{ asset('storage/dokumen/pas_foto_mahasiswa/' . $pendaftaran->mahasiswa->file_pas_foto) }}">
                                                         <i class="fas fa-eye"></i> Lihat
                                                     </a>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="pas_foto_checkbox" name="pas_foto_checkbox">
-                                                    </div>
                                                 </div>
                                             @else
                                                 <span class="text-danger">Belum diupload</span>
@@ -298,28 +250,74 @@
                                 </div>
                             </div>
 
-                            <div class="card border-0 shadow-sm">
+                            <!-- Kelengkapan Data & Dokumen -->
+                            <div class="card mt-3">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0 text-dark"><i class="fas fa-file-alt"></i> Kelengkapan Data & Dokumen
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row align-items-start">
+                                        <!-- Kolom checkbox -->
+                                        <div class="col-md-4">
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="ktm_checkbox"
+                                                    name="ktm_checkbox">
+                                                <label class="form-check-label" for="dataLengkap">
+                                                    KTM
+                                                </label><br>
+
+                                                <input class="form-check-input" type="checkbox" id="ktp_checkbox"
+                                                    name="ktp_checkbox">
+                                                <label class="form-check-label" for="dataLengkap">
+                                                    KTP
+                                                </label><br>
+
+                                                <input class="form-check-input" type="checkbox" id="pas_foto_checkbox"
+                                                    name="pas_foto_checkbox">
+                                                <label class="form-check-label" for="dataLengkap">
+                                                    Pas Foto
+                                                </label><br>
+
+                                                <input type="checkbox" class="form-check-input" id="data_dokumen"
+                                                    name="data_dokumen">
+                                                <label class="form-check-label" for="dataLengkap">
+                                                    Data Diri & Dokumen sesuai?
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Kolom keterangan -->
+                                        <div class="col-md-8">
+                                            <label for="keterangan" class="form-label">Keterangan (opsional)</label>
+                                            <textarea name="keterangan" id="keterangan" class="form-control" rows="3"
+                                                placeholder="Tulis data yang tidak sesuai"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Pendaftaran -->
+                            <div class="card border-0 shadow-sm mb-3">
                                 <div class="card-header bg-light">
                                     <h6 class="card-title mb-0 text-primary">
                                         <i class="fas fa-history"></i> Timeline Pendaftaran
                                     </h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="timeline">
-                                        <div class="timeline-item">
-                                            <div class="timeline-point timeline-point-primary">
-                                                <i class="fas fa-calendar-plus"></i>
+                                    <div class="row justify-content-center">
+                                        <!-- Pendaftaran Dibuat -->
+                                        <div class="col-md-4 text-center mb-3">
+                                            <div class="text-primary mb-2">
+                                                <i class="fas fa-calendar-plus fa-2x"></i>
                                             </div>
-                                            <div class="timeline-event">
-                                                <div class="timeline-heading">
-                                                    <h6>Pendaftaran Dibuat</h6>
-                                                </div>
-                                                <div class="timeline-body">
-                                                    <p>{{ $pendaftaran->created_at->translatedFormat('l, d F Y H:i') }}</p>
-                                                </div>
-                                            </div>
+                                            <h6 class="mb-1">Pendaftaran Dibuat</h6>
+                                            <p class="mb-0 text-muted">
+                                                {{ $pendaftaran->created_at->translatedFormat('l, d F Y H:i') }}
+                                            </p>
                                         </div>
 
+                                        <!-- Status Diperbarui -->
                                         @if ($pendaftaran->status)
                                             @php
                                                 $status = $pendaftaran->status->status_nama;
@@ -327,36 +325,26 @@
                                                     'Diterima' => 'success',
                                                     'Ditolak' => 'danger',
                                                     'Diproses' => 'warning',
-                                                    'Belum Bayar' => 'secondary',
-                                                    'Sudah Bayar' => 'primary',
                                                     default => 'light',
                                                 };
                                             @endphp
-                                            <div class="timeline-item">
-                                                <div class="timeline-point timeline-point-{{ $statusClass }}">
-                                                    <i class="fas fa-check-circle"></i>
+                                            <div class="col-md-4 text-center mb-3">
+                                                <div class="text-{{ $statusClass }} mb-2">
+                                                    <i class="fas fa-check-circle fa-2x"></i>
                                                 </div>
-                                                <div class="timeline-event">
-                                                    <div class="timeline-heading">
-                                                        <h6>Status Diperbarui</h6>
-                                                    </div>
-                                                    <div class="timeline-body">
-                                                        <p>Status:
-                                                            <span class="badge badge-{{ $statusClass }}">
-                                                                {{ $status }}
-                                                            </span>
-                                                        </p>
-                                                        <small class="text-muted">
-                                                            Terakhir diperbarui:
-                                                            {{ $pendaftaran->updated_at->diffForHumans() }}
-                                                        </small>
-                                                    </div>
-                                                </div>
+                                                <h6 class="mb-1">
+                                                    Status: <span
+                                                        class="badge bg-{{ $statusClass }} text-white">{{ $status }}</span>
+                                                </h6>
+                                                <h6 class="text-muted">Diperbarui:
+                                                    {{ $pendaftaran->updated_at->diffForHumans() }}</h6>
                                             </div>
                                         @endif
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </form>
@@ -369,7 +357,8 @@
     </div>
 
     <!-- Modal Preview Dokumen -->
-    <div class="modal fade" id="modalPreviewDokumen" tabindex="-1" aria-labelledby="modalPreviewDokumenLabel" aria-hidden="true">
+    <div class="modal fade" id="modalPreviewDokumen" tabindex="-1" aria-labelledby="modalPreviewDokumenLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -401,6 +390,7 @@
                 const mahasiswaNim = $('#mahasiswa_nim').val();
                 const mahasiswaNik = $('#nik').val();
                 const statusIdToSend = $('#status_id').val();
+                const keterangan = $('#keterangan').val();
 
                 const tanggalDB = $('#tanggal').val(); // Assuming this is in 'YYYY-MM-DD' format
                 const date = new Date(tanggalDB);
@@ -455,7 +445,8 @@
                                 mahasiswaNik,
                                 tanggalFormatted,
                                 jamFormatted,
-                                'ditolak'
+                                'ditolak',
+                                keterangan
                             );
                             // $('#form-validasi').submit();
                         }
@@ -482,7 +473,8 @@
                                 mahasiswaNik,
                                 tanggalFormatted,
                                 jamFormatted,
-                                'diterima'
+                                'diterima',
+                                keterangan
                             );
                             // $('#form-validasi').submit();
                         }
@@ -507,7 +499,8 @@
                                 mahasiswaNik,
                                 tanggalFormatted,
                                 jamFormatted,
-                                'ditolak'
+                                'ditolak',
+                                keterangan
                             );
                             // $('#form-validasi').submit();
                         }
@@ -523,7 +516,8 @@
                 nik,
                 tanggalFormatted,
                 jamFormatted,
-                status
+                status,
+                keterangan
             ) {
                 const templateParams = {
                     to_email: email,
@@ -533,6 +527,7 @@
                     status: status,
                     tanggalFormatted: tanggalFormatted || 'Akan diinformasikan',
                     jamFormatted: jamFormatted || 'Akan diinformasikan',
+                    keterangan: keterangan || '-'
                 };
 
                 // Use your specific template IDs

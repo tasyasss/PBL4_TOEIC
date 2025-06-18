@@ -2,7 +2,7 @@
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Data Mahasiswa</h5>
                 <button type="button" class="close" onclick="closeModal()"><span
                         aria-hidden="true">&times;</span></button>
@@ -77,8 +77,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="closeModal()" class="btn btn-warning">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" onclick="closeModal()" class="btn btn-outline-danger">Batal</button>
+                <button type="submit" class="btn btn-outline-success">Simpan</button>
             </div>
         </div>
     </div>

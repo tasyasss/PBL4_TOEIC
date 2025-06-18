@@ -14,7 +14,7 @@
 
                 <!-- Foto Profil -->
                 <div class="profile-picture">
-                    @if (auth()->user()->mahasiswa->foto_profil)
+                    @if (auth()->user()->mahasiswa && auth()->user()->mahasiswa->foto_profil)
                         <img src="{{ asset('storage/profile_pictures/foto_user_' . auth()->id() . '.' . pathinfo(auth()->user()->mahasiswa->foto_profil, PATHINFO_EXTENSION)) }}"
                             alt="Profile Picture" class="img-fluid rounded-circle shadow">
                     @else

@@ -2,14 +2,19 @@
     <div class="modal-content">
         <form action="{{ url('admin/mahasiswa/update_ajax/'.$mahasiswa->id) }}" method="POST" id="formEditMahasiswa">
             @csrf
-            <div class="modal-header">
+            <div class="modal-header bg-warning text-dark">
                 <h5 class="modal-title">Edit Data Mahasiswa</h5>
-                <button type="button" class="close" onclick="closeModal()">
+                <button type="button" class="close" onclick="closeModal()" style="color: black">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
+                <div class="form-group">
+                    <label>NIK</label>
+                    <input type="text" name="nik" class="form-control" value="{{ $mahasiswa->nik }}" required>
+                </div>
+
                 <div class="form-group">
                     <label>NIM</label>
                     <input type="text" name="mahasiswa_nim" class="form-control" value="{{ $mahasiswa->mahasiswa_nim }}" required>
@@ -32,20 +37,46 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Jurusan</label>
+                    <select name="jurusan_id" class="form-control" required>
+                        @foreach ($jurusan as $j)
+                            <option value="{{ $j->id }}" {{ $mahasiswa->jurusan_id == $j->id ? 'selected' : '' }}>
+                                {{ $j->jurusan_nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Kampus</label>
+                    <select name="kampus_id" class="form-control" required>
+                        @foreach ($kampus as $k)
+                            <option value="{{ $k->id }}" {{ $mahasiswa->kampus_id == $k->id ? 'selected' : '' }}>
+                                {{ $k->kampus_nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="alamat">Alamat</label>
                     <input type="text" name="alamat" class="form-control" value="{{ $mahasiswa->alamat }}" required>
                 </div>
                 
                 <div class="form-group">
+                    <label for="no_telp">Nomor Telepon</label>
+                    <input type="text" name="no_telp" class="form-control" value="{{ $mahasiswa->no_telp }}" required>
+                </div>
+
+                <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ $mahasiswa->email }}" required>
                 </div>
-                <!-- Tambah field lain jika perlu -->
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Batal</button>
+                <button type="button" class="btn btn-outline-danger" onclick="closeModal()">Batal</button>
+                <button type="submit" class="btn btn-outline-warning">Perbarui</button>
             </div>
         </form>
 

@@ -10,18 +10,54 @@
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">Data Mahasiswa</h6>
                         <div class="float-right">
+                            <!-- Tombol untuk membuka modal -->
                             <button class="btn btn-outline-success btn-sm" onclick="openImportModal()">
                                 <i class="fas fa-upload"></i> Import Data
                             </button>
 
-                            <button class="btn btn-primary btn-sm"
+                            {{-- <button class="btn btn-primary btn-sm"
                                 onclick="modalAction('{{ url('admin/mahasiswa/create_ajax') }}')">
                                 <i class="fas fa-plus mr-1"></i> Tambah Data
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+                            <div class="row mb-3">
+                                {{-- <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="filter_prodi">Program Studi</label>
+                                        <select class="form-control" id="filter_prodi" name="filter_prodi">
+                                            <option value="">Semua Prodi</option>
+                                            @foreach ($prodi as $p)
+                                                <option value="{{ $p->id }}">{{ $p->prodi_nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="filter_jurusan">Filter</label>
+                                        <select class="form-control" id="filter_jurusan" name="filter_jurusan">
+                                            <option value="">Semua Jurusan</option>
+                                            @foreach ($jurusan as $j)
+                                                <option value="{{ $j->id }}">{{ $j->jurusan_nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="filter_kampus">Kampus</label>
+                                        <select class="form-control" id="filter_kampus" name="filter_kampus">
+                                            <option value="">Semua Kampus</option>
+                                            @foreach ($kampus as $k)
+                                                <option value="{{ $k->id }}">{{ $k->nama_kampus }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
+                            </div>
                             <table class="table table-borderless" id="table_mahasiswa" width="100%" cellspacing="0">
                                 <thead class="bg-light">
                                     <tr>
@@ -61,21 +97,26 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
+                <!-- FORM Upload -->
                 <form id="importForm" enctype="multipart/form-data">
+                    @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="file">Pilih File Excel/CSV</label>
-                            <input type="file" name="file" id="file" class="form-control" required>
+                            <label for="file">Pilih File Excel (.xls / .xlsx)</label>
+                            <input type="file" name="file" id="file" class="form-control" accept=".xls,.xlsx"
+                                required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="closeImportModal()" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeImportModal()">Batal</button>
                         <button type="submit" class="btn btn-primary">Import</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
 
     <!-- Include CSS dan JS eksternal -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -96,11 +137,6 @@
         // Fungsi untuk membuka modal import
         function openImportModal() {
             $('#importModal').modal('show');
-        }
-
-        // Fungsi untuk menutup modal import
-        function closeImportModal() {
-            $('#importModal').modal('hide');
         }
 
         // Fungsi untuk mengirimkan file menggunakan AJAX
@@ -137,6 +173,11 @@
                 $('#modalDetail').modal('show');
             });
         }
+
+        // Menutup modal secara manual jika perlu
+        $(document).on('click', '[data-dismiss="modal"]', function() {
+            $('#importModal').modal('hide');
+        });
 
         // Reset password mahasiswa
         function resetPassword(id) {
@@ -190,15 +231,18 @@
         var dataMahasiswa;
         $(document).ready(function() {
             dataMahasiswa = $('#table_mahasiswa').DataTable({
-                // serverSide: true, jika ingin menggunakan server side processing
                 serverSide: true,
                 ajax: {
                     "url": "{{ url('admin/mahasiswa/list') }}",
                     "dataType": "json",
-                    "type": "POST"
+                    "type": "POST",
+                    "data": function(d) {
+                        d.kampus_id = $('#filter_kampus').val(); // filter kampus
+                        d.jurusan_id = $('#filter_jurusan').val();
+                        d.prodi_id = $('#filter_prodi').val();
+                    }
                 },
                 columns: [{
-                    // nomor urut dari laravel datatable addIndexColumn()
                     data: "DT_RowIndex",
                     className: "text-center",
                     orderable: false,
@@ -224,7 +268,6 @@
                     orderable: false,
                     searchable: false
                 }, {
-                    // mengambil data level hasil dari ORM berelasi
                     data: "prodi.prodi_nama",
                     className: "",
                     orderable: true,
@@ -236,6 +279,48 @@
                     searchable: false
                 }]
             });
+
+            // $('#filter_kampus').change(function() {
+            //     $('#filter_jurusan').val('');
+            //     $('#filter_prodi').val('');
+            //     dataMahasiswa.ajax.reload();
+            // });
+
+            // Ketika jurusan berubah, update dropdown prodi
+            $('#filter_jurusan').change(function() {
+                var jurusanId = $(this).val();
+                var $prodiSelect = $('#filter_prodi');
+
+                // Reset dropdown prodi
+                $prodiSelect.empty().append('<option value="">Semua Prodi</option>');
+
+                if (jurusanId) {
+                    // Jika jurusan dipilih, ambil prodi berdasarkan jurusan
+                    $.get("{{ url('admin/prodi/by-jurusan') }}/" + jurusanId, function(data) {
+                        $.each(data, function(key, value) {
+                            $prodiSelect.append('<option value="' + value.id + '">' + value
+                                .prodi_nama + '</option>');
+                        });
+                    });
+                } else {
+                    // Jika jurusan dikosongkan, isi dengan semua prodi
+                    $.get("{{ url('admin/prodi/list') }}", function(data) {
+                        $.each(data, function(key, value) {
+                            $prodiSelect.append('<option value="' + value.id + '">' + value
+                                .prodi_nama + '</option>');
+                        });
+                    });
+                }
+
+                // Reset nilai filter prodi dan reload tabel
+                $prodiSelect.val('').trigger('change');
+                dataMahasiswa.ajax.reload();
+            });
+
+            // // Ketika prodi berubah, reload tabel dengan parameter jurusan dan prodi
+            // $('#filter_prodi').change(function() {
+            //     dataMahasiswa.ajax.reload();
+            // });
         });
 
         function deleteConfirm(url) {

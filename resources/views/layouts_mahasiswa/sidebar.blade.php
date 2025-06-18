@@ -58,11 +58,16 @@
         @endif
     </li> --}}
     <li class="nav-item">
-        @php
+        {{-- @php
             $mahasiswa = Auth::user()->mahasiswa ?? null;
             $pendaftaran = $mahasiswa->pendaftaran->last() ?? null;
-        @endphp
+        @endphp --}}
 
+        @php
+            $mahasiswa = Auth::user()->mahasiswa ?? null;
+            $pendaftaran = $mahasiswa?->pendaftaran?->last() ?? null;
+        @endphp
+        
         @if (!$pendaftaran)
             <!-- Jika belum pernah mendaftar -->
             <a class="nav-link" href="{{ route('mahasiswa.pendaftaran.create_formulir') }}">

@@ -5,18 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 use App\Models\UsersModel;
 use App\Models\MahasiswaModel;
 use App\Models\ProdiModel;
+use App\Models\JurusanModel;
+use App\Models\KampusModel;
 
 class DataMahasiswaController extends Controller
 {
     public function index()
     {
+        $jurusan = JurusanModel::select('id', 'jurusan_nama')->get();
+        $prodi = ProdiModel::select('id', 'prodi_nama')->get();
+        $kampus = KampusModel::select('id', 'kampus_nama')->get();
+
         $breadcrumb = (object) [
             'title' => 'Data Mahasiswa',
             'list' => ['Home', 'Data Mahasiswa'],
@@ -28,7 +33,10 @@ class DataMahasiswaController extends Controller
 
         $activeMenu = 'mahasiswa'; // Should match your sidebar menu item
 
-        return view('admin.datamahasiswa.index', compact('breadcrumb', 'activeMenu', 'page'));
+        return view('admin.datamahasiswa.index', compact('breadcrumb', 'activeMenu', 'page', 'jurusan', 'prodi', 'kampus'))
+            ->with('jurusan', $jurusan)
+            ->with('prodi', $prodi)
+            ->with('kampus', $kampus);
     }
 
     public function list(Request $request)
@@ -46,9 +54,18 @@ class DataMahasiswaController extends Controller
             'prodi_id'
         )->with('prodi');
 
-        // filter data berdasarkan prodi_id
-        if ($request->prodi_id) {
-            $mahasiswa->where('prodi_id', $request->prodi_id);
+        // Filter berdasarkan kampus
+        if ($request->kampus_id) {
+            $mahasiswa->whereHas('jurusan', function ($query) use ($request) {
+                $query->where('kampus_id', $request->kampus_id);
+            });
+        }
+
+        // Filter berdasarkan jurusan
+        if ($request->jurusan_id) {
+            $mahasiswa->whereHas('prodi', function ($query) use ($request) {
+                $query->where('jurusan_id', $request->jurusan_id);
+            });
         }
 
         return DataTables::of($mahasiswa)
@@ -74,8 +91,10 @@ class DataMahasiswaController extends Controller
     {
         $mahasiswa = MahasiswaModel::findOrFail($id);
         $prodi = ProdiModel::select('id', 'prodi_nama')->get();
+        $jurusan = JurusanModel::select('id', 'jurusan_nama')->get();
+        $kampus = KampusModel::select('id', 'kampus_nama')->get();
 
-        return view('admin.datamahasiswa.edit_ajax', compact('mahasiswa', 'prodi'));
+        return view('admin.datamahasiswa.edit_ajax', compact('mahasiswa', 'prodi', 'jurusan', 'kampus'));
     }
 
     public function update_ajax(Request $request, $id)
@@ -92,6 +111,8 @@ class DataMahasiswaController extends Controller
             'file_ktp'        => 'file|mimes:jpg,jpeg,png|max:2048',
             'file_pas_foto'   => 'file|mimes:jpg,jpeg,png|max:2048',
             'prodi_id'        => 'integer',
+            'jurusan_id'      => 'integer',
+            'kampus_id'       => 'integer'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -287,70 +308,52 @@ class DataMahasiswaController extends Controller
 
     public function import(Request $request)
     {
-        // Validasi file
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:xlsx,xls,csv|max:10240', // Maksimal 10MB
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'File tidak valid. Harap upload file excel atau csv.',
-            ]);
+        $file = $request->file('file'); // pastikan name="file" pada form
+        if (!$file) {
+            return response()->json(['status' => false, 'message' => 'File tidak ditemukan.']);
         }
 
-        // Ambil file yang di-upload
-        $file = $request->file('file');
+        $spreadsheet = IOFactory::load($file->getPathname());
+        $sheet = $spreadsheet->getActiveSheet();
+        $rows = $sheet->toArray();
 
-        try {
-            // Membaca file excel menggunakan PhpSpreadsheet
-            $spreadsheet = IOFactory::load($file);
-            $sheet = $spreadsheet->getActiveSheet();
+        // Lewati baris pertama (header)
+        unset($rows[0]);
 
-            // Ambil data dari sheet (dalam bentuk array)
-            $data = [];
-            foreach ($sheet->getRowIterator() as $rowIndex => $row) {
-                if ($rowIndex == 1) continue; // Skip header row
+        foreach ($rows as $row) {
+            [$nim, $nama, $alamat, $no_telp, $email, $nik, $foto_profil, $file_ktm, $file_ktp, $file_pas_foto, $prodi_id, $jurusan_id, $kampus_id] = $row;
 
-                // Tentukan default file jika tidak ada foto yang diunggah
-                $defaultFile = 'default_image.jpg'; // Gantilah dengan file default yang ada di server
-
-                // Membuat pengguna baru untuk setiap mahasiswa
-                $user = UsersModel::create([
-                    'username' => 'mhs' . $sheet->getCell('A' . $rowIndex)->getValue(), // Gunakan NIM sebagai username
-                    'password' => Hash::make('12345'), // Password default, bisa Anda ubah
-                    'roles_id' => 2,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-
-                // Menambahkan data mahasiswa ke array
-                $data[] = [
-                    'mahasiswa_nim' => $sheet->getCell('A' . $rowIndex)->getValue(),
-                    'mahasiswa_nama' => $sheet->getCell('B' . $rowIndex)->getValue(),
-                    'alamat' => $sheet->getCell('C' . $rowIndex)->getValue(),
-                    'no_telp' => $sheet->getCell('D' . $rowIndex)->getValue(),
-                    'email' => $sheet->getCell('E' . $rowIndex)->getValue(),
-                    'prodi_id' => ProdiModel::where('prodi_nama', $sheet->getCell('F' . $rowIndex)->getValue())->first()->id, // Mendapatkan prodi_id berdasarkan nama prodi
-                    'users_id' => $user->id, // Menggunakan users_id yang baru saja dibuat
-                    'file_ktm' => $defaultFile, // Menggunakan file default jika tidak ada file yang diunggah
-                    'file_ktp' => $defaultFile, // Menggunakan file default jika tidak ada file yang diunggah
-                    'file_pas_foto' => $defaultFile, // Menggunakan file default jika tidak ada file yang diunggah
-                ];
+            // Cek duplikat nim/nik
+            if (MahasiswaModel::where('mahasiswa_nim', $nim)->orWhere('nik', $nik)->exists()) {
+                continue;
             }
 
-            // Simpan data mahasiswa ke database
-            MahasiswaModel::insert($data);
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Data mahasiswa berhasil diimport!',
+            // Buat user
+            $user = UsersModel::create([
+                'username' => 'mhs' . $nim,
+                'password' => Hash::make('12345'),
+                'roles_id' => 2
             ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Terjadi kesalahan saat mengimport file: ' . $e->getMessage(),
+
+            // Buat mahasiswa
+            MahasiswaModel::create([
+                'users_id' => $user->id,
+                'mahasiswa_nim' => $nim,
+                'mahasiswa_nama' => $nama,
+                'alamat' => $alamat,
+                'no_telp' => $no_telp,
+                'email' => $email,
+                'nik' => $nik,
+                'foto_profil' => $foto_profil ?? '',
+                'file_ktm' => $file_ktm ?? '',
+                'file_ktp' => $file_ktp ?? '',
+                'file_pas_foto' => $file_pas_foto ?? '',
+                'prodi_id' => $prodi_id,
+                'jurusan_id' => $jurusan_id,
+                'kampus_id' => $kampus_id,
             ]);
         }
+
+        return response()->json(['status' => true, 'message' => 'Data berhasil diimport.']);
     }
 }
